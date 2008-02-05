@@ -37,10 +37,13 @@ Rails::Initializer.run do |config|
   # Make sure the secret is at least 30 characters and all random, 
   # no regular words or you'll be exposed to dictionary attacks.
   config.action_controller.session = {
-    :session_key => '_graphpipes.git_session',
+    :session_key => '_graphpipes.session',
     :secret      => '842ff961f61fc31779cbd1307a04e8defe0a67c1120593b8629967cdd48e77a72a9c2d56f69edfec6ad9af0146ce9b23d7b45c0baef3ba73c451314d44cd215b'
   }
 
+  config.active_record.observers = :user_observer 
+  
+  # or whatever you
   # Use the database for sessions instead of the cookie-based default,
   # which shouldn't be used to store highly confidential information
   # (create the session table with 'rake db:sessions:create')
