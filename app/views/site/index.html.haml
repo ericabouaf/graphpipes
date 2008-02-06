@@ -19,7 +19,7 @@
         %p
           We will be opening this project to the public in the next few weeks.
         %p.button_field
-          = link_button '&#x2192; I want to know more!',  {:action => "move_to_step(2)"}
+          = link_button '&#x2192; I want to know more!',  {:action => "header_gallery.move_to_step(2)"}
           =# link_button '&#x238B; Signup',   {:action => "move_to_step(4)"}
           
     
@@ -34,8 +34,8 @@
           %br          
           = link_to '[Wikipedia]', 'http://en.wikipedia.org/wiki/Semantic_web'
         %p.button_field
-          = link_button '&#x2192; Woah!',  {:action => "move_to_step(3)"}                  
-          = link_button '&#x2190; Hu?',   {:action => "move_to_step(1)"}
+          = link_button '&#x2192; Woah!',  {:action => "header_gallery.move_to_step(3)"}                  
+          = link_button '&#x2190; Hu?',   {:action => "header_gallery.move_to_step(1)"}
     
     
       %div.step{:style => "background: url(../images/gallery/step3.png) no-repeat;"}
@@ -49,8 +49,8 @@
           approaches and methods for the design and maintenance of ontologies, as well as the semantic annotation of documents, 
           multimedia data or web services to enable the semantic search and usage of these resources.
         %p.button_field
-          = link_button '&#x2192; Go on!',  {:action => "move_to_step(4)"}                  
-          = link_button '&#x2190; Hu?',   {:action => "move_to_step(2)"}     
+          = link_button '&#x2192; Go on!',  {:action => "header_gallery.move_to_step(4)"}                  
+          = link_button '&#x2190; Hu?',   {:action => "header_gallery.move_to_step(2)"}     
           
              
       %div.step
