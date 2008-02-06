@@ -1,34 +1,74 @@
 - content_for :page_header do
   %div#page_header_container
     %div#all.gallery
+    
       %div.step{:style => "background: url(../images/gallery/step1.png) no-repeat;"}
-        %h1 A short How to
+        %h1 About graphpipes
         %p 
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-          Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in 
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in 
-          culpa qui officia deserunt mollit anim id est laborum.
+          %strong graphpipes 
+          is a simple and easy way to aggregate semantic data.
+
+          %br          
+          By using drag'n'drop you are able to create
+          SPARQL-queries and reuse them later in your networked graphs.
+          %br
+ 
+          %strong graphpipes  
+          is a proof of concept, developed at 
+          = link_to_function 'University of Koblenz', 'move_to_step(3)'
+        %p
+          We will be opening this project to the public in the next few weeks.
+        %p.button_field
+          = link_button '&#x2192; I want to know more!',  {:action => "move_to_step(2)"}
+          =# link_button '&#x238B; Signup',   {:action => "move_to_step(4)"}
+          
+    
       %div.step{:style => "background: url(../images/gallery/step2.png) no-repeat;"}
         %h1 The semantic web
         %p 
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-          Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in 
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in 
-          culpa qui officia deserunt mollit anim id est laborum.        
+          The Semantic Web is an evolving extension of the World Wide Web in which web content can be expressed not only in natural language, but 
+          also in a format that can be read and used by software agents, thus permitting them to find, share and integrate information 
+          more easily.[1] It derives from W3C director Tim Berners-Lee's vision of the Web as a universal medium for data, information, 
+          and knowledge exchange.
+          %br
+          %br          
+          = link_to '[Wikipedia]', 'http://en.wikipedia.org/wiki/Semantic_web'
+        %p.button_field
+          = link_button '&#x2192; Woah!',  {:action => "move_to_step(3)"}                  
+          = link_button '&#x2190; Hu?',   {:action => "move_to_step(1)"}
+    
+    
       %div.step{:style => "background: url(../images/gallery/step3.png) no-repeat;"}
-        %h1 Why graphpipes?
+        %h1 ISWeb | Koblenz
         %p 
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-          Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in 
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in 
-          culpa qui officia deserunt mollit anim id est laborum.        
+          The 
+          = link_to "Research Group ISWeb", "http://http://isweb.uni-koblenz.de/" 
+          concentrates its work on the basic 
+          principles and applications of semantic-based technologies and their integration into complex, dynamic information systems.
+          The basics of semantic-based systems include the modeling of ontologies, representation of ontologies, 
+          approaches and methods for the design and maintenance of ontologies, as well as the semantic annotation of documents, 
+          multimedia data or web services to enable the semantic search and usage of these resources.
+        %p.button_field
+          = link_button '&#x2192; Go on!',  {:action => "move_to_step(4)"}                  
+          = link_button '&#x2190; Hu?',   {:action => "move_to_step(2)"}     
+          
+             
+      %div.step
+        %h1 Signup
+        %p
+          %strong graphpipes
+          will be open to public registration in just a few days.
+         
+          
   %ul.gallery_tabs
     %li 
-      = link_to_function 'How to', "move_to_step(1)"
+      %a About graphpipes
     %li 
-      = link_to_function 'Semantic Web', "move_to_step(2)"    
-    %li
-      = link_to_function 'Why?', "move_to_step(3)"
+      %a The Semantic Web
+    %li 
+      %a ISWeb | Koblenz
+    %li 
+      %a Signup
     
     %div.endfix
     
@@ -37,17 +77,3 @@
   = javascript_include_tag 'parts/gallery'
 
   
-
-%h1 Welcome to graphpipes
-
-%p
-  Lorem ipsum dolor sit amet, <strong>consectetur adipisicing</strong> elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.     
-  Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in  
-  reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. <em>Excepteur sint</em> occaecat cupidatat non proident, sunt 
-  in culpa qui officia deserunt mollit anim id est laborum.
-
-%p
-  Lorem ipsum dolor sit amet, <strong>consectetur adipisicing</strong> elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.     
-  Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in  
-  reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. <em>Excepteur sint</em> occaecat cupidatat non proident, sunt 
-  in culpa qui officia deserunt mollit anim id est laborum.

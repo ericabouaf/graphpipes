@@ -12,6 +12,8 @@ h1 {
 	text-shadow: #6ecbfd 0 2px 2px;
 	margin-bottom: 7px;
 	width: 300px;
+	border-left: 2px solid #128ea9;
+	
 }
 
 
@@ -22,8 +24,9 @@ p {
 	text-align: left;
 	display: block;
 	height: auto;
-	background: #fff url(../images/hook.png) no-repeat center top;
-	padding: 50px 10px 10px;
+	background: #fff;
+	padding: 10px 10px 10px;
+	border-left: 2px solid #128ea9;
 }
 
 p img {
@@ -42,3 +45,22 @@ p em{
 	color: #128ea9;
 	font-style: italic;
 }
+
+a {
+	color: #4c4c4c;
+}
+
+a:link {
+	color: #128ea9;
+}
+
+a:visited {
+color: #128ea9;
+}
+
+a:hover {
+	color: #2ad2fd;	
+}
+
+
+

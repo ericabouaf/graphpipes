@@ -18,7 +18,7 @@
 }
 
 .step {
-	width: 960px;
+	width: 975px;
 	display: block;
 	float: left;
 	height: 375px;
@@ -26,12 +26,48 @@
 }
 
 div.step>p {
-	width:300px;
-	height: 260px;
-	background-image: none;
+	width: 290px;
+	height: auto;
 	margin-left: 20px;
 	overflow: hidden;
-	padding: 10px;
+	padding: 10px 20px 15px 10px;
+	font-size: 13px;
+	line-height: 18px;
+}
+
+div.step>p span.note {
+	border-bottom: 1px solid #ccc;
+	border-right: 1px solid #ccc;
+	color: #128ea9;
+	font-style: italic;
+	padding: 2px;
+}
+
+div.step>p label {
+	clear: none;
+	display: block;
+	margin-top: 10px;
+	float: none;
+}
+
+div.step>p textfield {
+	clear: none;
+	display: block;
+	margin-top: 10px;
+	float: none;
+}
+
+div.step>p.button_field {
+	background-image: none;
+	background-color: transparent;
+	border-style: none;
+	float: none;
+	width: 318px;
+	text-align: right;
+}
+
+div.step>p.button_field a {
+	float: right;
 }
 
 .step h1{
@@ -80,7 +116,8 @@ ul.gallery_tabs > li a:visited {
 	font-size: 14px;
 }
 
-ul.gallery_tabs > li a:hover {
+ul.gallery_tabs > li a:hover,
+ul.gallery_tabs > li a.current {
 	color: #227ffc;
 }
 
