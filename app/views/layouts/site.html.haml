@@ -1,0 +1,22 @@
+!!!
+
+%html
+  %head
+    %title graphpipes
+    %meta{'http-equiv' => 'Content-Type', :content => 'text/html'}    
+    = stylesheet_link_tag 'site'
+    = javascript_include_tag :defaults
+    = javascript_include_tag 'site'
+    = yield :head
+  %body
+    #container
+      #page       
+        %img#header{ 'src' => "images/demo_header.png" }
+       
+        = yield :page_header
+        
+        = yield
+      
+        #footer
+          = 'Thomas Winkler | 2007-2008'
+  

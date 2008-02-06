@@ -1,0 +1,15 @@
+@import url("reset.css");
+@import url("font.css");
+
+body {
+	background: url(../images/bg.jpg) repeat 0 0;
+	text-align: center;
+	padding-top:90px
+}
+
+#container {
+	width: 960px;
+	margin-left: auto; 
+	margin-right: auto;
+	text-align: left;	
+}

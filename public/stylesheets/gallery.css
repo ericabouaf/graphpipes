@@ -1,0 +1,103 @@
+#page_header_container {
+	display: block;
+	float: none;
+	height: 375px;
+	width: 940px;	
+	overflow: hidden;
+	margin-bottom: 10px;
+	background-color: #fff;
+	border: 10px solid #fff;
+}
+
+.gallery {
+	display: block;
+	background: #fff url(/images/gallery_bg.jpg) repeat 0 bottom;
+	float: none;
+	height: 375px;
+	width: 6000px;
+}
+
+.step {
+	width: 960px;
+	display: block;
+	float: left;
+	height: 375px;
+	position: relative;
+}
+
+div.step>p {
+	width:300px;
+	height: 260px;
+	background-image: none;
+	margin-left: 20px;
+	overflow: hidden;
+	padding: 10px;
+}
+
+.step h1{
+	margin: 20px 20px 10px;
+	display: inline-block;
+	width: auto;
+}
+
+.step img {
+	display: block;
+	float: right;
+}
+
+ul.gallery_tabs {
+ display: table;
+    vertical-align: middle
+	text-align: center;
+	margin-bottom: 70px;
+	list-style: none;
+  	line-height: 100%;
+  	background: url(/images/gallery/start.png) no-repeat;
+  	padding-left: 13px;
+	height: 33px;
+
+margin-left: auto; margin-right: auto;	
+}
+
+ul.gallery_tabs > li {
+	  display: block;
+ 	  background: url(../images/gallery/bg.png) repeat-x;
+  float: left;
+	height: 35px;
+	line-height: 35px;
+	border-right: 1px dotted #7b4829;
+	padding-right: 10px;
+	padding-left: 10px;
+}
+
+ul.gallery_tabs > li a:link,
+ul.gallery_tabs > li a:visited {
+	color: #4c4c4c;
+	font-weight: normal;
+	font-style: normal;
+	font-size: 14px;
+}
+
+ul.gallery_tabs > li a:hover {
+	color: #227ffc;
+}
+
+ul.gallery_tabs > li a:active {
+	color: #000;
+}
+
+ul.gallery_tabs > li:last-child {
+	border-right-width: 0px;
+	border-right-style: none;
+}
+
+div.endfix {
+	height: 35px;
+	background-color: #7bff5a;
+	width: 20px;
+	display: block;
+    background: url(/images/gallery/end.png) no-repeat;
+	float: left;
+	margin-left: -1px;
+	border-right-color: #e8e8e8;
+}

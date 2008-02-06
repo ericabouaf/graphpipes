@@ -1,0 +1,43 @@
+body {
+	font: 15px/20px Georgia, "Times New Roman", Times, serif;
+}
+
+h1 {
+	font-size: 18px;
+	color: #128ea9;
+	text-transform: uppercase;
+	background-color: #fff;
+	display: inline-block;
+	padding: 5px 10px;
+	text-shadow: #6ecbfd 0 2px 2px;
+	margin-bottom: 7px;
+}
+
+
+p {
+	color: #4c4c4c;
+	margin-top: 15px;
+	margin-bottom: 7px;
+	text-align: left;
+	display: block;
+	height: auto;
+	background: #fff url(../images/hook.png) no-repeat center top;
+	padding: 50px 10px 10px;
+}
+
+p img {
+	border: 1px solid #b3b3b3;
+	padding: 5px;
+	margin: 10px 10px 10px 0;
+  float: none;
+	display: block;
+}
+
+p strong{
+	color: #128ea9;
+}
+
+p em{
+	color: #128ea9;
+	font-style: italic;
+}

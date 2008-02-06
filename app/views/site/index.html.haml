@@ -1,0 +1,53 @@
+- content_for :page_header do
+  %div#page_header_container
+    %div#all.gallery
+      %div.step{:style => "background: url(../images/gallery/step1.png) no-repeat;"}
+        %h1 A short How to
+        %p 
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+          Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in 
+          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in 
+          culpa qui officia deserunt mollit anim id est laborum.
+      %div.step{:style => "background: url(../images/gallery/step2.png) no-repeat;"}
+        %h1 The semantic web
+        %p 
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+          Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in 
+          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in 
+          culpa qui officia deserunt mollit anim id est laborum.        
+      %div.step{:style => "background: url(../images/gallery/step3.png) no-repeat;"}
+        %h1 Why graphpipes?
+        %p 
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+          Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in 
+          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in 
+          culpa qui officia deserunt mollit anim id est laborum.        
+  %ul.gallery_tabs
+    %li 
+      = link_to_function 'How to', "move_to_step(1)"
+    %li 
+      = link_to_function 'Semantic Web', "move_to_step(2)"    
+    %li
+      = link_to_function 'Why?', "move_to_step(3)"
+    
+    %div.endfix
+    
+- content_for :head do
+  = stylesheet_link_tag 'gallery'
+  = javascript_include_tag 'parts/gallery'
+
+  
+
+%h1 Welcome to graphpipes
+
+%p
+  Lorem ipsum dolor sit amet, <strong>consectetur adipisicing</strong> elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.     
+  Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in  
+  reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. <em>Excepteur sint</em> occaecat cupidatat non proident, sunt 
+  in culpa qui officia deserunt mollit anim id est laborum.
+
+%p
+  Lorem ipsum dolor sit amet, <strong>consectetur adipisicing</strong> elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.     
+  Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in  
+  reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. <em>Excepteur sint</em> occaecat cupidatat non proident, sunt 
+  in culpa qui officia deserunt mollit anim id est laborum.
