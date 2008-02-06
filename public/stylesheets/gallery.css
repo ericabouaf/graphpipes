@@ -37,7 +37,9 @@ div.step>p {
 .step h1{
 	margin: 20px 20px 10px;
 	display: inline-block;
-	width: auto;
+
+	width:300px;
+	
 }
 
 .step img {
