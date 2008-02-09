@@ -1,31 +1,58 @@
-# This controller handles the login/logout function of the site.  
 class SessionsController < ApplicationController
-  # Be sure to include AuthenticationSystem in Application Controller instead
-  include AuthenticatedSystem
 
-  # render new.rhtml
+  layout 'login'
+
   def new
   end
 
   def create
-    self.current_user = User.authenticate(params[:login], params[:password])
+    login_params =  params['session']
+    
+    self.current_user = User.authenticate(login_params[:login], login_params[:password])
+
     if logged_in?
-      if params[:remember_me] == "1"
-        self.current_user.remember_me
-        cookies[:auth_token] = { :value => self.current_user.remember_token , :expires => self.current_user.remember_token_expires_at }
+      save_cookie if params[:remember_me] == "1"      
+     
+      respond_to do |format|
+        format.html do 
+          flash[:notice] = "Logged in successfully"          
+          redirect_back_or_default(user_pipes_path(current_user)) 
+        end
+        format.js { render :update do |page| page.redirect_to user_pipes_path(current_user); end }
       end
-      redirect_back_or_default('/')
-      flash[:notice] = "Logged in successfully"
-    else
-      render :action => 'new'
+    else      
+      error_message = 'That login and password could not be found.'
+      
+      respond_to do |format|
+        format.js { render :json => {
+          :object => "session", 
+          :success => false, 
+          :error_message => error_message } }
+        format.html {
+          flash[:error] = error_message              
+          redirect_to :action => 'new'
+        }
+      end      
+      
     end
   end
 
   def destroy
-    self.current_user.forget_me if logged_in?
-    cookies.delete :auth_token
-    reset_session
+    delete_cookie
     flash[:notice] = "You have been logged out."
     redirect_back_or_default('/')
+  end
+  
+  protected
+  
+  def save_cookie
+    self.current_user.remember_me
+    cookies[:auth_token] = { :value => self.current_user.remember_token , :expires => self.current_user.remember_token_expires_at }    
+  end
+  
+  def delete_cookie
+    self.current_user.forget_me if logged_in?
+    cookies.delete :auth_token
+    reset_session    
   end
 end

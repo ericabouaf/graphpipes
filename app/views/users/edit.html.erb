@@ -1,0 +1,35 @@
+<% content_for :sidebar do %>
+  <h1>Originaldaten</h1>
+  <table class="Contacts">
+       <tr>
+        <%= render :partial => 'user', :locals => {:user => @user} %>
+      </tr>
+    </table>
+<% end %>
+
+<div class="SectionHeader">
+  <h1>Meine Einstellungen</h1>
+  <h3>
+    <%= link_to "Abbrechen und zurück", users_path, :class => 'admin' %>
+
+     <%= link_to "Diesen Benutzer löschen…",  user_path(@user), 
+                                              :method => 'delete', 
+                                              :class => "admin", 
+                                              :confirm => "Wollen Sie den Benutzer \"#{@user.login}?\" wirklich löschen?" %>
+
+  </h3>
+</div>
+
+<%= error_messages_for :user %>
+
+<div id="basic_form">
+
+
+  <% form_for(:user, :url => user_path(@user) , :html => { :method => :put }) do |f| %>
+    <%= render :partial => 'form', :locals => {:f => f}%>
+    <div class="action">
+        <input name="commit" type="submit" value="Änderungen speichern" />
+      </div>
+  <% end %>
+  
+</div>

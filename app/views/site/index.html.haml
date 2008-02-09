@@ -1,3 +1,6 @@
+- content_for :header do
+  = javascript_include_tag 'login/index'
+
 - content_for :page_header do
   %div#page_header_container
     %div#all.gallery
@@ -15,12 +18,12 @@
  
           %strong graphpipes  
           is a proof of concept, developed at 
-          = link_to_function 'University of Koblenz', 'move_to_step(3)'
+          = link_to_function 'University of Koblenz', 'header_gallery.move_to_step(3)'
         %p
           We will be opening this project to the public in the next few weeks.
         %p.button_field
-          = link_button '&#x2192; I want to know more!',  {:action => "header_gallery.move_to_step(2)"}
-          =# link_button '&#x238B; Signup',   {:action => "move_to_step(4)"}
+          = link_button '&#x2192; I want to know more!',  {:id => 'step1_2'}
+          = link_button '&#x2192; Login!', {:id => 'step1_login'}
           
     
       %div.step{:style => "background: url(../images/gallery/step2.png) no-repeat;"}
@@ -34,8 +37,8 @@
           %br          
           = link_to '[Wikipedia]', 'http://en.wikipedia.org/wiki/Semantic_web'
         %p.button_field
-          = link_button '&#x2192; Woah!',  {:action => "header_gallery.move_to_step(3)"}                  
-          = link_button '&#x2190; Hu?',   {:action => "header_gallery.move_to_step(1)"}
+          = link_button '&#x2192; Woah!',  {:id => 'step2_3'}                  
+          = link_button '&#x2190; Hu?',   {:id => 'step2_1'}
     
     
       %div.step{:style => "background: url(../images/gallery/step3.png) no-repeat;"}
@@ -49,8 +52,8 @@
           approaches and methods for the design and maintenance of ontologies, as well as the semantic annotation of documents, 
           multimedia data or web services to enable the semantic search and usage of these resources.
         %p.button_field
-          = link_button '&#x2192; Go on!',  {:action => "header_gallery.move_to_step(4)"}                  
-          = link_button '&#x2190; Hu?',   {:action => "header_gallery.move_to_step(2)"}     
+          = link_button '&#x2192; Go on!', {:id => 'step3_4'}
+          = link_button '&#x2190; Hu?', {:id => 'step3_2'}
           
              
       %div.step
@@ -58,7 +61,9 @@
         %p
           %strong graphpipes
           will be open to public registration in just a few days.
-         
+        %p.button_field
+          = link_button '&#x2192; Sign up!', {:id => 'step4_signup'}        
+          = link_button '&#x2192; Login!', {:id => 'step4_login'}
           
   %ul.gallery_tabs
     %li 
@@ -73,7 +78,11 @@
     %div.endfix
     
 - content_for :head do
-  = stylesheet_link_tag 'gallery'
-  = javascript_include_tag 'parts/gallery'
-
+  -unless logged_in?
+    = stylesheet_link_tag 'gallery'
+    = javascript_include_tag 'parts/gallery'
+    = javascript_include_tag 'site'
+    
+  = javascript_include_tag 'parts/sheet'  
+  
   

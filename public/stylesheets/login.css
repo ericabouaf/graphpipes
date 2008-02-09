@@ -1,0 +1,73 @@
+#container {
+margin-left: auto; 
+	margin-right: auto;
+	text-align: left;		
+	display: block;
+	width: 370px;		
+}
+
+#login_container {
+	margin-left: auto; 
+	margin-right: auto;
+	text-align: left;		
+	display: block;
+	width: 315px;
+	border: 10px solid #fff;
+	background-color: rgba(255,255,255,0.8);
+	padding: 20px 15px 48px 20px;
+}
+
+#header_image {
+	width: 244px;
+		text-align: left;
+	height: 80px;
+	display: block;
+	background: url(../images/logo_short.png) no-repeat;
+	margin-bottom: 15px;
+	margin-left: 60px;
+}
+
+#header_image a{
+	width: 244px;
+	height: 80px;
+	display: block;
+}
+
+#header_image a i {
+	visibility: hidden;
+}
+
+label {
+	font: 14px/22px Georgia, "Times New Roman", Times, serif;
+	color: #4c4c4c;
+	float: none;
+	padding: 0;
+	margin: 0 0 12px 2px;
+	clear: none;
+}
+
+.error {
+	width: 285px;	
+	color: #fff;
+	margin-bottom: 20px;
+	padding: 5px 10px;
+	background-image: url(../images/bg.jpg);
+	border: 5px solid #fff;
+}
+
+#login_container input {
+	font: 16px/18px Georgia, "Times New Roman", Times, serif;
+	color: #4c4c4c;
+	margin-bottom: 10px;
+	float: none;
+	margin-top: 0;
+	width: 300px;
+	display: block;
+	clear: none;
+}
+
+#login_container div.buttons {
+	float: right;
+	padding-top: 5px;
+	padding-right: 5px;
+}

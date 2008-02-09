@@ -4,19 +4,34 @@
   %head
     %title graphpipes
     %meta{'http-equiv' => 'Content-Type', :content => 'text/html'}    
+    
     = stylesheet_link_tag 'site'
-    = stylesheet_link_tag 'buttons'    
-    = javascript_include_tag :defaults
-    = javascript_include_tag 'site'
+    = stylesheet_link_tag 'buttons'
+    = stylesheet_link_tag 'sheet'      
+    
+    = javascript_include_tag :defaults 
+ 
+    
     = yield :head
-  %body
+  %body#body
     #container
       #page
         #header
           %a{:href => '/'}
             %i 'home'
-            
-        = yield :page_header
+        
+        -if logged_in?
+          %p#toolbar
+            Hi 
+            = current_user.login
+            %span.note 
+              = link_to '{My Pipes}', user_pipes_path(current_user)
+              |            
+              = link_to '{My Account}', user_path(current_user)
+              |
+              = link_to '{Logout}', logout_path
+        -else
+          = yield :page_header
         
         = yield
       
@@ -26,3 +41,5 @@
           %br
           = "Universit&auml;t Koblenz |"
           = "#{link_to 'ISWeb - Research Group Staab', 'http://isweb.uni-koblenz.de'}"  
+
+  = render :partial => 'parts/sheets'

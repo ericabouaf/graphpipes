@@ -1,17 +1,30 @@
 class UsersController < ApplicationController
 
-  before_filter :login_required
+  before_filter :login_required, :except => ['activate', 'new', 'create']
 
-  # render new.rhtml
+  layout 'application'
+  
+    # render new.rhtml
   def new
+    render :action => 'new', :layout => 'login'
   end
 
+  def show
+    @user = User.find_by_id(params[:id])
+  end
+  
+  def edit
+    @user = User.find_by_id(params[:id])
+  end
+
+  def update
+    @user = User.update(params[:id])
+    
+  end
+  
   def create
     cookies.delete :auth_token
-    # protects against session fixation attacks, wreaks havoc with 
-    # request forgery protection.
-    # uncomment at your own risk
-    # reset_session
+
     @user = User.new(params[:user])
     @user.save
     if @user.errors.empty?
@@ -19,7 +32,7 @@ class UsersController < ApplicationController
       redirect_back_or_default('/')
       flash[:notice] = "Thanks for signing up!"
     else
-      render :action => 'new'
+      render :action => 'new', :layout => 'login'
     end
   end
 
@@ -32,4 +45,13 @@ class UsersController < ApplicationController
     redirect_back_or_default('/')
   end
 
+  protected
+  
+  
+  def authorized
+    @user = User.find_by_id(params[:id])    
+    current_user == @user 
+  end
+     
+    
 end

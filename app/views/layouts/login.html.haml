@@ -1,0 +1,32 @@
+!!!
+
+%html
+  %head
+    %title graphpipes login
+    %meta{'http-equiv' => 'Content-Type', :content => 'text/html'}   
+    = stylesheet_link_tag 'application'
+    = stylesheet_link_tag 'font' 
+    = stylesheet_link_tag 'buttons'        
+    = stylesheet_link_tag 'login'
+    
+    = javascript_include_tag :defaults
+    = javascript_include_tag 'parts/button'
+    = javascript_include_tag 'login'     
+    
+    = yield :header 
+    
+  %body
+    #container
+      #header_image
+        %a{:href => '/'}
+          %i 'home'
+       
+      #login_container
+        -unless flash[:error].blank?
+          %div.error
+            = flash[:error] 
+          
+        = yield
+      
+      
+      

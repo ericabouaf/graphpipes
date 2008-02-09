@@ -4,7 +4,6 @@ Gallery = Class.create({
   
   initialize : function(){
     var me = this
-    console.log('init')
     
     this.tabs = this.find_gallery_tabs()
     this.activate_tab(this.tabs[0])
@@ -37,29 +36,6 @@ Gallery = Class.create({
   
 })
 
-// var move_to_step = function(id) {
-//   var tabs = find_gallery_tabs()
-//   activate_tab(tabs[id - 1])    
-//   
-//   var width = 975
-//   var position = id * width - width
-//   new Effect.Move ('all',{ x: -position, y: 0, mode: 'absolute'}); 
-//   return false;
-// }
-
-// var activate_tab = function(tab) {
-//   var tabs = find_gallery_tabs()
-//   tabs.each(function(b) { b.removeClassName('current') })
-//   tab.addClassName('current')
-// }
-
-// var find_gallery_tabs = function() {
-//   return $$('ul.gallery_tabs li a')
-// }
-
-Event.observe(window, 'dom:loaded', function() { 
-  header_gallery = new Gallery()
-})
 
 
 

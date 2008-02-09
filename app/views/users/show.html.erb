@@ -1,0 +1,22 @@
+
+  <h1>Meine Einstellungen</h1>
+
+    <%= link_button "Abbrechen und zurück", {:url => site_path} %>
+
+
+
+<%= error_messages_for :user %>
+
+<p>
+<div id="basic_form">
+
+
+  <% form_for(:user, :url => user_path(@user) , :html => { :method => :put }) do |f| %>
+    <%= render :partial => 'form', :locals => {:f => f}%>
+    <div class="action">
+        <input name="commit" type="submit" value="Änderungen speichern" />
+      </div>
+  <% end %>
+  
+</div>
+</p>

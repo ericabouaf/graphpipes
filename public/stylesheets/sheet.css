@@ -1,0 +1,137 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 99999;
+  height: 100%;
+  display: block;
+  text-align: left;
+  visibility: visible; 
+  overflow: hidden;
+  background-color: transparent;
+}
+
+div.sheet {
+	visibility: hidden;
+	display: block;
+}
+
+.overlay-content {
+  	border: 0;
+  	width: 418px;
+  	color: #333;
+	z-index: 1;
+	margin: 0 auto;
+	position: relative;
+	display: block;
+}
+
+.login-form {
+  background: transparent url(/images/sheet/bg.png) repeat-y left;	
+  padding: 0 7px 10px 6px;
+	height: auto;
+}
+
+.login-form .error_messages {
+	
+}
+
+.sheet_header {
+	background: url(/images/sheet/header.png) no-repeat 0 bottom;
+	padding-left: 16px;
+}
+
+.login-form h2,
+.sheet_header h5 {
+  margin-right: 8px;
+  text-shadow: 2px 2px #fff;
+  padding: 10px;
+	color: #0278bb;
+}
+
+
+.login-form  {
+	height: 110px;
+	padding: 10px 7px 20px 6px;
+}
+
+div.sheet p label {
+  display: inline-block;
+  margin-top: 5px;
+  text-shadow: 2px 2px #fff;
+	font-size: 12px;
+	font-weight: bold;
+	padding: 6px 0 5px;
+}
+
+.login-form > p {
+  padding: 0px 20px;
+}
+
+.login-form > p label {
+	float: none;
+	display: inline-block;
+	clear: left;
+	font: 14px Georgia, "Times New Roman", Times, serif;
+	color: #4c4c4c;
+}
+
+.login-form > p input {
+	float: none;
+	color: #4c4c4c;
+	display: inline-block;
+	clear: left;
+	width: 315px;
+	font: normal 18px/26px Georgia, "Times New Roman", Times, serif;
+	margin-bottom: 10px;
+}
+
+.login-form textarea {
+  width: 99%;
+  border: 1px solid #ccc;
+}
+
+.login-form form {
+  padding: 20px;
+}
+
+.login-form  fieldset {
+  border: none;
+}
+
+/*.login-form input.big, 
+.login-form select.big {
+  font-size: 120%;
+  width: 95%;
+}*/
+
+.sheet_buttons {
+	background-image: none;
+	background-color: transparent;
+	border-style: none;
+	
+	margin: 0;
+	padding: 6px 25px 15px 20px;
+	position: relative;
+	top: 5px;
+	float: right;
+	display: block;
+	height: 20px;
+}
+
+.sheet_footer {
+	background: url(/images/sheet/bottom.png) no-repeat 0 top;
+	height: 100px;
+	display: block;
+	overflow: visible;
+}
+
+.sheet_footer img {
+	margin-top: 12px;
+	margin-left: 20px;
+}
+
+h5.error {
+	color: #f80a12;
+}

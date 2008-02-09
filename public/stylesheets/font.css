@@ -17,7 +17,8 @@ h1 {
 }
 
 
-p {
+#page > p,
+div.step p {
 	color: #4c4c4c;
 	margin-top: 15px;
 	margin-bottom: 7px;
@@ -27,9 +28,10 @@ p {
 	background: #fff;
 	padding: 10px 10px 10px;
 	border-left: 2px solid #128ea9;
+	width: 938px;
 }
 
-p img {
+p img{
 	border: 1px solid #b3b3b3;
 	padding: 5px;
 	margin: 10px 10px 10px 0;
@@ -37,7 +39,7 @@ p img {
 	display: block;
 }
 
-p strong{
+p strong,{
 	color: #128ea9;
 }
 
@@ -62,5 +64,10 @@ a:hover {
 	color: #2ad2fd;	
 }
 
+#toolbar span.note {
+	font-size: 12px;
+	text-align: right;
+	float: right;
+}
 
 

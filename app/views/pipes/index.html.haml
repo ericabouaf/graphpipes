@@ -1,0 +1,15 @@
+%h1 
+  Your Pipes 
+  = params[:user_id]
+
+- unless @pipes.blank?
+  - @pipes.each do |pipe| 
+    %p
+      = h pipe.title
+      = h pipe.user_id 
+-else
+  %p 
+    You did not create a pipe yet. 
+    = link_to "Do you want to do this now?", new_user_pipe_path(current_user)
+    
+      

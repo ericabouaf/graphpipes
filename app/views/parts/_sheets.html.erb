@@ -1,0 +1,45 @@
+<div style="visibility: collapse; display:none;">
+  <div id="notification_sheet" class="sheet">
+  	<div class="sheet_header message">
+  		<h5>Sorry. This feature is not implemented yet!</h5>
+  	</div>
+  	<div class="sheet_footer">
+  		<p class="btns">
+  			<a class="button" href="#" onclick="ok_sheet.hide(); return false;"><span>OK!</span></a>
+  		</p>
+  	</div>			
+  </div>
+
+
+  <div id="login_sheet" class="sheet">
+  	<div class="sheet_header">
+  		<h5>Login with your email address and passwort:</h5>
+  	</div>
+	
+	    <% form_for :session, :url => sessions_path, :html => {:id => 'sheet_login_form'} do |f|-%>
+      <!-- <form id='login-form'> -->
+
+        <div class="login-form">  
+            <p><label for="login">Login</label><br/>
+            <%= text_field_tag 'login', '', {:class => 'big'} %></p>
+            <p><label for="password">Password</label><br/>
+            <%= password_field_tag 'password', '', {:class => 'big'} %></p>
+        </div>          
+
+      <% end %>
+        
+
+
+	
+
+  		<div class="sheet_footer">
+  			<p class="sheet_buttons">
+  				<a id="loginsheet_cancel" class="button" href="#"><span>Cancel</span></a>
+  				<a id="loginsheet_login" class="button" href="#"><span>Login</span></a>					
+  			</p>
+  		  <img src="/images/spinner.gif" style="display:none;" id="login-spinner"/>
+  		</div>
+		
+  	</form>
+  </div>
+</div>
