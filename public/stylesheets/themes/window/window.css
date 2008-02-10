@@ -1,0 +1,93 @@
+._ui-window_safari2_fix_ {                       
+  border: 1px solid transparent; 
+}
+
+/* Sizer/Move div */     
+.ui-window .draggable { 
+  cursor:move !important;
+}
+
+.ui-window .se_sizer, .ui-window .sw_sizer,
+.ui-window .ne_sizer, .ui-window .nw_sizer,
+.ui-window .n_sizer,  .ui-window .s_sizer,
+.ui-window .e_sizer,  .ui-window .w_sizer {
+  line-height: 1px;
+  font-size:1px;
+  position: absolute;
+}
+.ui-window .se_sizer { 
+  cursor: se-resize;
+  width:5px;
+  height:5px;
+  z-index: 100;
+  bottom:0;
+  right:0;
+}          
+    
+.ui-window .sw_sizer { 
+  cursor: sw-resize;
+  width:5px;
+  height:5px;
+  z-index: 100;
+  bottom:0;
+  left:0;  
+}
+
+.ui-window .nw_sizer { 
+  cursor: nw-resize;
+  width:5px;
+  height:5px;
+  z-index: 100;
+  top:0;
+  left:0;  
+}
+
+.ui-window .ne_sizer { 
+  cursor: ne-resize;
+  width:5px;
+  height:5px;
+  z-index: 100;
+  top:0;
+  right:0;  
+}
+            
+.ui-window .n_sizer { 
+  cursor: n-resize;
+  height:5px;
+  width:100%;
+  z-index: 90;
+  top:0;
+  left:0;  
+}
+ 
+.ui-window .s_sizer { 
+  cursor: s-resize;
+  height:5px;
+  width:100%;
+  z-index: 90;
+  bottom:0;
+  left:0;  
+}
+
+.ui-window .e_sizer { 
+  cursor: e-resize;
+  width:5px;
+  height:100%;
+  z-index: 90;
+  top:0;
+  right:0;  
+}
+
+.ui-window .w_sizer { 
+  cursor: w-resize;
+  width:5px;
+  height:100%;
+  z-index: 90;
+  top:0;
+  left:0;  
+}
+
+.ui-window .content {
+  overflow: auto; 
+  position: relative;
+}

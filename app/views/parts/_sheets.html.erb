@@ -15,8 +15,7 @@
   	<div class="sheet_header">
   		<h5>Login with your email address and passwort:</h5>
   	</div>
-	
-	    <% form_for :session, :url => sessions_path, :html => {:id => 'sheet_login_form'} do |f|-%>
+      <% form_for :session, :url => sessions_path, :html => {:id => 'login-form'} do |f|-%>	
       <!-- <form id='login-form'> -->
 
         <div class="login-form">  
@@ -27,10 +26,6 @@
         </div>          
 
       <% end %>
-        
-
-
-	
 
   		<div class="sheet_footer">
   			<p class="sheet_buttons">

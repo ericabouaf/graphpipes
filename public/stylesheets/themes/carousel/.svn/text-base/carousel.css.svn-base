@@ -1,0 +1,28 @@
+.ui_horizontal_carousel {
+  margin: 0;
+  padding:0;
+  width: 100000px;
+  position: relative;
+  top: 0;
+  left: 0;
+}
+
+.ui_horizontal_carousel li {
+  list-style:none;   
+  float:left;
+}
+
+.ui_vertical_carousel {
+  margin: 0;
+  padding:0;
+  height: 100000px;
+  position: relative;
+  top: 0;
+  left: 0;
+}
+
+.ui_vertical_carousel li {
+  list-style:none;   
+  float:left;
+}
+

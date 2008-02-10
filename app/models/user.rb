@@ -1,5 +1,7 @@
 require 'digest/sha1'
 class User < ActiveRecord::Base
+  has_many :pipes
+  
   # Virtual attribute for the unencrypted password
   attr_accessor :password
 
@@ -80,6 +82,10 @@ class User < ActiveRecord::Base
     save(false)
   end
 
+  def to_param
+    "#{id}-#{login.downcase.gsub(/[^[:alnum:]]/,'-')}".gsub(/-{2,}/,'-')
+  end
+
   protected
     # before filter 
     def encrypt_password
@@ -97,4 +103,5 @@ class User < ActiveRecord::Base
       self.activation_code = Digest::SHA1.hexdigest( Time.now.to_s.split(//).sort_by {rand}.join )
     end
     
+   
 end

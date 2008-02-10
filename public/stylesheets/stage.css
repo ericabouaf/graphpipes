@@ -1,0 +1,112 @@
+@import url("grid.css");
+@import url("toolbar.css");
+@import url("breadcrumbs.css");
+@import url("sheet.css");
+@import url("buttons.css");
+@import url("patch.css");
+@import url("hud.css");
+
+#content {
+  color: #000;
+  display: block;
+  border: 1px solid #ececec;
+  font: 14px/20px Georgia, "Times New Roman", Times, serif;
+  background: white url(../images/content_bg.png) repeat-x;
+  padding: 40px 40px 100px;
+	margin: 20px 0 10px 20px;
+	float: left;
+	width: 50%;
+	min-width:400px;
+}
+
+#footer {
+  color: #000;
+  display: block;
+  font: italic 10px/20px Georgia, "Times New Roman", Times, serif;
+	float: left;
+	width: 50%;
+	margin: 5px 0 5px 20px;
+	padding: 5px 40px 5px 10px;
+	clear: left;
+}
+
+#sidebar {
+  font: 12px/18px Georgia, "Times New Roman", Times, serif;
+
+  border: 1px solid #ececec;	
+  width: 180px;
+  color: #000;
+	display: block;
+  background: white url(../images/content_bg.png) repeat-x;
+  padding: 40px 20px 100px;
+	float: left;
+	margin-top: 20px;
+	margin-left: 20px;
+	margin-right: 5px;
+	opacity: 1;
+	clear: none;
+}
+
+
+#content h1 {
+  text-shadow: #fff 2px 2px 2px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+	font: bold 16px "Helvetica Neue", Helvetica, Arial, Geneva, sans-serif, "HelveticaNeue Light";
+}
+
+#content p {
+	text-shadow: 2px 2px #fff;
+  margin-bottom: 20px;
+
+}
+
+#content img {
+	margin-right: 20px;
+  position: relative;
+  float: left;
+	margin-bottom: 10px;
+}
+
+#content img.feature {
+	clear: left;
+	display: block;
+	float: none;
+	margin-bottom: 40px;
+}
+
+#sidebar h1 {
+
+  text-shadow: #fff 2px 2px 2px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+	font: bold 16px "Helvetica Neue", Helvetica, Arial, Geneva, sans-serif, "HelveticaNeue Light";
+}
+
+#sidebar p {
+  text-shadow: 2px 2px #fff;
+  margin-bottom: 20px;
+}
+
+#sidebar .icon {
+  position: relative;
+  float: left;
+}
+
+
+#tom {
+	z-index: 102;
+}
+
+a,
+a:visited {
+	text-decoration: none;
+	color: #0d77c0;
+	font-weight: normal;
+	font-style: normal;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+

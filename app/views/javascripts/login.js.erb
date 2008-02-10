@@ -1,0 +1,7 @@
+// javascript for session login /login
+
+Event.observe(window, 'dom:loaded', function(){
+  $('login_button').observe('click', function() {
+    $('login-form').submit()
+  })
+})

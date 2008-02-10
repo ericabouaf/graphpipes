@@ -1,0 +1,75 @@
+div#crumbs {
+	overflow: visible;
+	height: 33px;
+	font-size: 12px;
+	text-decoration: none;
+	float: left;
+	clear: none;
+}
+
+div#crumbs_endfix {
+	height: 33px;
+	background-color: #7bff5a;
+	width: 20px;
+	display: block;
+	float: left;
+  background: url(../images/crumbs-end.png) no-repeat;	
+}
+
+div#crumbs ul  {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  line-height: 100%;
+  background: url(../images/crumbs-start.png) no-repeat;
+  padding-left: 13px;
+	height: 33px;
+}
+
+#crumbs li img{
+	margin-left: -4px;
+	border:0;
+}
+
+#crumbs li {
+  display: block;
+  margin: 0;
+  background: url(../images/crumb-bg.png) repeat-x;
+  float: left;
+	height: 33px;
+	padding-right: 0;
+	padding-bottom: 0;
+	padding-left: 0;
+}
+
+#crumbs li a {
+  text-shadow: 2px 2px #fff;
+  background: url(../images/crumb-divide.png) top right no-repeat;
+  display: block;
+  color: #555;
+  font-size: 92%;
+  font-weight: bold;
+	text-decoration: none;
+	height: 33px;
+	padding: 10px 15px 7px 5px;
+}
+
+#crumbs li a:hover {
+  color: #000;
+}
+
+li.crumb-divide-last a {
+  background: url(../images/crumb-divide.png) top right no-repeat !important;
+	padding-top: 10px;
+	display: block;
+}
+
+#crumbs li#current {
+  color: #0278bb;
+ font-size: 92%;
+ float: left;
+ text-shadow: 2px 2px #fff;
+ background: url(../images/crumb-bg.png) repeat-x;
+ padding: 10px 10px 7px;
+ font-weight: bold;
+}

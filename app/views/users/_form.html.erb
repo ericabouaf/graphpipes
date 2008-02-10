@@ -1,22 +1,20 @@
 
-<p class="blockintro">Dein Name und deine Emailadresse wird bei Artikeln als Autor und Kontakt verwendet. Deinen Loginnamen benötigst du, im dich in Kontrollrausch
-  einzuloggen.</p>
 
- <div class="block">
-      <dl>
-        <dt class="required"><label for="login">Login:</label></dt>
-        <dd><%= f.text_field :login %></dd>
+<p>
+      
+        <label for="login">Login:</label><br/>
+        <%= f.text_field :login %><br/>
 
-        <dt class="required"><label for="email">Email:</label></dt>
-        <dd><%= f.text_field :email %></dd>
+        <label for="email">Email:</label><br/>
+        <%= f.text_field :email %><br/>
           
-        <dt class="required"><label for="password">Password:</label></dt>
-        <dd><%= f.password_field :password %></dd>
+        <label for="password">Password:</label><br/>
+        <%= f.password_field :password %> <br/>
         
-        <dt class="required"><label for="password">Password<br />(bestätigen):</label></dt>
-        <dd><%= f.password_field :password_confirmation %></dd>
+        <label for="password">Password<br />(bestätigen):</label><br/>
+        <%= f.password_field :password_confirmation %><br/>
       </dl>
-    </div>
+</p>
 
 
     

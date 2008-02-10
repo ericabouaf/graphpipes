@@ -1,0 +1,118 @@
+
+
+/**
+ * Wires :
+ */
+
+canvas.WireIt-Wire {
+   position: absolute;
+   border: 0;
+   z-index: 0;
+}
+
+canvas.WireIt-Wire-editing {
+   z-index: 10;
+	border-style: none;
+	border-width: 0;
+}
+
+div.WireIt-Wire-scissors {
+   border: 0;
+   position: absolute;
+   z-index: 5;
+   width: 16px;
+   height: 16px;
+   cursor: pointer;
+	background: transparent url(../images/cut.png) no-repeat;
+}
+
+/**
+ * Terminals :
+ */
+
+div.WireIt-Terminal {
+   width: 24px;
+   height: 19px;
+   cursor: pointer;   
+   background-image: url(../images/term.png);
+   position: absolute;
+}
+
+div.WireIt-Terminal-connected {
+   width: 24px;
+   height: 19px;
+	background: url(../images/term.png) no-repeat 0 -38px;
+}
+
+div.WireIt-Terminal-dropinvite {
+	background: url(../images/term.png) no-repeat 0 -19px;
+}
+
+/**
+ * Containers
+ */
+div.WireIt-Container {
+   position: absolute;
+ 	z-index: 5;
+ 	opacity: 0.9;
+ 	border: 1px solid #222;
+ 	background-color: transparent;
+}
+
+div.WireIt-Container textarea{
+	font: 11px "Helvetica Neue", Helvetica, Arial, Geneva, sans-serif, "HelveticaNeue Light";
+	text-align: left;
+	background-color: black;
+	opacity: 0.5;
+	color: white;
+	overflow: auto;
+	width: 100%;
+}
+/* My Comment */
+
+div.WireIt-Container-ddhandle {
+   width: 100%;
+ 	cursor: move;
+	opacity: 1;
+	background: url(themes/window/black_hud/top.png) repeat-x 0 -76px;
+	height: 19px;
+	border-bottom: 1px solid #414141;
+} 
+
+div.WireIt-Container-resizehandle {
+   position: absolute;
+   bottom: 0;
+   right: 0;
+   width: 10px;
+   height: 10px;
+   cursor: se-resize;
+}
+
+div.WireIt-Container-closebutton {
+   background-image: url(../images/close_normal.png);	
+   height: 15px;
+   position: absolute;
+   top: 3px;
+   right: 3px;
+   cursor: pointer;
+	width: 15px;
+}
+
+div.WireIt-Container-closebutton:hover {
+   background-image: url(../images/cut.png);	
+ }
+ 
+/**
+ * Layers
+ */
+div.WireIt-Layer {
+   width: 100%;
+   height: 100%;
+   top: 0;
+   position: absolute;
+	margin-bottom: auto;
+	margin-top: auto;
+	background-image: url(../images/bg.jpg);
+	background-color: silver;
+	overflow: hidden;
+}

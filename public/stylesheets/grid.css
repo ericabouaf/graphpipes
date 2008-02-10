@@ -1,0 +1,70 @@
+* {
+	margin:0;
+	padding:0;
+}
+
+.clearfix {
+    display: inline-block;
+}
+
+
+
+body {
+	background: url(/images/metal_bg.png) repeat-x fixed;
+	z-index: 0;
+	font-family: "Lucida Grande", Lucida, Verdana, sans-serif;
+	overflow: visible;
+	width: 100%;
+	height: 100%;
+}
+
+
+#main_stage {	
+	width: 100%;
+	display: block;
+	float: left;
+	clear: none;
+	position: absolute;
+	padding-bottom: 10px;
+	z-index: 0;
+	overflow: auto;
+	top: 129px;
+}
+
+
+.right {
+	margin-left: 1;	
+	float: right;
+}
+
+.left {
+	margin-right: 1;	
+	float: left;
+}
+
+.prototip { position: absolute; }
+.prototip .effectWrapper { position: relative; }
+.prototip .tooltip { position: relative; 
+}
+
+.prototip .graphpipes .content {
+	font: normal 11px "Lucida Grande", Lucida, Verdana, sans-serif;	
+    background: url(/images/tooltip_span.png) no-repeat scroll right 0;
+    color: #fff;
+    display: block;
+    float: left;
+    height: 27px;
+    padding-right: 18px; 
+     text-decoration: none;
+	margin-right: 6px;
+	text-decoration: none;
+}
+
+.prototip .graphpipes .content span {
+    background: transparent url(/images/tooltip_a.png) no-repeat scroll left 0;
+    display: block;
+    line-height: 14px;
+	height: 19px;
+	padding: 1px 0 6px 10px;
+}
+

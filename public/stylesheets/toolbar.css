@@ -1,0 +1,184 @@
+#toolbar {
+	background: url(../images/header_bg.png) repeat-x 0 0;
+	left: 0;
+	display: block;
+	float: left;
+	clear: left;
+	width: 100%;
+	height: 131px;
+	z-index: 100;
+	position: fixed;
+	top: 0;
+}
+
+#toolbar_info {
+	clear: left;
+	position: fixed;
+	left: 0;
+	padding-top: 10px;
+	background: url(../images/metal_bg.png) repeat 0 -75px;
+	top: 77px;
+	width: 100%;
+	padding-left: 20px;
+	min-width: 600px;
+	display: block;
+	height: 45px;
+	z-index: 101;
+	text-decoration: none;
+}
+
+#toolbar_info a.button{
+	margin-top: 4px;
+	float: right;
+	margin-right: 40px;
+}
+
+#toolbar_icons {
+	color: #000;
+	display: block;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+#toolbar_icons li{
+	display: block;
+	width: auto;
+	list-style-type: none;
+}
+
+#toolbar_icons li.radio{
+	height: 19px;
+	font-size: 10px;
+	text-decoration: none;
+	font-weight: normal;
+	font-style: normal;
+	position: relative;
+	margin-right: 8px;
+	top: 14px;
+	margin-left: 8px;
+	overflow: hidden;
+}
+
+#toolbar_icons li.icon {
+		height: 45px;
+	font-size: 10px;
+	text-decoration: none;
+	font-weight: normal;
+	font-style: normal;
+	position: relative;
+	top: 7px;
+	padding-top: 0;
+	text-align: center;
+	overflow: hidden;
+	display: block;
+	background-position: center 0;
+	background-repeat: no-repeat;
+	width: 64px;
+
+	
+}
+
+#toolbar_icons a {
+	text-decoration: none;
+	color: #000;	
+	text-shadow: #d5d5d5 2px 2px 0;
+	line-height: 0;
+	display: block;
+	padding-top: 36px;
+	 outline: none;
+	height: 40px;
+}
+
+#toolbar_icons a:hover {
+	color: #000;	
+}
+
+#toolbar_icons .info {
+	background: url(../images/toolbar_inspector.png) no-repeat 10px 0;
+}
+
+/* Icons */
+
+
+#toolbar_icons .preferences {
+	background: url(../images/toolbar_preferences.png) no-repeat center center;
+}
+
+#toolbar_icons .preferences:hover {
+	background: url(../images/toolbar_preferences.png) no-repeat center -43px;
+}
+
+#toolbar_icons .preferences:active {
+	background: url(../images/toolbar_preferences.png) no-repeat center -86px;
+}
+
+/* --- */
+
+#toolbar_icons .new_pipe {
+	background: url(../images/toolbar_new_pipe.png) no-repeat center center;
+}
+
+#toolbar_icons .new_pipe:hover {
+	background: url(../images/toolbar_new_pipe.png) no-repeat center -43px;
+}
+
+#toolbar_icons .new_pipe:active {
+	background: url(../images/toolbar_new_pipe.png) no-repeat center -86px;
+}
+
+/* --- */
+
+#toolbar_icons .logout {
+	background: url(../images/toolbar_logout.png) no-repeat center center;
+}
+
+#toolbar_icons .logout:hover {
+	background: url(../images/toolbar_logout.png) no-repeat center -43px;
+}
+
+#toolbar_icons .logout:active {
+	background: url(../images/toolbar_logout.png) no-repeat center -86px;
+}
+
+/* --- */
+
+#toolbar_icons .dashboard {
+	background: url(../images/toolbar_dashboard.png) no-repeat center center;
+}
+
+#toolbar_icons .dashboard:hover {
+	background: url(../images/toolbar_dashboard.png) no-repeat center -43px;
+}
+
+#toolbar_icons .dashboard:active {
+	background: url(../images/toolbar_dashboard.png) no-repeat center -86px;
+}
+
+/* --- */
+
+#toolbar_icons .library {
+	background: url(../images/toolbar_library.png) no-repeat center center;
+}
+
+#toolbar_icons .library:hover {
+	background: url(../images/toolbar_library.png) no-repeat center -43px;
+}
+
+#toolbar_icons .library:active {
+	background: url(../images/toolbar_library.png) no-repeat center -86px;
+}
+/* Spacer */
+
+#toolbar_icons .spacer {
+	background: url(../images/toolbar_spacer.png) no-repeat center 0;
+	width: 1px;
+	margin-left: 2px;
+	display: block;
+	height: 43px;
+	margin-top: 7px;
+	margin-right: 2px;
+}
+
+#toolbar_icons .spacer i {
+	visibility: hidden;
+}

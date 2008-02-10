@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
 
-  before_filter :login_required, :except => ['activate', 'new', 'create']
+  before_filter :login_required
 
-  layout 'application'
+  layout 'site'
   
     # render new.rhtml
   def new
@@ -18,8 +18,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    @user = User.update(params[:id])
-    
+    redirect_to user_path(current_user)
   end
   
   def create
@@ -45,13 +44,14 @@ class UsersController < ApplicationController
     redirect_back_or_default('/')
   end
 
-  protected
+
   
   
-  def authorized
-    @user = User.find_by_id(params[:id])    
-    current_user == @user 
-  end
+  # def authorized
+  #   @user = User.find_by_id(params[:id])    
+  #   current_user == @user 
+  #   false
+  # end
      
     
 end

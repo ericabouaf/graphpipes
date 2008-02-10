@@ -1,0 +1,146 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+	"http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+	<head>
+		<title>graphpipes css sandbox</title>	
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		
+		<link rel="stylesheet" href="/stylesheets/stage.css" type="text/css" media="screen" title="application" charset="utf-8">
+		 		
+	  <link href="/stylesheets/themes/window/window.css" rel="stylesheet" type="text/css"> 		
+ 		<link href="/stylesheets/themes/window/black_hud.css" rel="stylesheet" type="text/css">
+				
+    <%= javascript_include_tag :defaults %>
+
+    <script src="/javascripts/prototip.js" type="text/javascript" charset="utf-8"></script>
+
+		<script src="/javascripts/prototype-ui/prototype-ui.js" type="text/javascript" charset="utf-8"></script>				
+		<script src="/javascripts/prototype-ui/window.js" type="text/javascript"></script>
+
+		<script src="/javascripts/sheet.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/javascripts/patch.js" type="text/javascript" charset="utf-8"></script>
+		
+		
+		<!-- YUI -->
+    <link rel="stylesheet" type="text/css" href="/stylesheets/yui/fonts/fonts-min.css" /> 
+    <link rel="stylesheet" type="text/css" href="/stylesheets/yui/reset/reset-min.css" />
+    <script type="text/javascript" src="/javascripts/yui/yahoo-dom-event/yahoo-dom-event.js"></script>
+    <script type="text/javascript" src="/javascripts/yui/dragdrop/dragdrop-min.js"></script>
+
+    <!-- WireIt -->
+    <script type="text/javascript" src="/javascripts/build/wireit.js"></script>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/WireIt.css" />
+
+    <!-- jsBox -->
+    <script type="text/javascript" src="/javascripts/jsBox.js"></script>
+		
+		
+    <!-- APPLICATION -->
+		<script src="/javascripts/stage.js" type="text/javascript" charset="utf-8"></script>
+
+	</head>
+	
+	<body id="body">
+		
+		<div id="container">
+			
+		<div id="toolbar">
+			<ul id="toolbar_icons">
+				
+				<li class="icon dashboard left help" tooltip="Show your personal dashboard">
+				  <%= link_to 'Dashboard', pipes_path %></li>		
+        <li class="spacer left"><i>|</i></li>	
+				
+				<li class="icon new_pipe left" tooltip="Create a new pipe">
+				  <%= link_to 'New Pipe', new_pipe_path  %></li>		
+								
+				<li class="icon logout right" tooltip="Leave graphpipes">
+				  <%= link_to 'Logout', logout_path %></li>		
+        <li class="spacer right"><i>|</i></li>	
+				<li class="icon preferences right" tooltip="Edit your personal settings">
+				  <%= link_to 'My Account', user_path(current_user) %></li>
+				<li class="icon library right" tooltip="Toogle the library's visibility"><a href="#" onclick="toogle_library_window();">Library</a></li>
+			</ul>
+		</div>
+		
+		<div id="toolbar_info">
+
+			<div id="crumbs" >
+				<ul class="clearfix">
+					<li>
+						<a href="/pipes" tooltip="Home">
+							<img src="/images/home.png" width="12" height="14">
+						</a>
+					</li>
+					<li class="crumb-divide-last">
+					  <%= link_to 'Dashboard', user_pipes_path(current_user), {:tooltip => 'Dashboard'} %>
+					</li>
+					<li id="current">
+						Welcome
+					</li>
+				</ul>
+			</div>
+			<div id="crumbs_endfix"> </div>			
+			<a class="button right help" href="#" onclick="jsBox.run(); return false;" tooltip="Ready! Set! Go!"><span>Run Pipe</span></a>
+		</div>
+		
+		<div id="main_stage">
+
+		</div>
+	
+
+	
+		<div id="dummy_sheet" class="sheet">
+			<div class="sheet_header message">
+				<h5>Sorry. This feature is not implemented yet!</h5>
+			</div>
+			<div class="sheet_footer">
+				<p class="btns">
+					<a class="button" href="#" onclick="ok_sheet.hide(); return false;"><span>OK!</span></a>
+				</p>
+			</div>			
+		</div>
+		
+		<div id="login_sheet" class="sheet">
+			<div class="sheet_header">
+				<h5>Login with your email address and passwort:</h5>
+			</div>
+			
+			<form action="/login" id="login-form" method="post">
+				
+				<div class="login-form">              
+					<!-- <img src="images/graphpipes_icon.png" width="111" height="110" alt="Graphpipes Icon" id='overlay-icon'> -->
+					<p><label for="login">Login:</label><input class="big" id="login" name="login" type="text" /></p>
+					<p><label for="password">Password:</label><input class="big" id="password" name="password" type="password" /></p>						
+				</div>
+
+				<div class="sheet_footer">
+					<p class="btns">
+						<a class="button" href="#" onclick="login_sheet.hide(); return false;"><span>Cancel</span></a>
+						<a class="button" href="#" onclick="login_sheet.hide(); return false;"><span>Login</span></a>					
+					</p>
+				</div>
+				
+			</form>
+		</div>
+		
+			<div id="tools" style="display:none">
+				<ul id="test_ul">
+					<li class="header" id="test_li_0">Operators</li>
+					<li class="test_button" id="test_li_1">Regex</li>
+					<li class="test_button" id="test_li_2">Union</li>
+					<li class="test_button" id="test_li_3">Join</li>
+					<li class="test_button" id="test_li_4">Bound</li>					
+					<li class="test_button" id="test_li_5">Filter</li>
+					<li class="test_button" id="test_li_6">Optional</li>
+					<li class="test_button" id="test_li_7">Prefix</li>
+					<li class="header">Special</li>
+					<li class="test_button" id="test_li_4">!=</li>
+															
+				</ul>
+			</div>	
+		
+		</div>	
+	</body>
+</html>

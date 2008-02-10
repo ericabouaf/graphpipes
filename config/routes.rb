@@ -10,10 +10,12 @@ ActionController::Routing::Routes.draw do |map|
   map.login  '/login', :controller => 'sessions', :action => 'new'
   map.logout '/logout', :controller => 'sessions', :action => 'destroy'
   
-  map.logout '/dashboard', :controller => 'pipes', :action => "dashboard"
+  # map.logout '/dashboard', :controller => 'pipes', :action => "dashboard"
   
   map.site '/:action', :controller => 'site'
 
   map.connect ':controller/:action/:id'
+  map.connect ':controller/:action.:format'  
+  
   map.connect ':controller/:action/:id.:format'
 end

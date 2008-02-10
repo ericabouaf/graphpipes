@@ -1,0 +1,61 @@
+/* GENERAL STYLES */
+
+.menu {
+	position: absolute;
+	top: 0;
+	left: 0;
+	font-family: verdana;
+}
+.menu a {
+	display: block;
+	text-decoration: none;
+	cursor: default;
+	outline: none;
+	font-size: 11px;
+}
+.menu .separator {
+	height: 1px;
+	padding: 0;
+	overflow: hidden;
+	display: block;
+}
+.menu ul, .menu li {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+
+/* MAC OS X STYLES */
+
+.menu.mac_os_x, .mac_os_x .menu {
+	width: 12em;
+	background: url(mac_os_x/bg.png) repeat;
+}
+.menu.mac_os_x ul, .mac_os_x .menu ul{
+	border: 1px solid #c3c3c3;
+	padding: 2px 0;
+}
+.menu.mac_os_x a, .mac_os_x .menu a {
+	color: #555;
+	padding: 2px 15px;
+	margin: 0 2px;
+}
+.menu.mac_os_x a:hover, .mac_os_x .menu a:hover {
+	background: #3875D7;
+	color: #fff;
+}
+.menu.mac_os_x a.disabled, .mac_os_x .menu a.disabled {
+	color: #bbb;
+}
+.menu.mac_os_x a.disabled:hover, .mac_os_x .menu a.disabled:hover {
+	background: url(mac_os_x/bg.png) repeat;
+	color: #bbb;
+}
+.menu.mac_os_x .separator, .mac_os_x .menu .separator {
+	background: url(mac_os_x/separator.png) repeat-x;  
+	height: 2px;
+	margin: 2px;   
+	line-height: 1px;   
+	overflow: hidden;
+}

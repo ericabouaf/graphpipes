@@ -14,10 +14,9 @@ class CreateUsers < ActiveRecord::Migration
     end
     
     u = User.create :login => 'admin', 
-                :email =>'admin@localhost',
-                :password => "secret", 
-                :password_confirmation => "secret"      
-
+                    :email =>'admin@localhost',
+                    :password => "secret", 
+                    :password_confirmation => "secret"      
     u.activate            
   end
 

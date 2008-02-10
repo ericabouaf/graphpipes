@@ -1,0 +1,71 @@
+/* Horizontal Carousel */
+#horizontal_carousel_container {
+  float:left;
+  width: 575px;
+  height: 200px;
+  margin-bottom: 10px;
+  position: relative;  
+}         
+
+#horizontal_carousel_container #horizontal_carousel {
+  position: absolute;
+  top: 5px;
+  left: 37px;  
+  width: 504px;
+  height: 144px;
+  overflow:hidden;   
+  background: #3F3F3F;
+}            
+
+#left_button {
+  position: absolute;
+  top: 5px;
+  left: 10px;
+  width: 27px;
+  height: 144px;
+  background: url(classic/horizontal/left.gif);
+  z-index: 100;    
+  cursor:pointer;
+}        
+
+
+#left_button.disabled {
+  background: url(classic/horizontal/left-disabled.gif);
+  cursor:default;
+}
+
+#right_button {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  width: 27px;
+  height: 144px;
+  background: url(classic/horizontal/right.gif);
+  z-index: 100;
+  cursor:pointer;
+}   
+
+#right_button.disabled {
+  background: url(classic/horizontal/right-disabled.gif);
+  cursor:default;
+}
+  
+.ui_horizontal_carousel li img {
+  border:1px solid #999999;
+  display:block;             
+  background:#E3EDFA;  
+}                               
+
+.ui_horizontal_carousel li {
+  font-family:verdana,arial,sans-serif;
+  font-size:10px;
+}                               
+
+.ui_horizontal_carousel li {
+  border:0px solid green;
+  color:#E3EDFA;
+  margin:0pt;
+  padding:15px 10px 10px;
+  width:106px;
+  text-align:center;
+}

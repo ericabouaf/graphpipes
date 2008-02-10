@@ -1,0 +1,128 @@
+/* Horizontal Carousel */
+#horizontal_carousel_container {
+  float:left;
+  width: 610px;
+  height: 290px;
+  margin-bottom: 10px;
+  position: relative;  
+}         
+
+#horizontal_carousel_container #horizontal_carousel {
+  position: absolute;
+  top: 50px;
+  left: 44px;  
+  width: 520px;
+  height: 240px;  
+  overflow:hidden;
+}            
+
+#left_button {
+  position: absolute;
+  top: 50px;
+  left: 10px;
+  width: 32px;
+  height: 175px;
+  background: url(prototype-ui/horizontal/left.png);
+  z-index: 100;
+  cursor:pointer;
+}        
+
+#left_button.over {
+  background: url(prototype-ui/horizontal/left_over.png);
+}
+
+#left_button.disabled {
+  background: url(prototype-ui/horizontal/left_disabled.png);
+  cursor:default;
+}
+
+#right_button {
+  position: absolute;
+  top: 50px;
+  right: 10px;
+  width: 32px;
+  height: 175px;
+  background: url(prototype-ui/horizontal/right.png);
+  z-index: 100;
+  cursor:pointer;
+}   
+
+#right_button.over {
+  background: url(prototype-ui/horizontal/right_over.png);
+}
+
+#right_button.disabled {
+  background: url(prototype-ui/horizontal/right_disabled.png);
+  cursor:default;
+}
+
+.ui_horizontal_carousel li {
+  width: 260px;
+  height: 240px;     
+  text-align:center;
+}
+
+
+/* vertical Carousel */
+#vertical_carousel_container {
+  float:left;
+  width: 350px;
+  height: 270px;
+  margin-bottom: 10px;
+  position: relative;  
+}         
+
+#vertical_carousel_container #vertical_carousel {
+  position: absolute;
+  top: 90px;
+  left: 0px;  
+  width: 260px;
+  height: 240px;  
+  overflow:hidden;
+}            
+
+#top_button {
+  position: absolute;
+  top: 50px;
+  left: 50px;
+  height: 32px;
+  width: 175px;
+  background: url(prototype-ui/vertical/left.png);
+  z-index: 100;
+  cursor:pointer;
+}        
+
+#top_button.over {
+  background: url(prototype-ui/vertical/left_over.png);
+}
+
+#top_button.disabled {
+  background: url(prototype-ui/vertical/left_disabled.png);
+  cursor:default;
+}
+
+#bottom_button {
+  position: absolute;
+  top: 320px;
+  left: 50px;
+  height: 32px;
+  width: 175px;
+  background: url(prototype-ui/vertical/right.png);
+  z-index: 100;
+  cursor:pointer;
+}   
+
+#bottom_button.over {
+  background: url(prototype-ui/vertical/right_over.png);
+}
+
+#bottom_button.disabled {
+  background: url(prototype-ui/vertical/right_disabled.png);
+  cursor:default;
+}
+
+.ui_vertical_carousel li {
+  width: 260px;
+  height: 240px;     
+  text-align:center;
+}
