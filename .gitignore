@@ -7,3 +7,4 @@ tmp/**/*
 doc/api
 doc/app
 schema.rb
+*.sqlite3
