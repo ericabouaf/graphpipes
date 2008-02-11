@@ -1,16 +1,28 @@
 class UsersController < ApplicationController
 
-  before_filter :login_required
+  before_filter :login_required, :except => ['new','create', 'activate']
 
-  layout 'site'
+  layout 'login'
+  
+  def index
+    @users = User.find :all
+  end
   
     # render new.rhtml
   def new
-    render :action => 'new', :layout => 'login'
+    @user = User.new
+    respond_to do |format|
+      format.html # new.html.erb
+      format.xml  { render :xml => @dummy }
+    end  
   end
-
+  
   def show
     @user = User.find_by_id(params[:id])
+    respond_to do |format|
+      format.html # show.html.erb
+      format.xml  { render :xml => @user }
+    end    
   end
   
   def edit
@@ -18,8 +30,19 @@ class UsersController < ApplicationController
   end
 
   def update
-    redirect_to user_path(current_user)
-  end
+     @user = User.find(params[:id])
+
+     respond_to do |format|
+       if @user.update_attributes(params[:dummy])
+         flash[:notice] = 'The useraccount was successfully updated.'
+         format.html { redirect_to(users_path) }
+         format.xml  { head :ok }
+       else
+         format.html { render :action => "edit" }
+         format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }
+       end
+     end
+   end
   
   def create
     cookies.delete :auth_token
@@ -47,11 +70,11 @@ class UsersController < ApplicationController
 
   
   
-  # def authorized
-  #   @user = User.find_by_id(params[:id])    
-  #   current_user == @user 
-  #   false
-  # end
+  def authorized
+    @user = User.find_by_id(params[:id])    
+    current_user == @user 
+    false
+  end
      
     
 end

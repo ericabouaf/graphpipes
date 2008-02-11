@@ -25,7 +25,9 @@
         -unless flash[:error].blank?
           %div.error
             = flash[:error] 
-          
+        -unless flash[:notice].blank?
+          %div.notice
+            = flash[:notice]          
         = yield
       
       

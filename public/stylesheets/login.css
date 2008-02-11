@@ -46,13 +46,23 @@ label {
 	clear: none;
 }
 
-.error {
+.error,
+.errorExplanation {
 	width: 285px;	
 	color: #fff;
 	margin-bottom: 20px;
 	padding: 5px 10px;
 	background-image: url(../images/bg.jpg);
 	border: 5px solid #fff;
+}
+
+.errorExplanation h2 {
+  background-color: maroon;
+  padding-left:10px;
+}
+
+.errorExplanation li {
+	list-style-type: disc;
 }
 
 #login_container input {

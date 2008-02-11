@@ -1,12 +1,11 @@
 
   <h1>Meine Einstellungen</h1>
 
-    <%# link_button "Abbrechen und zurück", {:url => site_path} %>
+    <% link_button "Abbrechen und zurück", {:url => site_path} %>
 
 
 
 <%= error_messages_for :user %>
-
 <p>
 <div id="basic_form">
   <% form_for(:user, :url => user_path(@user) , :html => { :method => :put }) do |f| %>

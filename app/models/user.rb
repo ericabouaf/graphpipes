@@ -82,9 +82,9 @@ class User < ActiveRecord::Base
     save(false)
   end
 
-  def to_param
-    "#{id}-#{login.downcase.gsub(/[^[:alnum:]]/,'-')}".gsub(/-{2,}/,'-')
-  end
+  # def to_param
+  #   "#{id}-#{login.downcase.gsub(/[^[:alnum:]]/,'-')}".gsub(/-{2,}/,'-')
+  # end
 
   protected
     # before filter 
