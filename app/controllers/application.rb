@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
   #protect_from_forgery # :secret => '95f6fe8da4fa969a7cdf9f0acbdfe597'
   #self.allow_forgery_protection = false
   
-  before_filter :reject_ie
+  #before_filter :reject_ie
   
   
   protected
