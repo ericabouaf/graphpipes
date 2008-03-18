@@ -1,20 +1,19 @@
-%h1 
-  Your Pipes 
-  = params[:user_id]
-  |
-  = link_to "Create new pipe", new_user_pipe_path(current_user)
-  
+= link_button "Create new pipe", :id => "create_pipe", :url => new_user_pipe_path(current_user)
 
+%br
+  
 - unless @pipes.blank?
-  - @pipes.each do |pipe| 
-    %p
+  %p  
+    - @pipes.each do |pipe| 
       = link_to h(pipe.title), user_pipe_path(current_user, pipe.id)
       from:
       %span.note
         = h pipe.user_id 
+      %br
 -else
   %p 
     You did not create a pipe yet. 
     = link_to "Do you want to do this now?", new_user_pipe_path(current_user)
     
       
+= javascript_include_tag :defaults 

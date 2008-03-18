@@ -35,7 +35,7 @@ class UsersController < ApplicationController
      respond_to do |format|
        if @user.update_attributes(params[:dummy])
          flash[:notice] = 'The useraccount was successfully updated.'
-         format.html { redirect_to(users_path) }
+         format.html { redirect_to(user_pipes_path(current_user)) }
          format.xml  { head :ok }
        else
          format.html { render :action => "edit" }

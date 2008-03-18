@@ -4,7 +4,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :users, :has_many => :pipes
   map.resource :sessions
 
-  map.resources :pipes
+  # map.resources :pipes
 
   map.signup '/signup', :controller => 'users', :action => 'new'
   map.login  '/login', :controller => 'sessions', :action => 'new'
@@ -13,9 +13,10 @@ ActionController::Routing::Routes.draw do |map|
   # map.logout '/dashboard', :controller => 'pipes', :action => "dashboard"
   
   map.site '/:action', :controller => 'site'
-
-  map.connect ':controller/:action/:id'
-  map.connect ':controller/:action.:format'  
+  map.javascript '/javascripts/:action.:format', :controller => 'javascripts' 
   
-  map.connect ':controller/:action/:id.:format'
+  # map.connect ':controller/:action/:id'
+  # map.connect ':controller/:action.:format'  
+  # 
+  # map.connect ':controller/:action/:id.:format'
 end

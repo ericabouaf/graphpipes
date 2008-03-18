@@ -2,7 +2,8 @@
 module ApplicationHelper
   
   def link_button(name=Untitled, options={})
-    result = "<a class='button' href='#' "
+    url = options[:url] || "#"
+    result = "<a class='button' href='#{url}' "
     result << "id='#{options[:id]}'" unless options[:id].blank?
     result << "><span>#{name}</span></a>"
     result

@@ -11,7 +11,8 @@
   <% form_for(:user, :url => user_path(@user) , :html => { :method => :put }) do |f| %>
     <%= render :partial => 'form', :locals => {:f => f}%>
     <div class="action">
-        <input name="commit" type="submit" value="Änderungen speichern" />
+        <input name="commit" type="submit" value="Save changes" />
+                <%= link_button 'Cancel and go back…', {:url => site_path}  %>
       </div>
   <% end %>
   

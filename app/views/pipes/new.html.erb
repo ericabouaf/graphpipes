@@ -2,11 +2,14 @@
 
 <%= error_messages_for :pipe %>
 
-<% form_for(:pipe, :url => collection_url) do |f| %>
+<% form_for(:pipe, :url => user_pipes_path(current_user)) do |f| %>
   <%= render :partial => "form", :locals => { :f => f } %>
   <p>
-    <%= submit_tag "Create" %>
+   
   </p>
+
+<br/><br/>
+<%= link_button 'Cancel and go back to list', :url => user_pipes_url(current_user) %>
+<%= submit_tag "Create new Pipe" %>
+<% button_to 'Create Pipe', :id => 'create_pipe',  :url => user_pipes_url(current_user)%>
 <% end %>
-<br/>
-<%= link_to 'Back', collection_url %>

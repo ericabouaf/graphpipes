@@ -3,7 +3,8 @@ class CreatePipes < ActiveRecord::Migration
     create_table :pipes, :force => true do |t|
       t.string :title
       t.integer :user_id
-
+      t.string :short_description
+      
       t.timestamps
     end
   end
