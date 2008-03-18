@@ -19,8 +19,15 @@ class PipesController < ApplicationController
   end
   
   def show
-    @pipe = Pipe.find_by_id params[:id]
+    @pipe = current_user.pipes.find_by_id params[:id]
+    
+    raise ActiveRecord::RecordNotFound if @pipe.nil?
+  
     render :action => 'show', :layout => 'stage'
+  end
+  
+  def edit
+    @pipe = Pipe.find_by_id(params[:id])
   end
   
   def new
@@ -44,4 +51,39 @@ class PipesController < ApplicationController
       end
     end
   end
+  
+  def update
+     @pipe = current_user.pipes.find(params[:id])
+     
+     raise ActiveRecord::RecordNotFound if @pipe.nil?
+     
+     debugger
+     
+     respond_to do |format|
+       if @pipe.update_attributes(params[:pipe])
+         flash[:notice] = 'The pipe was successfully updated.'
+         format.html { redirect_to(edit_user_pipe_path(current_user, @pipe)) }
+         format.xml  { head :ok }
+       else
+         format.html { render :action => "edit" }
+         format.xml  { render :xml => @pipe.errors, :status => :unprocessable_entity }
+       end
+     end
+   end
+  
+   def destroy
+     @pipe = current_user.pipes.find_by_id(params[:id])
+     
+     raise ActiveRecord::RecordNotFound if @pipe.nil?
+     
+     @pipe.destroy
+
+     flash[:notice] = "The pipe '#{@pipe.title}' was removed."
+
+     respond_to do |format|
+       format.html { redirect_to(user_pipes_path(current_user)) }
+       format.xml  { head :ok }
+     end
+   end
+  
 end

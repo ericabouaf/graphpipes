@@ -7,6 +7,9 @@ class Pipe < ActiveRecord::Base
   
   validates_presence_of     :title
   
+  has_many :nodes
+  has_many :edges
+  
   # container:
     # type
     # postition (array) x,y

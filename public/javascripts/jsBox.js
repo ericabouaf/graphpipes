@@ -3,7 +3,6 @@
  * @constructor
  */
 var jsBox = function(config, layer) {
-   
    jsBox.superclass.constructor.call(this, config, layer);
    
    this.buildTextArea(this.config.codeText || "function(e) {\n\n  return 0;\n}");
@@ -163,27 +162,3 @@ jsBox.run = function() {
 jsBox.addModule = function () {
    jsBox.jsBoxLayer.addContainer({xtype: jsBox, position: [50,250],});
 };
-
-/**
- * Init the jsBox layer with a default program
- */
-// YAHOO.util.Event.addListener(window, "load", function() {
-//    jsBox.jsBoxLayer = new WireIt.Layer({
-//       
-//       containers: [
-//          {xtype: jsBox, position: [180,40], codeText: "function() {\n   return 3;\n}"},
-//          {xtype: jsBox, position: [400,50], codeText: "function() {\n   return 6;\n}"},
-//          {xtype: jsBox, position: [300,180], codeText: "function(a,b) {\n   return a*b;\n}"},
-//          {xtype: jsBox, position: [350,340], codeText: "function(result) {\n   alert('the result is '+result);\n}"}
-//       ],
-//       
-//       wires: [
-//          {src: {moduleId: 0, terminalId: 0}, tgt: {moduleId: 2, terminalId: 0}},
-//          {src: {moduleId: 1, terminalId: 0}, tgt: {moduleId: 2, terminalId: 1}},
-//          {src: {moduleId: 2, terminalId: 2}, tgt: {moduleId: 3, terminalId: 0}}
-//       ]
-//       
-//    });
-// });
-
-

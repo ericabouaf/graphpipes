@@ -3,8 +3,9 @@ class Node < ActiveRecord::Base
   belongs_to :pipe
   has_many :edges
   
-  validates_presence_of :type
-  validates_presence_of :postition
+  validates_presence_of :kind
+  validates_presence_of :x
+  validates_presence_of :y  
     
   # node:
     # type

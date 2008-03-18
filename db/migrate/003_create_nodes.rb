@@ -2,8 +2,9 @@ class CreateNodes < ActiveRecord::Migration
   def self.up
     create_table :nodes do |t|
       t.integer :pipe_id
-      t.string  :type
-      t.string  :position
+      t.string  :kind
+      t.string  :x
+      t.string  :y      
       t.string  :content
       
       t.timestamps

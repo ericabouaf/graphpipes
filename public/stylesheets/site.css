@@ -68,3 +68,85 @@ body {
 	border: 10px solid #fff;
 }
 
+/* -------- form content */
+
+.form-content {
+	background-color: #fff;
+	width: 928px;
+	padding: 15px;
+	margin-bottom: 15px;
+	border-left: 2px solid #128ea9;
+}
+
+.form-content > h2 {
+	color: #128ea9;
+	margin-bottom: 20px;
+	font-size: 18px;
+}
+
+.form-content p {
+	height: 30px;
+	margin-bottom: 5px;
+}
+
+.form-content input{
+	font: 18px Georgia, "Times New Roman", Times, serif;
+}
+
+.form-content label{
+	width: 120px;
+	display: inline-block;
+}
+
+.form-content .errorExplanation  {
+	color: #7c0509;
+	margin-bottom: 15px;
+	border: 5px solid #7c0509;
+	width: 500px;
+	padding: 15px;
+	font-size: 14px;
+}
+
+.form-content .errorExplanation ul {
+	margin-left: 40px;
+}
+
+.note{
+	color: #808080;
+	font-size: 12px;
+	font-style: italic;
+}
+
+.fieldWithErrors input {
+	width: auto;
+	border: 5px solid #7c0509;
+	display: inline;
+	clear: none;
+	margin: 0;
+}
+
+p.pipe {
+	border-bottom: 1px solid #128ea9;
+	color: #f98016;
+	display: block;
+	width: 300px;
+	background-color: #f98016;
+}
+
+
+p.pipe a {
+	font-size: 18px;
+}
+
+p.pipe a.small{
+	color: #666;
+	font-size: 11px;
+	text-decoration: underline;
+}
+
+p.notice {
+	background-color: #83ff1a;
+	color: #83ff1a;
+	font-style: normal;
+	font-weight: normal;
+}
