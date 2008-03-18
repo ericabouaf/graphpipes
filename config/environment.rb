@@ -60,3 +60,8 @@ Rails::Initializer.run do |config|
   # Make Active Record use UTC-base instead of local time
   # config.active_record.default_timezone = :utc
 end
+#Workling::Remote.dispatcher = Workling::Remote::Runners::NotRemoteRunner.new
+Workling::Return::Store.instance = Workling::Return::Store::MemoryReturnStore.new
+Workling::Remote.dispatcher = Workling::Remote::Runners::StarlingRunner.new
+# 
+# Workling::Remote.dispatcher = Workling::Remote::Runners::StarlingRunner.new
