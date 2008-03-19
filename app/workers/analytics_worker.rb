@@ -7,7 +7,7 @@ class AnalyticsWorker < Workling::Base
     #Hit.create :potential_user_id => options[:potential_user_id], :action => "converted" 
   end
   
-  def search(options)
+  def status(options)
     #results = Blackbook.get(options[:key], options[:username], options[:password])
     results = '123'
     Workling::Return.set(options[:uid], results)
