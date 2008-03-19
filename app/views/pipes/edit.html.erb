@@ -1,16 +1,17 @@
-<h1>Editing Pipe</h1>
+
+
+<div class='form-content'>
+<h2>Editing Pipe</h2> 
 
 <%= error_messages_for :pipe %>
 
-<% form_for(:pipe, :url => user_pipes_path(current_user), :html => { :method => :put }) do |f| %>
+<% form_for(:pipe, :url => user_pipe_url(current_user, @pipe.id), :html => { :method => :put }) do |f| %>
   <%= render :partial => "form", :locals => { :f => f } %>
-  <p>
-    <%=submit_tag "Update"%>
-  </p>
+</div>
+
+<%= link_button h("Show #{@pipe.title}"), :url => user_pipe_path(current_user, @pipe) %>
+
+<%= link_button 'Cancel and show all my pipes', :url =>  user_pipes_path(current_user) %>
+<%=submit_tag "Update #{@pipe.title}"%>
+
 <% end %>
-
-<br/>
-
-<%= link_to 'Show', user_pipe_path(current_user, @partial) %>
-|
-<%= link_to 'Back', user_pipes_path(current_user) %>

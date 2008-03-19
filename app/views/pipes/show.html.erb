@@ -1,0 +1,21 @@
+<% content_for :javascript do %>
+
+<script>
+window.boxes = {
+
+    containers: [
+      <% @pipe.nodes.each_with_index do |node, index| %>
+        <%= "{xtype: #{node.kind}, position: [#{node.x}, #{node.y}], codeText: '#{node.content}'} "%> <% if index < @pipe.nodes.size - 1 %>,<% end %>
+      <% end %>
+    ],
+    
+    wires: [
+      <% @pipe.edges.each_with_index do |edge, index| %>    
+        <%= "{src: {moduleId: #{edge.from_node}, terminalId: #{edge.from_terminal}}, tgt: {moduleId: #{edge.to_node}, terminalId: #{edge.to_terminal}}}}" %> <% if index < @pipe.edges.size - 1 %>,<% end %>        
+      <% end %>        
+    ]
+    
+ }
+</script>
+
+<% end %>

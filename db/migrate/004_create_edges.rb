@@ -1,7 +1,7 @@
 class CreateEdges < ActiveRecord::Migration
   def self.up
     create_table :edges do |t|
-      t.integer :node_id
+      t.integer :pipe_id
       
       t.integer :from_node
       t.integer :to_node

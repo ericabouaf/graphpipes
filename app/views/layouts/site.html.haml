@@ -33,9 +33,14 @@
               |            
               = link_to '{My Account}', user_path(current_user)
               |
-              = link_to '{Logout}', logout_path
+              = link_to '{Logout}', logout_path    
+          
         -else
           = yield :page_header
+        
+        -unless flash[:notice].blank?
+          %p.notice
+            = flash[:notice]
         
         = yield
       
@@ -43,7 +48,7 @@
           = "#{link_to 'Thomas Winkler', 'mailto:tomfarm@gmail.com'} | 2007-2008 | "
           = "#{link_to 'Impressum', site_path(:action => 'imprint')}"
           %br
-          = "Universit&auml;t Koblenz-Landau|"
+          = "Universit&auml;t Koblenz-Landau |"
           = "#{link_to 'ISWeb - Research Group Staab', 'http://isweb.uni-koblenz.de'}"  
 
   = render :partial => 'parts/sheets'

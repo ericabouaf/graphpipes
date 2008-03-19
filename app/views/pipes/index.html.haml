@@ -1,15 +1,21 @@
-= link_button "Create new pipe", :id => "create_pipe", :url => new_user_pipe_path(current_user)
+= link_button "Create a new pipe", :id => "create_pipe", :url => new_user_pipe_path(current_user)
 
 %br
   
 - unless @pipes.blank?
-  %p  
-    - @pipes.each do |pipe| 
+
+  - @pipes.each do |pipe| 
+    %p.pipe
       = link_to h(pipe.title), user_pipe_path(current_user, pipe.id)
-      from:
-      %span.note
-        = h pipe.user_id 
+      
       %br
+      %span.note
+        = h pipe.short_description 
+      |
+      = link_to "Edit", edit_user_pipe_path(current_user, pipe.id), :class => 'small'
+      |
+      = link_to "Delete", user_pipe_path(current_user, pipe), :method => :delete, :confirm => "Are you sure you want to delete this pipe?", :class => 'small'  
+      
 -else
   %p 
     You did not create a pipe yet. 

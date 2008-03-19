@@ -2,6 +2,9 @@ ActionController::Routing::Routes.draw do |map|
   map.root :controller => 'site', :action => 'index'
 
   map.resources :users, :has_many => :pipes
+  # map.resources :users do |user|
+  #   user.resources :pipes
+  # end
   map.resource :sessions
 
   # map.resources :pipes

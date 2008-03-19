@@ -173,28 +173,47 @@ var Tip = Class.create({
     this.activate();
   },
 
+  // setup: function() {
+  //    this.wrapper = new Element('div', { className: 'prototip' }).setStyle({
+  //      display: 'none', zIndex: Tips.zIndex });
+  //    this.wrapper.identify();
+  // 
+  //    if (Tips.fixIE) {
+  //      this.iframeShim = new Element('iframe', {
+  //        className : 'iframeShim',
+  //    src: 'javascript:false;',
+  //    frameBorder: 0
+  //      }).setStyle({
+  //        display: 'none',
+  //    zIndex: Tips.zIndex - 1
+  //      });
+  //    }
+  // 
+  //    this.tip = new Element('div', { className : 'content' }).insert(this.content);
+  //    this.tip.insert(new Element('div').setStyle({ clear: 'both' }));
+  // 
+  //    if (this.options.closeButton || (this.options.hideOn.element && this.options.hideOn.element == 'closeButton'))
+  //      this.closeButton = new Element('a', { href: '#', className: 'close' });
+  //  },
+  
   setup: function() {
-    this.wrapper = new Element('div', { className: 'prototip' }).setStyle({
-      display: 'none', zIndex: Tips.zIndex });
-    this.wrapper.identify();
+     this.wrapper = new Element('div', {'class' : 'prototip' }).setStyle({
+       display: 'none', zIndex: Tips.zIndex });
+     this.wrapper.identify();
 
-    if (Tips.fixIE) {
-      this.iframeShim = new Element('iframe', {
-        className : 'iframeShim',
-		src: 'javascript:false;',
-		frameBorder: 0
-      }).setStyle({
-        display: 'none',
-		zIndex: Tips.zIndex - 1
-      });
-    }
+     if (Tips.fixIE) {
+       this.iframeShim = new Element('iframe', { 'class' : 'iframeShim', src: 'javascript:false;' }).setStyle({
+         display: 'none', zIndex: Tips.zIndex - 1 });
+     }
 
-    this.tip = new Element('div', { className : 'content' }).insert(this.content);
-    this.tip.insert(new Element('div').setStyle({ clear: 'both' }));
 
-    if (this.options.closeButton || (this.options.hideOn.element && this.options.hideOn.element == 'closeButton'))
-      this.closeButton = new Element('a', { href: '#', className: 'close' });
-  },
+     var cap = new Element('span')
+     cap.insert(this.content)
+
+     this.tip = new Element('div', { 'class' : 'content' }).insert(cap);
+     this.tip.insert(new Element('div').setStyle({ clear: 'both' }));
+
+   },
 
   build: function() {
     if (Tips.fixIE) document.body.appendChild(this.iframeShim).setOpacity(0);
