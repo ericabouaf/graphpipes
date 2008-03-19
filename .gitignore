@@ -9,3 +9,4 @@ doc/app
 schema.rb
 *.sqlite3
 db/*.sqlite3
+config/deploy.rb
