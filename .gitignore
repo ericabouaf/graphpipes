@@ -1,3 +1,4 @@
+*.pid
 *.log
 .DS_Store
 *.sql
