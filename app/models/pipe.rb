@@ -5,11 +5,12 @@ class Pipe < ActiveRecord::Base
   #   "#{id}-#{title.downcase.gsub(/[^[:alnum:]]/,'-')}".gsub(/-{2,}/,'-')
   # end  
   
-  validates_presence_of     :title
+  validates_presence_of :title
   
   has_many :nodes
   has_many :edges
   belongs_to :node
+  has_and_belongs_to_many :sources
   
   # container:
     # type

@@ -1,0 +1,18 @@
+<p>
+  <b>User:</b>
+  <%=h @source.user_id %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%=h @source.name %>
+</p>
+
+<p>
+  <b>Iri:</b>
+  <%=h @source.iri %>
+</p>
+
+
+<%= link_to 'Edit', edit_user_source_path(current_user, @source) %> |
+<%= link_to 'Back', user_sources_path(current_user) %>

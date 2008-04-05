@@ -39,6 +39,10 @@
 				<li class="icon preferences right" tooltip="Edit your personal settings">
 				  <%= link_to 'My Account', user_path(current_user) %></li>
 				<li class="icon library right" tooltip="Toogle the library's visibility"><a href="#" onclick="toogle_library_window();">Library</a></li>
+        <li class="spacer right"><i>|</i></li>	
+				
+				<li class="icon new_pipe right" tooltip="Add a rdf resource">
+				  <%= link_to 'Add RDF', user_sources_path(current_user) %></li>	
 			</ul>
 		</div>
 		

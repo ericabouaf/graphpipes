@@ -4,7 +4,8 @@ class User < ActiveRecord::Base
   has_many :nodes, :through => :pipes  
   has_many :edges, :through => :pipes  
   
-  
+  has_many :sources
+
   # Virtual attribute for the unencrypted password
   attr_accessor :password
 

@@ -1,0 +1,27 @@
+<h1>Editing source</h1>
+
+<%= error_messages_for :source %>
+
+<% form_for(@source) do |f| %>
+  <p>
+    <b>User</b><br />
+    <%= f.text_field :user_id %>
+  </p>
+
+  <p>
+    <b>Name</b><br />
+    <%= f.text_field :name %>
+  </p>
+
+  <p>
+    <b>Iri</b><br />
+    <%= f.text_field :iri %>
+  </p>
+
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', user_source_path(current_user, @source) %> |
+<%= link_to 'Back', user_sources_path(current_user) %>
