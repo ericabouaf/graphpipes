@@ -8,14 +8,9 @@ class SessionsController < ApplicationController
   end
 
   def create
-
     login_params = params['session'] || params
-  
-    
-    
+
     self.current_user = User.authenticate(login_params['login'], login_params['password'])
-    
-    puts pp params
     
     if logged_in?
       save_cookie if params[:remember_me] == "1"      

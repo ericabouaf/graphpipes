@@ -9,6 +9,7 @@ class Pipe < ActiveRecord::Base
   
   has_many :nodes
   has_many :edges
+  belongs_to :node
   
   # container:
     # type

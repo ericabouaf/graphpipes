@@ -1,10 +1,14 @@
 ActionController::Routing::Routes.draw do |map|
   map.root :controller => 'site', :action => 'index'
 
-  map.resources :users, :has_many => :pipes
-  # map.resources :users do |user|
-  #   user.resources :pipes
-  # end
+  # map.resources :users, :has_many => :pipes
+  map.resources :users do |user|
+    user.resources :pipes do |node|
+      node.resources :nodes
+      node.resources :edges      
+    end
+  end
+  
   map.resource :sessions
 
   # map.resources :pipes

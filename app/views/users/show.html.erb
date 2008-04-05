@@ -1,5 +1,5 @@
 
-  <h1>Meine Einstellungen</h1>
+  <h1><%= @user.login %></h1>
 
     <% link_button "Abbrechen und zurück", {:url => site_path} %>
 
@@ -9,11 +9,7 @@
 <p>
 <div id="basic_form">
   <% form_for(:user, :url => user_path(@user) , :html => { :method => :put }) do |f| %>
-    <%= render :partial => 'form', :locals => {:f => f}%>
-    <div class="action">
-        <input name="commit" type="submit" value="Save changes" />
-                <%= link_button 'Cancel and go back…', {:url => site_path}  %>
-      </div>
+    <%= render :partial => 'user', :locals => {:f => f}%>
   <% end %>
   
 </div>

@@ -10,6 +10,7 @@
     = stylesheet_link_tag 'sheet'      
     
     = javascript_include_tag 'prototype'
+    = javascript_include_tag 'scriptaculous'    
     = javascript_include_tag 'controls'
     = javascript_include_tag 'dragdrop'
     = javascript_include_tag 'effects'
@@ -31,7 +32,9 @@
             %span.note 
               = link_to '{My Pipes}', user_pipes_path(current_user)
               |            
-              = link_to '{My Account}', user_path(current_user)
+              = link_to '{My Account}', edit_user_path(current_user)              
+              |            
+              = link_to '{Public Profile}', user_path(current_user)
               |
               = link_to '{Logout}', logout_path    
           

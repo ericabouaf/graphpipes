@@ -1,3 +1,9 @@
-<%= user.login %>
+
 <a href="mailto:<%= user.email %>"><%= user.email %></a>
-      
+
+<br><br>
+<p>      
+  <div class="action">
+              <%= link_button 'Go to my pipes…', {:url => site_path}  %>
+    </div>
+    </p>

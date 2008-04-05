@@ -4,7 +4,6 @@ var Patch = Class.create({
     this.run(kind)
   },
   run: function(func_name) {
-    console.log('Created Node in DB')
     var operation = this["new_" + func_name]
     if (this["new_" + func_name] != undefined) { 
       this["new_" + func_name](func_name)

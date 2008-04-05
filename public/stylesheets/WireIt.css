@@ -56,8 +56,12 @@ div.WireIt-Container {
  	z-index: 5;
  	opacity: 0.9;
  	border: 1px solid #222;
- 	background-color: transparent;
 }
+
+.sub-node {
+  background: transparent url(../images/marker-subnode.png) no-repeat -5px -5px;
+}
+
 
 div.WireIt-Container textarea{
 	font: 11px "Helvetica Neue", Helvetica, Arial, Geneva, sans-serif, "HelveticaNeue Light";
@@ -79,6 +83,16 @@ div.WireIt-Container-ddhandle {
 	border-bottom: 1px solid #414141;
 } 
 
+div.WireIt-Container-ddhandle-last {
+  width: 100%;
+ 	cursor: move;
+	opacity: 1;
+	background: url(themes/window/black_hud/top_last.png) repeat-x 0 -76px;
+	height: 19px;
+	border-bottom: 1px solid #414141;
+}
+
+
 div.WireIt-Container-resizehandle {
    position: absolute;
    bottom: 0;
@@ -87,6 +101,20 @@ div.WireIt-Container-resizehandle {
    height: 10px;
    cursor: se-resize;
 }
+
+div.WireIt-Container-editbutton {
+   background-image: url(../images/edit.png);	
+   height: 16px;
+   position: absolute;
+   top: 2px;
+   left: 4px;
+   cursor: pointer;
+	 width: 16px;
+}
+
+div.WireIt-Container-editbutton:hover {
+   background-image: url(../images/edit_hover.png);	
+ }
 
 div.WireIt-Container-closebutton {
    background-image: url(../images/close_normal.png);	

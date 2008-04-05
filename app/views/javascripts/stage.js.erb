@@ -1,5 +1,3 @@
-console.log('sheet')
-
 var ok_sheet
 var login_sheet
 var library_window
@@ -45,7 +43,6 @@ var toogle_library_window = function() {
 
 
 var init_tooltips = function() {
-  console.log('init_tooltips')
   var options = { 
       effect: 'appear', 
       hideAfter: true, 
@@ -59,8 +56,6 @@ var init_tooltips = function() {
   }
   
   $$('*[tooltip]').each( function(input) {
-    console.log(input)
-    console.log()
      var t = new Tip(input, input.readAttribute('tooltip'), options)
    });
 

@@ -54,6 +54,13 @@
 					<li class="crumb-divide-last">
 					  <%= link_to 'Dashboard', user_pipes_path(current_user), {:tooltip => 'Dashboard'} %>
 					</li>
+          <% unless @parent_pipes.nil? %>					
+					  <% @parent_pipes.each do |p| %>
+					    <li>
+						    <%= link_to h(p.title), user_pipe_path(current_user, p) %>
+					    </li>
+					  <% end  %>  
+					<% end  %>  					
 					<li id="current">
 						<%= h @pipe.title %>
 					</li>
@@ -150,7 +157,7 @@
 
     <!-- jsBox -->
     <script type="text/javascript" src="/javascripts/jsBox.js"></script>
-    <script type="text/javascript" src="/javascripts/TestBox.js"></script>
+    <script type="text/javascript" src="/javascripts/lastBox.js"></script>
 		
 		
 		<%= yield :javascript %>

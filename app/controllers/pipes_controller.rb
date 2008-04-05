@@ -8,17 +8,18 @@ class PipesController < ApplicationController
   end
   
   def index
-    
     raise ActiveRecord::RecordNotFound if User.find_by_id(params[:user_id]).nil?
     
     if (current_user.id = params[:user_id])
-      @pipes = Pipe.find_all_by_user_id(params[:user_id] || current_user.id)
+      @pipes = Pipe.find_all_by_user_id(params[:user_id] || current_user.id, :conditions => {:root => true})
     else
       redirect_to user_pipes_path(current_user)
     end
   end
   
   def show
+    @parent_pipes = find_parental_pipe
+    debugger
     @pipe = current_user.pipes.find_by_id params[:id]
     
     raise ActiveRecord::RecordNotFound if @pipe.nil?
@@ -31,10 +32,11 @@ class PipesController < ApplicationController
   end
   
   def new
-    @user = Pipe.new
+    @pipe = Pipe.new
+    @pipe.root = 't'
     respond_to do |format|
       format.html # new.html.erb
-      format.xml  { render :xml => @user }
+      format.xml  { render :xml => @pipe }
     end  
   end
   
@@ -56,9 +58,7 @@ class PipesController < ApplicationController
      @pipe = current_user.pipes.find(params[:id])
      
      raise ActiveRecord::RecordNotFound if @pipe.nil?
-     
-     debugger
-     
+          
      respond_to do |format|
        if @pipe.update_attributes(params[:pipe])
          flash[:notice] = 'The pipe was successfully updated.'
@@ -86,4 +86,10 @@ class PipesController < ApplicationController
      end
    end
   
+  protected
+
+  def find_parental_pipe
+    return nil if params[:parent].nil?
+    current_user.pipes.find_all_by_id(params[:parent])
+  end
 end

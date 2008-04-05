@@ -64,10 +64,17 @@ a:hover {
 	color: #2ad2fd;	
 }
 
+#toolbar {
+
+	overflow: hidden;
+}
+
 #toolbar span.note {
 	font-size: 12px;
 	text-align: right;
 	float: right;
+	position: relative;
+	top: 0;
 }
 
 

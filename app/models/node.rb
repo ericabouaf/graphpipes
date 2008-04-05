@@ -2,6 +2,7 @@ class Node < ActiveRecord::Base
   
   belongs_to :pipe
   has_many :edges
+  has_one :sub_pipe, :foreign_key => :id, :class_name => 'Pipe'
   
   validates_presence_of :kind
   validates_presence_of :x

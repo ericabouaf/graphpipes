@@ -871,7 +871,12 @@ YAHOO.extend(WireIt.util.DD, YAHOO.util.DD, {
    /**
     * Override YAHOO.util.DD.prototype.onDrag to redraw the wires
     */
+    onMouseUp: function(e) {    
+      this._domRef.fire("drag:done", { target: this._domRef });     // prototype.js event
+    },
+    
    onDrag: function(e) {
+
       // Make sure terminalList is an array
       var terminalList = YAHOO.lang.isArray(this._WireItTerminals) ? this._WireItTerminals : (this._WireItTerminals.isWireItTerminal ? [this._WireItTerminals] : []);
       // Redraw all the wires
@@ -989,6 +994,7 @@ WireIt.Container = function(config, layer) {
    this.config.position = this.config.position || [100,100];
    this.config.className = this.config.className || 'WireIt-Container';
    
+   
    this.config.ddHandle = (typeof this.config.ddHandle == "undefined") ? true : this.config.ddHandle;
    this.config.ddHandleClassName = this.config.ddHandleClassName || "WireIt-Container-ddhandle";
    
@@ -1001,6 +1007,11 @@ WireIt.Container = function(config, layer) {
    this.config.close = (typeof this.config.close == "undefined") ? true : this.config.close;
    this.config.closeButtonClassName = this.config.closeButtonClassName || "WireIt-Container-closebutton";
    
+   
+   this.config.has_pipe = this.config['has_pipe'] || false
+
+   if (config.has_pipe) { this.config.className += ' sub-node' }
+
    /**
     * the WireIt.Layer object that schould contain this container
     */
@@ -1100,6 +1111,16 @@ WireIt.Container.prototype.render = function() {
       YAHOO.util.Event.addListener(this.closeButton, "click", this.onCloseButton, this, true);
    }
    
+
+   if(this.config.has_pipe) {
+      
+     
+       // edit button
+       this.editButton = WireIt.cn('div', {className: 'WireIt-Container-editbutton '} );
+       this.el.appendChild(this.editButton);
+       YAHOO.util.Event.addListener(this.editButton, "click", this.onEditButton, this, true);
+    }
+   
    // Append to the layer element
    this.layer.el.appendChild(this.el);
    
@@ -1115,6 +1136,12 @@ WireIt.Container.prototype.render = function() {
 WireIt.Container.prototype.onCloseButton = function() {
    this.layer.removeContainer(this);
 };
+
+WireIt.Container.prototype.onEditButton = function() {
+  // hack
+  window.open('/users/1/pipes/1/nodes/' + this.config.has_pipe, "_self")
+};
+
 
 /**
  * Remove this container from the dom

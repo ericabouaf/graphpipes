@@ -33,12 +33,12 @@ class UsersController < ApplicationController
      @user = User.find(params[:id])
 
      respond_to do |format|
-       if @user.update_attributes(params[:dummy])
+       if @user.update_attributes(params[:user])
          flash[:notice] = 'The useraccount was successfully updated.'
          format.html { redirect_to(user_pipes_path(current_user)) }
          format.xml  { head :ok }
        else
-         format.html { render :action => "edit" }
+         format.html { render :action => "show" }
          format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }
        end
      end

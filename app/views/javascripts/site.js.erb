@@ -31,7 +31,7 @@ var init_login_sheet = function() {
 
   $('loginsheet_login').observe('click', function(){
     $('login-spinner').setStyle({display : 'inline-block'})
-    new Ajax.Request('/sessions/create', {
+    new Ajax.Request('/sessions', {
       asynchronous:true, 
       evalScripts:true, 
       method: 'post',

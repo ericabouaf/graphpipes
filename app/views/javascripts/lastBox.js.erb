@@ -2,22 +2,42 @@
  * @class jsBox
  * @constructor
  */
-var jsBox = function(config, layer) {
+var lastBox = function(config, layer) {
    jsBox.superclass.constructor.call(this, config, layer);
    
-   this.buildTextArea(this.config.codeText || "function(e) {\n\n  return 0;\n}");
+  //this.buildTextArea(this.config.codeText || "function(e) {\n\n  return 0;\n}");
    this.nParams = this.getNbrInputs();
    this.createTerminals();
    
    // Reposition the terminals when the jsBox is being resized
+ 
+  document.observe('node:edit:' + config.id, function() {
+    console.log('edit!!')    
+  })
+ 
+  document.observe('drag:done', function() {
+    console.log('drag:done')
+    new Ajax.Request("/users/1/pipes/1/nodes/1", {
+      method: 'put',
+      parameters: {'node[x]': 400, 'node[y]': 400},
+      onSuccess: function(transport) {
+        console.log('updated ' + transport.responseText)        
+      }
+    });    
+  })
+ 
    this.ddResize.eventResize.subscribe(function(e, args) {
       this.positionTerminals();
-      
       YAHOO.util.Dom.setStyle(this.textarea, "height", (args[0][1]-30)+"px");
    }, this, true);
+   
+   this.el.setStyle({height:'19px'})   
 };
 
-YAHOO.extend(jsBox, WireIt.Container, {
+YAHOO.extend(lastBox, WireIt.Container, {
+    getPostion:function(){
+      return {x: this.el.getStyle('left'), y: this.el.getStyle('left')}
+    },
    buildTextArea: function(codeText) {
 
      var text_area_width = parseInt(YAHOO.util.Dom.getStyle(this.el, 'width')) - 10
@@ -58,10 +78,10 @@ YAHOO.extend(jsBox, WireIt.Container, {
          WireIt.sn(term.el, null, {position: "absolute", top: "-15px"});
       }
 
-   	var term = this.addTerminal({xtype: WireIt.util.TerminalOutput});      
-      term.jsBox = this;
-      WireIt.sn(term.el, null, {position: "absolute", bottom: "-15px"});
-
+   	// var term = this.addTerminal({xtype: WireIt.util.TerminalOutput});      
+   	//       term.jsBox = this;
+   	//       WireIt.sn(term.el, null, {position: "absolute", bottom: "-15px"});
+   	
       this.positionTerminals();
 
       // Declare the new terminals to the drag'n drop handler (so the wires are moved around with the container)
@@ -79,7 +99,7 @@ YAHOO.extend(jsBox, WireIt.Container, {
       var inputsIntervall = Math.floor(width/(this.nParams+1));
 
       for(var i = 0 ; i < this.terminals.length-1 ; i++) {
-         YAHOO.util.Dom.setStyle(this.terminals[i].el, "left", (inputsIntervall*(i+1))-15+"px" );
+         YAHOO.util.Dom.setStyle(this.terminals[i].el, "left", (inputsIntervall*(i+1))-20+"px" );
          
          for(var j = 0 ; j < this.terminals[i].wires.length ; j++) {
             this.terminals[i].wires[j].redraw();
@@ -97,6 +117,8 @@ YAHOO.extend(jsBox, WireIt.Container, {
     * Execute the module
     */
    execute: function() {
+     console.log('lastBox::execute')
+     console.log(this.getPostion())
 
       // Eval each of the parameter functions : 
       var params = [];
@@ -107,9 +129,8 @@ YAHOO.extend(jsBox, WireIt.Container, {
             otherTerm.jsBox.execute();
          params[i] = otherTerm.jsBox.evalResult;
       }
-      var code = "var tempJsBoxFunction = ("+this.textarea.value+")";
-      eval(code);
-      this.evalResult = tempJsBoxFunction.apply(window, params);
+     
+      this.evalResult = '123'
    },
    
    /**
@@ -133,7 +154,8 @@ YAHOO.extend(jsBox, WireIt.Container, {
 /**
  * Static function to run the "program"
  */
-jsBox.run = function() {
+lastBox.run = function() {
+   console.log(this.getPostion())
    
    // Clear the previous results
    for(var i = 0; i < jsBox.jsBoxLayer.containers.length; i++) {
@@ -158,6 +180,6 @@ jsBox.run = function() {
 /**
  * Adds a jsBox to the layer
  */
-jsBox.addModule = function () {
+lastBox.addModule = function () {
    jsBox.jsBoxLayer.addContainer({xtype: jsBox, position: [50,250],});
 };

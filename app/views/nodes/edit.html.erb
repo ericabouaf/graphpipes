@@ -1,0 +1,12 @@
+<h1>Editing node</h1>
+
+<%= error_messages_for :node %>
+
+<% form_for(@node) do |f| %>
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @node %> |
+<%= link_to 'Back', nodes_path %>
