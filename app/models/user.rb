@@ -1,6 +1,6 @@
 require 'digest/sha1'
 class User < ActiveRecord::Base
-  has_many :pipes
+  has_many :pipes, :dependent => :destroy
   has_many :nodes, :through => :pipes  
   has_many :edges, :through => :pipes  
   

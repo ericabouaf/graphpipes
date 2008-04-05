@@ -7,10 +7,10 @@ class Pipe < ActiveRecord::Base
   
   validates_presence_of :title
   
-  has_many :nodes
-  has_many :edges
+  has_many :nodes, :dependent => :destroy
+  has_many :edges, :dependent => :destroy
   belongs_to :node
-  has_and_belongs_to_many :sources
+  has_and_belongs_to_many :sources, :dependent => :destroy
   
   # container:
     # type
