@@ -86,9 +86,8 @@ Event.observe(window, 'dom:loaded', function() {
    init_tooltips()
   
   $$('li.test_button').each(function(button) {
-
     button.observe('click', function() {
-      Patches.push(new Patch(button))
+      Patches.push(new Patch(button, {id: button.id}))
     })
   })
   

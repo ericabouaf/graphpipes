@@ -2,7 +2,7 @@
  * @class jsBox
  * @constructor
  */
-var repositoryBox = function(config, layer) {
+var lastBox = function(config, layer) {
    jsBox.superclass.constructor.call(this, config, layer);
    
   //this.buildTextArea(this.config.codeText || "function(e) {\n\n  return 0;\n}");
@@ -34,7 +34,7 @@ var repositoryBox = function(config, layer) {
    this.el.setStyle({height:'19px'})   
 };
 
-YAHOO.extend(repositoryBox, WireIt.Container, {
+YAHOO.extend(lastBox, WireIt.Container, {
     getPostion:function(){
       return {x: this.el.getStyle('left'), y: this.el.getStyle('left')}
     },
@@ -117,7 +117,7 @@ YAHOO.extend(repositoryBox, WireIt.Container, {
     * Execute the module
     */
    execute: function() {
-     console.log('repositoryBox::execute')
+     console.log('lastBox::execute')
      console.log(this.getPostion())
 
       // Eval each of the parameter functions : 
@@ -154,7 +154,7 @@ YAHOO.extend(repositoryBox, WireIt.Container, {
 /**
  * Static function to run the "program"
  */
-repositoryBox.run = function() {
+lastBox.run = function() {
    console.log(this.getPostion())
    
    // Clear the previous results
@@ -180,6 +180,6 @@ repositoryBox.run = function() {
 /**
  * Adds a jsBox to the layer
  */
-repositoryBox.addModule = function () {
-   jsBox.jsBoxLayer.addContainer({xtype: jsBox, position: [50,250],});
+lastBox.addModule = function () {
+   jsBox.jsBoxLayer.addContainer({xtype: lastBox, position: [50,250],});
 };

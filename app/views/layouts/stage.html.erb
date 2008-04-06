@@ -85,8 +85,10 @@
 		
 			<div id="tools" style="display:none">
 				<ul id="test_ul">
-					<li class="header" id="test_li_0">Resources</li>
-          <li class="test_button" id="nav_rdf_resource">Add new RDF Resource</li>									  
+          <% if @pipe.root %>
+					  <li class="header" id="test_li_0">Resources</li>
+            <li class="test_button" id="nav_rdf_resource">Add new RDF Resource</li>									  
+          <% end %>
 					<li class="header" id="test_li_0">Operators</li>
 					<li class="test_button" id="test_li_1">Regex</li>
 					<li class="test_button" id="test_li_2">Union</li>
@@ -133,6 +135,8 @@
     <!-- jsBox -->
     <script type="text/javascript" src="/javascripts/jsBox.js"></script>
     <script type="text/javascript" src="/javascripts/lastBox.js"></script>
+    <script type="text/javascript" src="/javascripts/repositoryBox.js"></script>
+
 		
 		
 		<%= yield :javascript %>
