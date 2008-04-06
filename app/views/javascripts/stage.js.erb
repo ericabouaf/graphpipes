@@ -2,6 +2,8 @@ var ok_sheet
 var login_sheet
 var sources_sheet
 
+var sources = []
+
 var library_window
 
 if (! ("console" in window) || !("firebug" in console)) {
@@ -81,7 +83,15 @@ Event.observe(window, 'dom:loaded', function() {
     login_sheet = new Sheet($("login_sheet"))
     sources_sheet = new Sheet($("sources_sheet"))
 
-  
+    sources = [    
+    <% current_user.sources.each_with_index do |s,i| %>
+      { name: '<%= s.name %>', iri: '12' }
+      <% unless i == current_user.sources.length %> , <% end %>
+    <% end %>
+    ]    
+    
+    console.log(sources)
+    
    toogle_library_window()
    init_tooltips()
   
@@ -90,6 +100,37 @@ Event.observe(window, 'dom:loaded', function() {
       Patches.push(new Patch(button, {id: button.id}))
     })
   })
+
+  
+  $('add_rdf_button').observe('click', function(){
+     new Ajax.Request('<%= user_sources_path(current_user)%>', {
+        asynchronous:true, 
+        evalScripts:true, 
+        method: 'post',
+        parameters:Form.serialize($('sources-form')),
+  
+        onSuccess: function(transport) {    
+          var response = (transport.responseText.evalJSON(true));   
+          
+          if (!response.success) {
+            var header_text = $$('#sources_sheet div.sheet_header h5').first()
+            header_text.addClassName('error').innerHTML = response.error_message || 'Ups!'
+            return
+          } 
+          sources.push({name: response.name, iri: response.iri})
+          console.log(sources)
+          
+          sources_sheet.hide(); 
+          return false;
+        },
+        onFailure: function(transport) {
+          header_text.addClassName('error').innerHTML = 'Could not connect to server.'    
+          console.log('Could not connect to server.')
+          sources_sheet.hide(); return false;             
+        }
+      });       
+     return false
+   })
   
  jsBox.jsBoxLayer = new WireIt.Layer(window.boxes);
 })

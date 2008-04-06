@@ -52,9 +52,22 @@ class SourcesController < ApplicationController
         flash[:notice] = 'Source was successfully created.'
         format.html { redirect_to(user_sources_path(current_user)) }
         format.xml  { render :xml => @source, :status => :created, :location => @source }
+        format.js { render :json => {
+            :object => "source", 
+            :success => true, 
+            :iri => @source.iri,
+            :name => @source.name,
+            :error_message => 'Source was successfully created.'
+          } 
+        }
+          
       else
         format.html { render :action => "new" }
         format.xml  { render :xml => @source.errors, :status => :unprocessable_entity }
+         format.js { render :json => {
+            :object => "source", 
+            :success => false, 
+            :error_message => '' } }        
       end
     end
   end
