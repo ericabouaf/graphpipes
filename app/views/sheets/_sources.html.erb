@@ -1,0 +1,24 @@
+<div id="sources_sheet" class="sheet">
+	<div class="sheet_header message">
+		<h5>Add a new resource to this pipe</h5>
+	</div>
+	
+	<form action="<%= new_user_source_path(current_user) %>" id="login-form" method="post">
+		
+		<div class="login-form">      
+			<p><%= collection_select(:source, :iri, current_user.sources.find(:all), :id, :name, options ={:prompt => "-Select a resource"}, :class =>"source")
+       %></p>						
+       <br>       <br>
+       <p>	<a class="button" href="<%= new_user_source_path(current_user) %>"><span>Create a new resource</span></a>
+			</p>
+		</div>
+
+		<div class="sheet_footer login-form">
+			<p class="btns">
+				<a class="button" href="#" onclick="sources_sheet.hide(); return false;"><span>Cancel</span></a>
+				<a class="button" href="#" onclick="sources_sheet.hide(); return false;"><span>Add</span></a>					
+			</p>
+		</div>
+		
+	</form>
+</div>

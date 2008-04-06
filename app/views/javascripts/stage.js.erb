@@ -1,5 +1,7 @@
 var ok_sheet
 var login_sheet
+var sources_sheet
+
 var library_window
 
 if (! ("console" in window) || !("firebug" in console)) {
@@ -26,10 +28,10 @@ var toogle_library_window = function() {
       resizable: true,
       id: 'library',
       shadow:false,
-      height: 300,
+      height: 350,
       top: 200,
       width: 250, 
-      left: 800, 
+      left: 750, 
       superflousEffects: true,  
     }).setContent($('tools').innerHTML).setZIndex(1000).show()
   } else {
@@ -77,6 +79,8 @@ Event.observe(window, 'dom:loaded', function() {
   
     ok_sheet = new Sheet($("dummy_sheet"))
     login_sheet = new Sheet($("login_sheet"))
+    sources_sheet = new Sheet($("sources_sheet"))
+
   
    toogle_library_window()
    init_tooltips()
