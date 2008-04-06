@@ -1,27 +1,17 @@
-<h1>Editing source</h1>
+
+
+<div class='form-content'>
+<h2>Editing a resource</h2> 
 
 <%= error_messages_for :source %>
 
-<% form_for(@source) do |f| %>
-  <p>
-    <b>User</b><br />
-    <%= f.text_field :user_id %>
-  </p>
+<% form_for(:source, :url => user_source_url(current_user, @source.id), :html => { :method => :put }) do |f| %>
+  <%= render :partial => "form", :locals => { :f => f } %>
+</div>
 
-  <p>
-    <b>Name</b><br />
-    <%= f.text_field :name %>
-  </p>
+<%= link_button h("Show #{@source.name}"), :url => user_source_path(current_user, @source) %>
 
-  <p>
-    <b>Iri</b><br />
-    <%= f.text_field :iri %>
-  </p>
+<%= link_button 'Cancel and show all resources', :url =>  user_sources_path(current_user) %>
+<%=submit_tag "Update #{@source.name}"%>
 
-  <p>
-    <%= f.submit "Update" %>
-  </p>
 <% end %>
-
-<%= link_to 'Show', user_source_path(current_user, @source) %> |
-<%= link_to 'Back', user_sources_path(current_user) %>
