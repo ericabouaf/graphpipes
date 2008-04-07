@@ -11,10 +11,7 @@ window.boxes = {
         
         <%= "{xtype: #{node.kind}, id: #{node.id}, position: [#{node.x}, #{node.y}], 
         codeText: '#{node.content}' + ' ' + #{node.id}, has_pipe: #{has_pipe} }"%>,
-      <% end %>
-      
-      {xtype: lastBox, position: [500, 600], close: false, codeText: 'Last', has_pipe: false, ddHandleClassName: 'WireIt-Container-ddhandle-last' }
-      
+      <% end %>      
     ],
     
     wires: [

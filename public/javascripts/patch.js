@@ -14,21 +14,41 @@ var Patch = Class.create({
     }
   },
   
- new_nav_rdf_resource: function(as) {
-   this.build_me('repositoryBox')
- },
-  
-  new_regex: function(as) {
-    this.build_me('jsBox')  
+  new_nav_rdf_resource: function(as) {
+   this.build_me('nodeBox', 'node_repo')
   },
   
-  new_union: function(as) {
-    this.build_me('jsBox')  
+  new_nav_subgraph: function(as) {
+   this.build_me('nodeBox', 'node_subgraph')
+  },  
+  
+  new_nav_condition: function(as) {
+    this.build_me('nodeBox', 'node_condition')    
+  },
+
+  new_nav_union: function(as) {
+    this.build_me('nodeBox', 'node_union')    
+  },
+
+  new_nav_join: function(as) {
+    this.build_me('nodeBox', 'node_join')    
   },
   
-  build_me: function(namespace) {
+  new_nav_filter: function(as) {
+    this.build_me('nodeBox', 'node_filter')    
+  },
+  
+  new_nav_condition: function(as) {
+    this.build_me('nodeBox', 'node_condition')    
+  },  
+
+  new_nav_construct: function(as) {
+    this.build_me('nodeBox', 'node_construct')    
+  },
+
+  build_me: function(namespace, element) {
     var name = namespace 
-    window[name].addModule();
+    window[name].addModule(element);
   }
 })
 

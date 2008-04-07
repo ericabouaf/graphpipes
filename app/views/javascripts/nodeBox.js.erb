@@ -2,13 +2,17 @@
  * @class jsBox
  * @constructor
  */
-var repositoryBox = function(config, layer) {
+var nodeBox = function(config, layer) {
    jsBox.superclass.constructor.call(this, config, layer);
    
-   this.el.setStyle({height:'100px', width:'200px'})   
-
-   this.build_from($('node_repo'))
-  //this.buildTextArea(this.config.codeText || "function(e) {\n\n  return 0;\n}");
+   this.el.setStyle({height:'110px', width:'200px'})   
+   
+   if (config.element == 'node_subgraph'){
+     console.log('node_subgraph!!!!!!!!!!')
+     this.el.addClassName('has_pipe')        
+   }
+   
+   this.build_from($(config.element))
    this.nParams = this.getNbrInputs();
    this.createTerminals();
    
@@ -34,10 +38,9 @@ var repositoryBox = function(config, layer) {
       YAHOO.util.Dom.setStyle(this.textarea, "height", (args[0][1]-30)+"px");
    }, this, true);
    
-
 };
 
-YAHOO.extend(repositoryBox, WireIt.Container, {
+YAHOO.extend(nodeBox, WireIt.Container, {
     getPostion:function(){
       return {x: this.el.getStyle('left'), y: this.el.getStyle('left')}
     },
@@ -54,7 +57,7 @@ YAHOO.extend(repositoryBox, WireIt.Container, {
       //var sParamList = this.textarea.value.match(/^[ ]*function[ ]*\((.*)\)[ ]*{/)[1];
       //var params = sParamList.split(',');
       //var nParams = (sParamList == "") ? 0 : parseInt(params.length);
-      return 0/*nParams;*/
+      return 1/*nParams;*/
    },
    
    /**
@@ -113,7 +116,7 @@ YAHOO.extend(repositoryBox, WireIt.Container, {
     * Execute the module
     */
    execute: function() {
-     console.log('repositoryBox::execute')
+     console.log('nodeBox::execute')
      console.log(this.getPostion())
 
       // Eval each of the parameter functions : 
@@ -150,7 +153,7 @@ YAHOO.extend(repositoryBox, WireIt.Container, {
 /**
  * Static function to run the "program"
  */
-repositoryBox.run = function() {
+nodeBox.run = function() {
    console.log(this.getPostion())
    
    // Clear the previous results
@@ -176,6 +179,6 @@ repositoryBox.run = function() {
 /**
  * Adds a jsBox to the layer
  */
-repositoryBox.addModule = function () {
-   jsBox.jsBoxLayer.addContainer({xtype: repositoryBox, position: [50,250],});
+nodeBox.addModule = function (element) {
+   jsBox.jsBoxLayer.addContainer({xtype: nodeBox, position: [50,250], element:element});
 };

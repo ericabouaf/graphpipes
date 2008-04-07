@@ -19,7 +19,6 @@ class PipesController < ApplicationController
   
   def show
     @parent_pipes = find_parental_pipe
-    debugger
     @pipe = current_user.pipes.find_by_id params[:id]
     
     raise ActiveRecord::RecordNotFound if @pipe.nil?
@@ -42,8 +41,10 @@ class PipesController < ApplicationController
   
   def create
     @pipe = Pipe.new params[:pipe].merge(:user_id => current_user.id)
+        
     if @pipe.save
-    
+      @pipe.nodes.create :kind => "lastBox", :x => 300, :y => 250, :content => 'Terminal Box', :has_pipe => false
+      
       respond_to do |format|
         format.html { redirect_to user_pipe_path(current_user, @pipe) }
       end
