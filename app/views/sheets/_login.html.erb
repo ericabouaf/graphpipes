@@ -1,0 +1,22 @@
+	<div id="login_sheet" class="sheet">
+		<div class="sheet_header">
+			<h5>Login with your email address and passwort:</h5>
+		</div>
+		
+		<form action="/login" id="login-form" method="post">
+			
+			<div class="login-form">              
+				<!-- <img src="images/graphpipes_icon.png" width="111" height="110" alt="Graphpipes Icon" id='overlay-icon'> -->
+				<p><label for="login">Login:</label><input class="big" id="login" name="login" type="text" /></p>
+				<p><label for="password">Password:</label><input class="big" id="password" name="password" type="password" /></p>						
+			</div>
+
+			<div class="sheet_footer">
+				<p class="btns">
+					<a class="button" href="#" onclick="login_sheet.hide(); return false;"><span>Cancel</span></a>
+					<a class="button" href="#" onclick="login_sheet.hide(); return false;"><span>Login</span></a>					
+				</p>
+			</div>
+			
+		</form>
+	</div>

@@ -1,0 +1,17 @@
+.node {
+	background-color: rgba(0,0,0,0.5);
+	width: 100%;
+	height: 90px;
+	font-size: 11px;
+	color: #fff;
+}
+
+.node .content {
+	padding: 3px 5px;
+}
+
+.node .content p{
+	font: 11px "Lucida Grande", Lucida, Verdana, sans-serif;
+	color: #fff;
+	margin-bottom: 6px;
+}

@@ -1,0 +1,25 @@
+= link_button "Add a rdf resource", :id => "create_source", :url => new_user_source_path(current_user)
+
+%br
+  
+- unless @sources.blank?
+
+  - @sources.each do |source| 
+    %p.pipe
+      = link_to h(source.name), user_source_path(current_user, source.id)
+      
+      %br
+      %span.note
+        = h source.iri 
+      |
+      = link_to "Edit", edit_user_source_path(current_user, source.id), :class => 'small'
+      |
+      = link_to "Delete", user_source_path(current_user, source), :method => :delete, :confirm => "Are you sure you want to delete this pipe?", :class => 'small'  
+      
+-else
+  %p 
+    You did not create a source yet. 
+    = link_to "Do you want to do this now?", new_user_source_path(current_user)
+    
+      
+=#fsd javascript_include_tag :defaults 

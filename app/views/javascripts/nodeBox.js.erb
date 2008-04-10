@@ -2,10 +2,17 @@
  * @class jsBox
  * @constructor
  */
-var lastBox = function(config, layer) {
+var nodeBox = function(config, layer) {
    jsBox.superclass.constructor.call(this, config, layer);
    
-  //this.buildTextArea(this.config.codeText || "function(e) {\n\n  return 0;\n}");
+   this.el.setStyle({height:'110px', width:'200px'})   
+   
+   if (config.element == 'node_subgraph'){
+     console.log('node_subgraph!!!!!!!!!!')
+     this.el.addClassName('has_pipe')        
+   }
+   
+   this.build_from($(config.element))
    this.nParams = this.getNbrInputs();
    this.createTerminals();
    
@@ -31,28 +38,17 @@ var lastBox = function(config, layer) {
       YAHOO.util.Dom.setStyle(this.textarea, "height", (args[0][1]-30)+"px");
    }, this, true);
    
-   this.el.setStyle({height:'19px'})   
 };
 
-YAHOO.extend(lastBox, WireIt.Container, {
+YAHOO.extend(nodeBox, WireIt.Container, {
     getPostion:function(){
       return {x: this.el.getStyle('left'), y: this.el.getStyle('left')}
     },
-   buildTextArea: function(codeText) {
+    
+    build_from: function(element) {
+      this.el.appendChild(element);      
+    },
 
-     var text_area_width = parseInt(YAHOO.util.Dom.getStyle(this.el, 'width')) - 10
-      this.textarea = WireIt.cn('textarea', null, {width: text_area_width + "px", height: "70px", border: "0", padding: "5px"}, codeText);
-      this.el.appendChild(this.textarea);
-
-      YAHOO.util.Event.addListener(this.textarea, 'change', function() {
-         var nParams = this.getNbrInputs();
-         if( nParams != this.nParams) {
-            this.nParams = nParams;
-            this.createTerminals();
-         }
-      }, this, true);
-      
-   },
    
    /**
     * Parse the textarea code to get the number of input parameters
@@ -78,9 +74,9 @@ YAHOO.extend(lastBox, WireIt.Container, {
          WireIt.sn(term.el, null, {position: "absolute", top: "-15px"});
       }
 
-   	// var term = this.addTerminal({xtype: WireIt.util.TerminalOutput});      
-   	//       term.jsBox = this;
-   	//       WireIt.sn(term.el, null, {position: "absolute", bottom: "-15px"});
+    var term = this.addTerminal({xtype: WireIt.util.TerminalOutput});      
+          term.jsBox = this;
+          WireIt.sn(term.el, null, {position: "absolute", bottom: "-15px"});
    	
       this.positionTerminals();
 
@@ -92,6 +88,9 @@ YAHOO.extend(lastBox, WireIt.Container, {
     * Reposition the terminals
     */
    positionTerminals: function() {
+     if (this.terminals.length == 0) {
+       return
+     }
       // Calculate the width
       var widthStr = YAHOO.util.Dom.getStyle(this.el, 'width');
       var width = parseInt( widthStr.substr(0,widthStr.length-2), 10);
@@ -117,7 +116,7 @@ YAHOO.extend(lastBox, WireIt.Container, {
     * Execute the module
     */
    execute: function() {
-     console.log('lastBox::execute')
+     console.log('nodeBox::execute')
      console.log(this.getPostion())
 
       // Eval each of the parameter functions : 
@@ -154,7 +153,7 @@ YAHOO.extend(lastBox, WireIt.Container, {
 /**
  * Static function to run the "program"
  */
-lastBox.run = function() {
+nodeBox.run = function() {
    console.log(this.getPostion())
    
    // Clear the previous results
@@ -180,6 +179,6 @@ lastBox.run = function() {
 /**
  * Adds a jsBox to the layer
  */
-lastBox.addModule = function () {
-   jsBox.jsBoxLayer.addContainer({xtype: lastBox, position: [50,250],});
+nodeBox.addModule = function (element) {
+   jsBox.jsBoxLayer.addContainer({xtype: nodeBox, position: [50,250], element:element});
 };

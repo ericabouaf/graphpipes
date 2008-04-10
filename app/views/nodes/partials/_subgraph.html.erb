@@ -1,0 +1,8 @@
+<div class='node' id="node_subgraph">
+  <div class='content'>
+    <p>SUBGRAPH</p>
+    <%pipes = @pipe.user.pipes %>
+    <%= collection_select(:pipe, :id, pipes, :id, :title, options ={:prompt => "Select a pipe"}, :class =>"pipe") %>
+    <input type='checkbox'> optional
+  </div>
+</div>

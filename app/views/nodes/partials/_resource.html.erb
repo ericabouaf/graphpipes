@@ -1,0 +1,14 @@
+<div class='node' id="node_repo">
+  <div class='content'>
+    <p>FROM Resources<p>
+    <form name='repo1'>
+      <input type='checkbox'>
+      <% sources = @pipe.user.sources %>
+      <%= collection_select(:source, :id, sources, :id, :name, options ={:prompt => "Select a resource"}, :class =>"source") %>
+     
+     
+      <img src='/images/add_row.png' />
+      <img src='/images/remove_row.png' />  
+    </form>
+  </div>
+</div>

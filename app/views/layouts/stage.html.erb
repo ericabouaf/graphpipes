@@ -12,6 +12,7 @@
 	  <link href="/stylesheets/themes/window/window.css" rel="stylesheet" type="text/css"> 		
  		<link href="/stylesheets/themes/window/black_hud.css" rel="stylesheet" type="text/css">
 				
+    <link rel="stylesheet" type="text/css" href="/stylesheets/nodes.css" />
 
     
 	</head>
@@ -41,8 +42,7 @@
 				<li class="icon library right" tooltip="Toogle the library's visibility"><a href="#" onclick="toogle_library_window();">Library</a></li>
         <li class="spacer right"><i>|</i></li>	
 				
-				<li class="icon new_pipe right" tooltip="Add a rdf resource">
-				  <%= link_to 'Add RDF', user_sources_path(current_user) %></li>	
+				<li class="icon new_pipe right" tooltip="Add a rdf resource"><a href="#" onclick="sources_sheet.show();">Add RDF</a></li>	
 			</ul>
 		</div>
 		
@@ -80,58 +80,40 @@
 	
 
 	
-		<div id="dummy_sheet" class="sheet">
-			<div class="sheet_header message">
-				<h5>Sorry. This feature is not implemented yet!</h5>
-			</div>
-			<div class="sheet_footer">
-				<p class="btns">
-					<a class="button" href="#" onclick="ok_sheet.hide(); return false;"><span>OK!</span></a>
-				</p>
-			</div>			
-		</div>
-		
-		<div id="login_sheet" class="sheet">
-			<div class="sheet_header">
-				<h5>Login with your email address and passwort:</h5>
-			</div>
-			
-			<form action="/login" id="login-form" method="post">
-				
-				<div class="login-form">              
-					<!-- <img src="images/graphpipes_icon.png" width="111" height="110" alt="Graphpipes Icon" id='overlay-icon'> -->
-					<p><label for="login">Login:</label><input class="big" id="login" name="login" type="text" /></p>
-					<p><label for="password">Password:</label><input class="big" id="password" name="password" type="password" /></p>						
-				</div>
-
-				<div class="sheet_footer">
-					<p class="btns">
-						<a class="button" href="#" onclick="login_sheet.hide(); return false;"><span>Cancel</span></a>
-						<a class="button" href="#" onclick="login_sheet.hide(); return false;"><span>Login</span></a>					
-					</p>
-				</div>
-				
-			</form>
-		</div>
+    <%= render :partial => 'sheets/notification' %>
+    <%= render :partial => 'sheets/login' %>
+    <%= render :partial => 'sheets/sources' %>	
 		
 			<div id="tools" style="display:none">
 				<ul id="test_ul">
+          <% if @pipe.root %>
+					  <li class="header" id="test_li_0">Resources</li>
+            <li class="test_button" id="nav_rdf_resource">Add new RDF Resource</li>				
+            <li class="test_button" id="nav_subgraph">Add a Subgraph</li>				            		  
+          <% end %>				            
 					<li class="header" id="test_li_0">Operators</li>
-					<li class="test_button" id="test_li_1">Regex</li>
-					<li class="test_button" id="test_li_2">Union</li>
-					<li class="test_button" id="test_li_3">Join</li>
-					<li class="test_button" id="test_li_4">Bound</li>					
-					<li class="test_button" id="test_li_5">Filter</li>
-					<li class="test_button" id="test_li_6">Optional</li>
-					<li class="test_button" id="test_li_7">Prefix</li>
+  					<li class="test_button" id="nav_condition">Where</li>
+  					<li class="test_button" id="nav_union">Union</li>
+  					<li class="test_button" id="nav_join">Join</li>
+  					<li class="test_button" id="nav_filter">Filter</li>
+            <li class="test_button" id="nav_construct">Construct</li>	
 					<li class="header">Special</li>
-					<li class="test_button" id="test_li_4">!=</li>
+  					<li class="test_button" id="unequal">!=</li>
 															
 				</ul>
 			</div>	
 		
 		</div>	
 		
+    <%= render :partial => 'nodes/partials/resource' %>			
+    <%= render :partial => 'nodes/partials/subgraph' %>			
+    <%= render :partial => 'nodes/partials/condition' %>			
+    <%= render :partial => 'nodes/partials/union' %>			
+    <%= render :partial => 'nodes/partials/join' %>			    
+    <%= render :partial => 'nodes/partials/filter' %>	    
+    <%= render :partial => 'nodes/partials/construct' %>					
+    
+    
     <script src="/javascripts/prototype.js" type="text/javascript"></script>
     <script src="/javascripts/scriptaculous.js" type="text/javascript"></script>
     
@@ -162,6 +144,9 @@
     <!-- jsBox -->
     <script type="text/javascript" src="/javascripts/jsBox.js"></script>
     <script type="text/javascript" src="/javascripts/lastBox.js"></script>
+    <script type="text/javascript" src="/javascripts/repositoryBox.js"></script>
+    <script type="text/javascript" src="/javascripts/nodeBox.js"></script>
+
 		
 		
 		<%= yield :javascript %>

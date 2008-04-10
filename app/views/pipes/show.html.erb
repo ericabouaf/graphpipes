@@ -5,14 +5,13 @@
 
 window.boxes = {
 
-    containers: [
-
+    containers: [      
       <% @pipe.nodes.each_with_index do |node, index| %>
         <% has_pipe = node.has_pipe.blank? ? false : "'#{node.has_pipe}'" %>
-        <%= "{xtype: #{node.kind}, id: #{node.id}, position: [#{node.x}, #{node.y}], codeText: '#{node.content}' + ' ' + #{node.id}, has_pipe: #{has_pipe} }"%>,
-      <% end %>
-      {xtype: lastBox, position: [500, 600], close: false, codeText: 'Last', has_pipe: false, ddHandleClassName: 'WireIt-Container-ddhandle-last' }
-      
+        
+        <%= "{xtype: #{node.kind}, id: #{node.id}, position: [#{node.x}, #{node.y}], 
+        codeText: '#{node.content}' + ' ' + #{node.id}, has_pipe: #{has_pipe} }"%>,
+      <% end %>      
     ],
     
     wires: [

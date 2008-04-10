@@ -50,11 +50,24 @@ class SourcesController < ApplicationController
     respond_to do |format|
       if @source.save
         flash[:notice] = 'Source was successfully created.'
-        format.html { redirect_to(@source) }
+        format.html { redirect_to(user_sources_path(current_user)) }
         format.xml  { render :xml => @source, :status => :created, :location => @source }
+        format.js { render :json => {
+            :object => "source", 
+            :success => true, 
+            :iri => @source.iri,
+            :name => @source.name,
+            :error_message => 'Source was successfully created.'
+          } 
+        }
+          
       else
         format.html { render :action => "new" }
         format.xml  { render :xml => @source.errors, :status => :unprocessable_entity }
+         format.js { render :json => {
+            :object => "source", 
+            :success => false, 
+            :error_message => '' } }        
       end
     end
   end
@@ -67,7 +80,7 @@ class SourcesController < ApplicationController
     respond_to do |format|
       if @source.update_attributes(params[:source])
         flash[:notice] = 'Source was successfully updated.'
-        format.html { redirect_to(@source) }
+        format.html { redirect_to(user_source_path(current_user, @source)) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -83,7 +96,7 @@ class SourcesController < ApplicationController
     @source.destroy
 
     respond_to do |format|
-      format.html { redirect_to(sources_url) }
+      format.html { redirect_to(user_sources_url) }
       format.xml  { head :ok }
     end
   end

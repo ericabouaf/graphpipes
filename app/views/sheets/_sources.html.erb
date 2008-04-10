@@ -1,0 +1,34 @@
+<div id="sources_sheet" class="sheet">
+	<div class="sheet_header message">
+		<h5>RDF Resources</h5>
+	</div>
+	
+	<form action="<%= new_user_source_path(current_user) %>" id="sources-form" method="post">
+		
+		<!--  -->
+		<div class="login-form" style="height:180px;">      
+			<p>
+        <a class="button" href="<%= user_sources_path(current_user) %>"><span>View all Resources</span></a>
+			 
+       </p>						
+       <br>
+              <br>
+       <hr style="width:395px">
+       <br>      
+      <% remote_form_for(:source, :url => user_sources_path(current_user), :method => :post) do |f| %>
+ 			  <%= render :partial => 'sources/simple_form', :locals => { :f => f } %>
+			<p>				
+      </p>
+ 			<% end %>
+		</div>
+
+		<div class="sheet_footer login-form">
+			<p class="btns" style="float:right;">
+			  <a class="button" href="#" onclick="sources_sheet.hide(); return false;"><span>Cancel</span></a>			  
+        <a class="button" href="#" id="add_rdf_button"><span>Add</span></a>
+			</p>
+
+			
+		</div>
+		</form>
+</div>
