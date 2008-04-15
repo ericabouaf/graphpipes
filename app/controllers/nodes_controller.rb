@@ -35,8 +35,7 @@ class NodesController < ApplicationController
   end
   
   def update
-    
-    
+
     respond_to do |format|
       format.xml  { head :ok }    
     end
