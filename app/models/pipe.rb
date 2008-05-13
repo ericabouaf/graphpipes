@@ -6,7 +6,6 @@ class Pipe < ActiveRecord::Base
   # end  
   
   validates_presence_of :title
-dependent
   has_many :nodes#, #:dependent => :destroy
   has_many :edges#, :dependent => :destroy
   belongs_to :node
