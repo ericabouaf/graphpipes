@@ -1,11 +1,16 @@
 var ok_sheet
 var login_sheet
 var sources_sheet
+var runner_sheet
 
 var sources = []
 
 var library_window
 
+
+
+// 'Fix Firefox': if console object from firebug is not present, the scripts would not run.
+// Fix: create an empty stub
 if (! ("console" in window) || !("firebug" in console)) {
     var names = ["log", "debug", "info", "warn", "error", "assert", "dir", "dirxml", "group"
                  , "groupEnd", "time", "timeEnd", "count", "trace", "profile", "profileEnd"];
@@ -79,6 +84,8 @@ var Patches = []
 
 Event.observe(window, 'dom:loaded', function() {
   
+  
+    runner_sheet = new Sheet($("runner_sheet"))
     ok_sheet = new Sheet($("dummy_sheet"))
     login_sheet = new Sheet($("login_sheet"))
     sources_sheet = new Sheet($("sources_sheet"))
@@ -101,6 +108,55 @@ Event.observe(window, 'dom:loaded', function() {
     })
   })
 
+// RUN PIPE
+  $('pipe_runner').observe('click', function(){
+    
+    <% debugger %>
+    runner_sheet.show()
+    console.log('running query')
+    
+    new Ajax.Request('<%= run_user_pipe_path(current_user, @id) %>', {
+        asynchronous:true, 
+        evalScripts:true, 
+        method: 'post',
+        parameters: '123',
+  
+        onSuccess: function(transport) {    
+          var response = (transport.responseText.evalJSON(true));   
+          
+          console.log(response.xml) 
+                    
+          if (!response.success) {
+            var header_text = $$('#runner_sheet div.status-message p').first()
+            header_text.addClassName('error').innerHTML = response.error_message || 'Ups!'
+            return
+          } else {
+            var header_text = $$('#runner_sheet div.status-message p').first()
+            // show button
+            
+            $('visit-button').observe('click', function() {
+              runner_sheet.hide()
+              window.open(response.path)
+            })
+            
+            $('query-button').observe('click', function() {
+              runner_sheet.hide()
+              window.open(response.query_path)
+            })            
+            
+            $('visit-button').setStyle({visibility: 'visible'})
+            $('query-button').setStyle({visibility: 'visible'})
+
+            header_text.addClassName('error').innerHTML = 'Ok. All went well.'
+          }
+          return false;
+        },
+        onFailure: function(transport) {   
+          console.log('Could not connect to server.') 
+        }
+      });       
+     return false
+   })
   
   $('add_rdf_button').observe('click', function(){
      new Ajax.Request('<%= user_sources_path(current_user)%>', {

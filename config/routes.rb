@@ -4,7 +4,7 @@ ActionController::Routing::Routes.draw do |map|
 
   # map.resources :users, :has_many => :pipes
   map.resources :users do |user|
-    user.resources :pipes do |node|
+    user.resources :pipes, :member => {:run => :post} do |node|
       node.resources :nodes
       node.resources :edges      
     end
@@ -22,6 +22,7 @@ ActionController::Routing::Routes.draw do |map|
   # map.logout '/dashboard', :controller => 'pipes', :action => "dashboard"
   
   map.site '/:action', :controller => 'site'
+  map.javascript '/javascripts/:action/:pipe_id.:format', :controller => 'javascripts'   
   map.javascript '/javascripts/:action.:format', :controller => 'javascripts' 
   
   # map.connect ':controller/:action/:id'

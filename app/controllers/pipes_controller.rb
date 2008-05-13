@@ -1,3 +1,8 @@
+require 'rubygems'
+require 'rest_client'
+require 'hpricot'
+require 'digest/sha1'
+
 class PipesController < ApplicationController
   before_filter :login_required
   
@@ -5,6 +10,38 @@ class PipesController < ApplicationController
   
   def dashboard
     redirect_to user_pipes_path(current_user)
+  end
+  
+  # 3 running the pipe in worker (todo)
+  # 2 currently: just build the query and send to server
+  # 2 render response to file /responses/time/
+  # send link to response to client
+  # 1 send testquery to server
+  def run 
+    
+    # all inline
+    # todo: refactor to /lib
+    
+    query = URI.escape 'select x from {x} <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> {<http://www.w3.org/2002/07/owl#Class>}'
+    xml = RestClient.get "http://k-sems.uni-koblenz.de/openrdf-sesame/repositories/k-sems?query=#{query}&queryLn=serql"
+  
+    file_name = Digest::SHA1.hexdigest(xml)
+    
+    File.open("#{RAILS_ROOT}/public/responses/#{file_name}.txt", 'w') {|f| f.write(xml) }
+    File.open("#{RAILS_ROOT}/public/responses/#{file_name}.query.txt", 'w') {|f| f.write(URI.unescape query) }
+  
+  
+    respond_to do |format|
+      format.js { 
+        render :json => { :object => "session", 
+                          :success => true,
+                          :query => query,
+                          :query_path => "/responses/#{file_name}.query",
+                          :file_name => file_name,
+                          :path => "/responses/#{file_name}" } 
+      }
+    end
+    
   end
   
   def index

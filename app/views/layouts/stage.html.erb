@@ -71,7 +71,7 @@
 				</ul>
 			</div>
 			<div id="crumbs_endfix"> </div>			
-			<a class="button right help" href="#" onclick="jsBox.run(); return false;" tooltip="Ready! Set! Go!"><span>Run Pipe</span></a>
+			<a class="button right help" id='pipe_runner' href="#" tooltip="Go!"><span>Run Pipe</span></a>
 		</div>
 		
 		<div id="main_stage">
@@ -83,6 +83,7 @@
     <%= render :partial => 'sheets/notification' %>
     <%= render :partial => 'sheets/login' %>
     <%= render :partial => 'sheets/sources' %>	
+    <%= render :partial => 'sheets/runner' %>  
 		
 			<div id="tools" style="display:none">
 				<ul id="test_ul">
@@ -153,7 +154,7 @@
     
 		
     <!-- APPLICATION -->    
-		<script src="/javascripts/stage.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/javascripts/stage/<%= @pipe.id %>.js" type="text/javascript" charset="utf-8"></script>
 		
 	</body>
 </html>
