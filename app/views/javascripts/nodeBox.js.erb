@@ -12,6 +12,8 @@ var nodeBox = function(config, layer) {
      this.el.addClassName('has_pipe')        
    }
    
+   console.log($(config.element))
+   
    this.build_from($(config.element))
    this.nParams = this.getNbrInputs();
    this.createTerminals();
@@ -46,7 +48,7 @@ YAHOO.extend(nodeBox, WireIt.Container, {
     },
     
     build_from: function(element) {
-      this.el.appendChild(element);      
+      this.el.appendChild(element.cloneNode(true));      
     },
 
    

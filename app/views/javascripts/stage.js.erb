@@ -7,8 +7,6 @@ var sources = []
 
 var library_window
 
-
-
 // 'Fix Firefox': if console object from firebug is not present, the scripts would not run.
 // Fix: create an empty stub
 if (! ("console" in window) || !("firebug" in console)) {
@@ -83,11 +81,10 @@ var error = function(error) {
 var Patches = []
 
 Event.observe(window, 'dom:loaded', function() {
-  
-  
-    runner_sheet = new Sheet($("runner_sheet"))
-    ok_sheet = new Sheet($("dummy_sheet"))
-    login_sheet = new Sheet($("login_sheet"))
+
+    runner_sheet  = new Sheet($("runner_sheet"))
+    ok_sheet      = new Sheet($("dummy_sheet"))
+    login_sheet   = new Sheet($("login_sheet"))
     sources_sheet = new Sheet($("sources_sheet"))
 
     sources = [    
@@ -96,8 +93,6 @@ Event.observe(window, 'dom:loaded', function() {
       <% unless i == current_user.sources.length %> , <% end %>
     <% end %>
     ]    
-    
-    console.log(sources)
     
    toogle_library_window()
    init_tooltips()
@@ -132,7 +127,6 @@ Event.observe(window, 'dom:loaded', function() {
             return
           } else {
             var header_text = $$('#runner_sheet div.status-message p').first()
-            // show button
             
             $('visit-button').observe('click', function() {
               runner_sheet.hide()
@@ -179,6 +173,7 @@ Event.observe(window, 'dom:loaded', function() {
           sources_sheet.hide(); 
           return false;
         },
+        
         onFailure: function(transport) {
           header_text.addClassName('error').innerHTML = 'Could not connect to server.'    
           console.log('Could not connect to server.')
