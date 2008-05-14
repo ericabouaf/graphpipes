@@ -872,7 +872,7 @@ YAHOO.extend(WireIt.util.DD, YAHOO.util.DD, {
     * Override YAHOO.util.DD.prototype.onDrag to redraw the wires
     */
     onMouseUp: function(e) {    
-      this._domRef.fire("drag:done", { target: this._domRef });     // prototype.js event
+      e.rangeParent.fire("drag:done", { target: e.rangeParent});     // prototype.js event
     },
     
    onDrag: function(e) {
@@ -1134,12 +1134,27 @@ WireIt.Container.prototype.render = function() {
  * Called when the user clicked on the close button
  */
 WireIt.Container.prototype.onCloseButton = function() {
-   this.layer.removeContainer(this);
+   
+/*   e.rangeParent.fire("drag:done", { target: e.rangeParent});     // prototype.js event*/
+    var user_id = this.config.user_id
+    var pipe_id = this.config.pipe_id
+    var node_id = this.config.node_id        
+    var me = this
+    
+    new Ajax.Request("/users/" + user_id + "/pipes/" + pipe_id + "/nodes/" + node_id, {
+       method: 'delete',
+       parameters: {},
+       onSuccess: function(transport) {
+         console.log('deleted ' + transport)        
+         me.layer.removeContainer(me);         
+       }
+     });
 };
 
 WireIt.Container.prototype.onEditButton = function() {
   // hack
-  window.open('/users/1/pipes/1/nodes/' + this.config.has_pipe, "_self")
+  console.log('find my in wireit.js on line 1156')
+  //window.open('/users/1/pipes/1/nodes/' + this.config.has_pipe, "_self")
 };
 
 

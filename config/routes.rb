@@ -22,7 +22,10 @@ ActionController::Routing::Routes.draw do |map|
   # map.logout '/dashboard', :controller => 'pipes', :action => "dashboard"
   
   map.site '/:action', :controller => 'site'
-  map.javascript '/javascripts/:action/:pipe_id.:format', :controller => 'javascripts'   
+
+  map.javascript '/javascripts/:action/:user_id/:pipe_id.:format', :controller => 'javascripts'     
+  map.javascript '/javascripts/:action/:user_id/:pipe_id/:node_id.:format', :controller => 'javascripts'   
+  
   map.javascript '/javascripts/:action.:format', :controller => 'javascripts' 
   
   # map.connect ':controller/:action/:id'

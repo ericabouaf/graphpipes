@@ -104,9 +104,14 @@ Event.observe(window, 'dom:loaded', function() {
   })
 
 // RUN PIPE
+  $('show_query').observe('click', function() {
+    ok_sheet.show()
+  })
+
   $('pipe_runner').observe('click', function(){
     
     var parse_nodes = function() {
+      return 'select x from {x} <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> {<http://www.w3.org/2002/07/owl#Class>}'
       // jsBox.jsBoxLayer.containers
         // - config
         // - terminals
@@ -143,22 +148,19 @@ Event.observe(window, 'dom:loaded', function() {
     }
     
     runner_sheet.show()
-    console.log('running query')
     
     new Ajax.Request('<%= run_user_pipe_path(current_user, @id) %>', {
         asynchronous:true, 
         evalScripts:true, 
         method: 'post',
-        parameters: '123',
+        parameters: {query: parse_nodes()},
   
         onSuccess: function(transport) {    
           var response = (transport.responseText.evalJSON(true));   
           
-          console.log(response.xml) 
-                    
           if (!response.success) {
             var header_text = $$('#runner_sheet div.status-message p').first()
-            header_text.addClassName('error').innerHTML = response.error_message || 'Ups!'
+            header_text.addClassName('error').innerHTML = response.error_message || 'What? An Error!'
             return
           } else {
             var header_text = $$('#runner_sheet div.status-message p').first()

@@ -1,12 +1,10 @@
 var Patch = Class.create({
   initialize: function(element, options) {
-    console.log(options.id)
     var kind = options.id || element.innerHTML.toLowerCase()
     this.run(kind)
   },
   run: function(func_name) {
     var operation = this["new_" + func_name]
-    console.log("new_" + func_name)
     if (this["new_" + func_name] != undefined) { 
       this["new_" + func_name](func_name)
     } else {

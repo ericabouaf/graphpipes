@@ -22,14 +22,17 @@ class NodesController < ApplicationController
   end
   
   def create
-    debugger
     @pipe = current_user.pipes.find_by_id(params[:pipe_id])
     @node = Node.new params[:node].merge(:pipe_id => @pipe.id)
 
     if @node.save    
       respond_to do |format|
         format.html { redirect_to user_pipe_path(current_user, @pipe) }
-        format.js { render :json => { :object => "node", :success => true } }
+        format.js { render :json => { :object => "node", 
+                                      :node_id => @node.id, 
+                                      :pipe_id => @pipe.id,                                       
+                                      :user_id => current_user.id,                                       
+                                      :success => true } }
       end
     else 
       respond_to do |format|
@@ -42,29 +45,29 @@ class NodesController < ApplicationController
   end
   
   def update
+    @pipe = current_user.pipes.find_by_id(params[:pipe_id])
+    raise ActiveRecord::RecordNotFound if @pipe.nil?
+    
+    @node = @pipe.nodes.find_by_id params[:id]
+    raise ActiveRecord::RecordNotFound if @node.nil?
+        
     respond_to do |format|
-      format.xml  { head :ok }    
-    end
-    # @pipe = current_user.pipe.find_by_id(params[:pipe_id])
-    #    raise ActiveRecord::RecordNotFound if @pipe.nil?
-    # 
-    #    @node = @pipe.nodes.find_by_id params[:id]
-    #    raise ActiveRecord::RecordNotFound if @node.nil?
-    #     
-    #     respond_to do |format|
-    #       if @node.update_attributes(params[:pipe])
-    #         flash[:notice] = 'The pipe was successfully updated.'
-    #         format.html { redirect_to(edit_user_pipe_path(current_user, @pipe)) }
-    #         format.xml  { head :ok }
-    #       else
-    #         format.html { render :action => "edit" }
-    #         format.xml  { render :xml => @node.errors, :status => :unprocessable_entity }
-    #       end
-    #     end
+      if @node.update_attributes(params[:node])
+            flash[:notice] = 'The node was successfully updated.'
+            format.html { redirect_to(edit_user_pipe_path(current_user, @pipe)) }
+            format.js  { render :json => { :object => "node", 
+                              :success => true} } 
+          else
+            format.html { render :action => "edit" }
+            format.js { render :json => { :object => "node", 
+                              :success => false,
+                              :errorMessage => @node.errors }   }
+            end
+        end
    end
   
    def destroy
-     @pipe = current_user.pipe.find_by_id(params[:pipe_id])
+     @pipe = current_user.pipes.find_by_id(params[:pipe_id])
      raise ActiveRecord::RecordNotFound if @pipe.nil?
 
      @node = @pipe.nodes.find_by_id params[:id]
@@ -76,7 +79,8 @@ class NodesController < ApplicationController
 
      respond_to do |format|
        format.html { redirect_to(user_pipes_path(current_user)) }
-       format.xml  { head :ok }
+       format.js  { render :json => { :object => "node", 
+                         :success => true} }
      end
    end
   

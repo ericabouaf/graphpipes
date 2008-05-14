@@ -70,8 +70,10 @@
 					</li>
 				</ul>
 			</div>
-			<div id="crumbs_endfix"> </div>			
+			<div id="crumbs_endfix"> </div>					
 			<a class="button right help" id='pipe_runner' href="#" tooltip="Go!"><span>Run Pipe</span></a>
+			<a class="button right help" id='show_query' href="#" tooltip="Get the SPQARL query" style='margin-right:10px'><span>Show Query</span></a>
+			
 		</div>
 		
 		<div id="main_stage">
@@ -146,7 +148,7 @@
     <script type="text/javascript" src="/javascripts/jsBox.js"></script>
     <script type="text/javascript" src="/javascripts/lastBox.js"></script>
     <script type="text/javascript" src="/javascripts/repositoryBox.js"></script>
-    <script type="text/javascript" src="/javascripts/nodeBox.js"></script>
+    <script type="text/javascript" src="/javascripts/nodeBox/<%= current_user.id %>/<%= @pipe.id %>.js"></script>
 
 		
 		
@@ -154,7 +156,7 @@
     
 		
     <!-- APPLICATION -->    
-		<script src="/javascripts/stage/<%= @pipe.id %>.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/javascripts/stage/<%= current_user.id %>/<%= @pipe.id %>.js" type="text/javascript" charset="utf-8"></script>
 		
 	</body>
 </html>

@@ -1,27 +1,27 @@
 /**
- * @class jsBox
+ * @class lastBox
  * @constructor
  */
 var lastBox = function(config, layer) {
    jsBox.superclass.constructor.call(this, config, layer);
    
-  //this.buildTextArea(this.config.codeText || "function(e) {\n\n  return 0;\n}");
    this.nParams = this.getNbrInputs();
    this.createTerminals();
-   
-   // Reposition the terminals when the jsBox is being resized
- 
+
   document.observe('node:edit:' + config.id, function() {
     console.log('edit!!')    
   })
  
-  document.observe('drag:done', function() {
-    console.log('drag:done')
+
+  this.el.observe('drag:done', function(event) {
+    var x = event.target.getStyle('left')
+    var y = event.target.getStyle('top')
+  
     new Ajax.Request("/users/1/pipes/1/nodes/1", {
       method: 'put',
-      parameters: {'node[x]': 400, 'node[y]': 400},
+      parameters: {'id: 1, node[x]': x, 'node[y]': y},
       onSuccess: function(transport) {
-        console.log('updated ' + transport.responseText)        
+        console.log('updated ' + transport)        
       }
     });    
   })

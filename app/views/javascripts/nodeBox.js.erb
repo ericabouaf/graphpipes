@@ -11,7 +11,11 @@ var nodeBox = function(config, layer) {
      this.el.addClassName('has_pipe')        
    }
    
-   console.log(config.element)
+   console.log(config)
+   
+   this.el.object_ref = this
+   
+   console.log(this.el)
    
    this.build_from($(config.element))
    this.nParams = this.getNbrInputs();
@@ -22,16 +26,24 @@ var nodeBox = function(config, layer) {
   document.observe('node:edit:' + config.id, function() {
     console.log('edit!!')    
   })
- 
-  document.observe('drag:done', function() {
-    console.log('drag:done')
-    new Ajax.Request("/users/1/pipes/1/nodes/1", {
+
+  Event.observe(this.el, 'drag:done', function(event) {
+    var x = parseInt(event.target.getStyle('left'))
+    var y = parseInt(event.target.getStyle('top'))
+    
+    var node_id = event.target.object_ref.config.node_id
+    var user_id = <%= params[:user_id] %>
+    var pipe_id = <%= params[:pipe_id] %>  
+        
+    new Ajax.Request("/users/" + user_id + "/pipes/" + pipe_id + "/nodes/" + node_id, {
       method: 'put',
-      parameters: {'node[x]': 400, 'node[y]': 400},
+      parameters: {'node[x]': x, 'node[y]': y},
       onSuccess: function(transport) {
-        console.log('updated ' + transport.responseText)        
+        console.log('updated ' + transport)        
       }
     });    
+    
+    event.stop()
   })
  
    this.ddResize.eventResize.subscribe(function(e, args) {
@@ -181,13 +193,18 @@ nodeBox.run = function() {
  * Adds a jsBox to the layer
  */
 nodeBox.addModule = function (element, namespace) {
-  console.log(element)
-   jsBox.jsBoxLayer.addContainer({xtype: nodeBox, position: [50,250], element:element});
-     new Ajax.Request("/users/1/pipes/1/nodes", {
+    
+    var user_id = <%= params[:user_id] %>
+    var pipe_id = <%= params[:pipe_id] %>
+    
+     new Ajax.Request("/users/" + user_id + "/pipes/" + pipe_id + "/nodes", {
        method: 'post',
-       parameters: {'node[x]': 50, 'node[y]': 50, 'node[kind]': 'nodeBox', 'node[content]': namespace, 'node[has_pipe]': false },
+       parameters: {'node[x]': 50, 'node[y]': 250, 'node[kind]': 'nodeBox', 'node[element]': element, 'node[has_pipe]': false },
        onSuccess: function(transport) {
-         console.log('updated ' + transport.responseText)        
+         var response = (transport.responseText.evalJSON(true));   
+         jsBox.jsBoxLayer.addContainer({xtype: nodeBox, node_id: response.node_id, pipe_id: response.pipe_id, user_id: response.user_id, position: [50,250], element:element});   
        }
      });   
+   
+       
 };

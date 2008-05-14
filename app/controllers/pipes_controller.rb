@@ -21,8 +21,9 @@ class PipesController < ApplicationController
     
     # all inline
     # todo: refactor to /lib
-    
-    query = URI.escape 'select x from {x} <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> {<http://www.w3.org/2002/07/owl#Class>}'
+  
+    # query = URI.escape 'select x from {x} <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> {<http://www.w3.org/2002/07/owl#Class>}'
+    query = URI.escape params['query']
     xml = RestClient.get "http://k-sems.uni-koblenz.de/openrdf-sesame/repositories/k-sems?query=#{query}&queryLn=serql"
   
     file_name = Digest::SHA1.hexdigest(xml)
@@ -36,9 +37,9 @@ class PipesController < ApplicationController
         render :json => { :object => "session", 
                           :success => true,
                           :query => query,
-                          :query_path => "/responses/#{file_name}.query",
+                          :query_path => "/responses/#{file_name}.query.txt",
                           :file_name => file_name,
-                          :path => "/responses/#{file_name}" } 
+                          :path => "/responses/#{file_name}.txt" } 
       }
     end
     
