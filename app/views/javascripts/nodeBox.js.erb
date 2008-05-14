@@ -8,11 +8,10 @@ var nodeBox = function(config, layer) {
    this.el.setStyle({height:'110px', width:'200px'})   
    
    if (config.element == 'node_subgraph'){
-     console.log('node_subgraph!!!!!!!!!!')
      this.el.addClassName('has_pipe')        
    }
    
-   console.log($(config.element))
+   console.log(config.element)
    
    this.build_from($(config.element))
    this.nParams = this.getNbrInputs();

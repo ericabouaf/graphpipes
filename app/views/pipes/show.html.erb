@@ -10,7 +10,7 @@ window.boxes = {
         <% has_pipe = node.has_pipe.blank? ? false : "'#{node.has_pipe}'" %>
         
         <%= "{xtype: #{node.kind}, id: #{node.id}, position: [#{node.x}, #{node.y}], 
-        codeText: '#{node.content}' + ' ' + #{node.id}, has_pipe: #{has_pipe} }"%>,
+        codeText: '#{node.content}' + ' ' + #{node.id}, element: '', has_pipe: #{has_pipe} }"%>,
       <% end %>      
     ],
     
