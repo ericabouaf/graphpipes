@@ -1327,6 +1327,7 @@ WireIt.Layer.prototype.addWire = function(wireConfig) {
 WireIt.Layer.prototype.addContainer = function(containerConfig) {
    
    var type = containerConfig.xtype || WireIt.Container;
+   console.log(containerConfig)
    var container = new type(containerConfig, this);
    
    this.containers.push( container );

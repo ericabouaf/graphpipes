@@ -5,9 +5,13 @@ class NodesController < ApplicationController
     
   def show
     @pipe = current_user.pipes.find_by_id(params[:pipe_id])
+    
+    raise ActiveRecord::RecordNotFound if @pipe.nil?  
+  
     @node = @pipe.nodes.find_by_id params[:id]
     
-    raise ActiveRecord::RecordNotFound if @node.nil?
+    raise ActiveRecord::RecordNotFound if @node.nil? || @pipe.nil?
+    
     respond_to do |format|  
       format.html { redirect_to user_pipe_path(current_user, @node.sub_pipe.id, :parent => @pipe.id)     }      
       format.xml  { head :ok }
@@ -18,24 +22,26 @@ class NodesController < ApplicationController
   end
   
   def create
-    @pipe = current_user.pipe.find_by_id(params[:pipe_id])
-    raise ActiveRecord::RecordNotFound if @pipe.nil?
-
+    debugger
+    @pipe = current_user.pipes.find_by_id(params[:pipe_id])
     @node = Node.new params[:node].merge(:pipe_id => @pipe.id)
 
     if @node.save    
       respond_to do |format|
         format.html { redirect_to user_pipe_path(current_user, @pipe) }
+        format.js { render :json => { :object => "node", :success => true } }
       end
     else 
       respond_to do |format|
         format.html { render :action => 'new' }
+        format.js { render :json => { :object => "node", 
+                          :success => false,
+                          :errorMessage => @node.errors }   }     
       end
     end
   end
   
   def update
-
     respond_to do |format|
       format.xml  { head :ok }    
     end

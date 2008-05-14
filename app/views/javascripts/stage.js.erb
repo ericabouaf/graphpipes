@@ -106,7 +106,42 @@ Event.observe(window, 'dom:loaded', function() {
 // RUN PIPE
   $('pipe_runner').observe('click', function(){
     
-    <% debugger %>
+    var parse_nodes = function() {
+      // jsBox.jsBoxLayer.containers
+        // - config
+        // - terminals
+        // - className
+        // - position
+        
+      // jsBox.jsBoxLayer.Terminal
+        // - container
+        // - wires
+        // - direction
+        // - fakeDirection
+        // - className
+        // - config
+        
+      // jsBox.jsBoxLayer.Wire
+        // - terminal1
+        // - terminal2
+        // - config
+        
+      // Parse Tree
+        // recursiv 
+        // unless found_container.includes(new_container)
+        
+        // find rdf nodes || or nodes without parent3
+        // forEach: 
+        //    |node|
+        //    node.terminals.forEach
+        //        |terminal|
+        //        terminal.container
+        
+        // jsBox.jsBoxLayer.containers.each(function(container) {
+        //           container.terminal
+        // })
+    }
+    
     runner_sheet.show()
     console.log('running query')
     

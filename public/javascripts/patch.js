@@ -48,7 +48,7 @@ var Patch = Class.create({
 
   build_me: function(namespace, element) {
     var name = namespace 
-    window[name].addModule(element);
+    window[name].addModule(element, namespace);
   }
 })
 

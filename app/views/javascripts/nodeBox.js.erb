@@ -180,6 +180,14 @@ nodeBox.run = function() {
 /**
  * Adds a jsBox to the layer
  */
-nodeBox.addModule = function (element) {
+nodeBox.addModule = function (element, namespace) {
+  console.log(element)
    jsBox.jsBoxLayer.addContainer({xtype: nodeBox, position: [50,250], element:element});
+     new Ajax.Request("/users/1/pipes/1/nodes", {
+       method: 'post',
+       parameters: {'node[x]': 50, 'node[y]': 50, 'node[kind]': 'nodeBox', 'node[content]': namespace, 'node[has_pipe]': false },
+       onSuccess: function(transport) {
+         console.log('updated ' + transport.responseText)        
+       }
+     });   
 };
