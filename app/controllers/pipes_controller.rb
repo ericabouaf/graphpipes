@@ -22,6 +22,7 @@ class PipesController < ApplicationController
     # all inline
     # todo: refactor to /lib
   
+    # n3 
     # query = URI.escape 'select x from {x} <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> {<http://www.w3.org/2002/07/owl#Class>}'
     query = URI.escape params['query']
     xml = RestClient.get "http://k-sems.uni-koblenz.de/openrdf-sesame/repositories/k-sems?query=#{query}&queryLn=serql"
@@ -30,7 +31,6 @@ class PipesController < ApplicationController
     
     File.open("#{RAILS_ROOT}/public/responses/#{file_name}.txt", 'w') {|f| f.write(xml) }
     File.open("#{RAILS_ROOT}/public/responses/#{file_name}.query.txt", 'w') {|f| f.write(URI.unescape query) }
-  
   
     respond_to do |format|
       format.js { 
