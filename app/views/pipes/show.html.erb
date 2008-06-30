@@ -7,17 +7,17 @@ window.boxes = {
 
     containers: [      
       <% @pipe.nodes.each_with_index do |node, index| %>
-        <% has_pipe = node.has_pipe.blank? ? false : "'#{node.has_pipe}'" %>
+        <% has_pipe = node.has_pipe.blank? ? false : "'#{node.has_pipe.id}'" %>
         
-        <%= "{xtype: #{node.kind}, id: #{node.id}, position: [#{node.x}, #{node.y}], 
-        codeText: '#{node.content}' + ' ' + #{node.id}, element: '#{node.element}', node_id: #{node.id}, pipe_id: #{node.pipe.id}, user_id: #{node.pipe.user.id}, has_pipe: #{has_pipe} }"%>,
+        <%= "{xtype: #{node.kind}, id: #{node.id}, position: [#{node.x.to_i}, #{node.y.to_i}], 
+        codeText: '#{node.content}' + ' ' + #{node.id}, element: '#{node.element}', node_id: #{node.id}, pipe_id: #{node.pipe.id}, user_id: #{node.pipe.user.id}, has_pipe: #{has_pipe} }"%><% if index < @pipe.nodes.size - 1 %>,<% end %>    
       <% end %>      
     ],
     
     wires: [
     <% @pipe.edges.each_with_index do |edge, index| %>    
-      <%= "{src: {moduleId: #{edge.from_node}, terminalId: #{edge.from_terminal}}, tgt: {moduleId: #{edge.to_node}, terminalId: #{edge.to_terminal}}}" %> <% if index < @pipe.edges.size - 1 %>,<% end %>        
-    <% end %>
+      <%= "{id: #{edge.id}, src: {moduleId: #{edge.from_node}, terminalId: #{edge.from_terminal}}, tgt: {moduleId: #{edge.to_node}, terminalId: #{edge.to_terminal}}}" %> <% if index < @pipe.edges.size - 1 %>,<% end %>        
+            <% end %>
     ]
     
  }

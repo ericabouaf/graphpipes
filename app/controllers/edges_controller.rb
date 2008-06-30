@@ -13,18 +13,28 @@ class EdgesController < ApplicationController
   end
   
   def create
-    @pipe = current_user.pipe.find_by_id(params[:pipe_id])
+    debugger
+    @pipe = current_user.pipes.find_by_id(params[:pipe_id])
     raise ActiveRecord::RecordNotFound if @pipe.nil?
 
-    @edge = Edge.new params[:edge].merge(:pipe_id => @pipe.id)
+    debugger
+    @edge = Edge.new params[:edge]# .merge(:pipe_id => @pipe.id)
 
     if @edge.save    
       respond_to do |format|
         format.html { redirect_to user_pipe_path(current_user, @pipe) }
+        format.js { render :json => { :object => "edge", 
+                                      :edge_id => @edge.id, 
+                                      :pipe_id => @pipe.id,                                       
+                                      :user_id => current_user.id,                                       
+                                      :success => true } }
       end
     else 
       respond_to do |format|
         format.html { render :action => 'new' }
+        format.js { render :json => { :object => "edge", 
+                          :success => false,
+                          :errorMessage => @edge.errors }   }
       end
     end
   end

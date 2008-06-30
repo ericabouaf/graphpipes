@@ -1,31 +1,40 @@
-/**
- * @class jsBox
- * @constructor
- */
 var nodeBox = function(config, layer) {
-   jsBox.superclass.constructor.call(this, config, layer);
+    if (config.element == 'node_last') {    config.close = false }
+
+   nodeBox.superclass.constructor.call(this, config, layer);
    
-   this.el.setStyle({height:'110px', width:'200px'})   
-   
-   if (config.element == 'node_subgraph'){
-     this.el.addClassName('has_pipe')        
+   var user_id = <%= params[:user_id] %>
+   var pipe_id = config.has_pipe
+
+   this.result = function() {
+     return '123'
    }
+
+   if (this.has_subgraph()) { 
+     this.editButton = WireIt.cn('div', {className: 'WireIt-Container-editbutton '} );
+     this.el.appendChild(this.editButton);
+     
+     YAHOO.util.Event.addListener(this.editButton, "click", function() {
+       window.open("/users/" + user_id + "/pipes/" + pipe_id)  
+     }, this, true);     
+     this.el.addClassName('has_pipe') 
+   } 
    
-   console.log(config)
-   
+//   new YAHOO.util.CustomEvent("eventAddWire").fire(wire)
+  YAHOO.util.Event.addListener(document, "eventAddWire", function() { 
+ })
+ 
+   this.el.setStyle(this.is_last() ? {height:'19px', width: '150px'} : {height:'110px', width:'200px'})        
+
    this.el.object_ref = this
-   
-   console.log(this.el)
+   this.nParams = 1
    
    this.build_from($(config.element))
-   this.nParams = this.getNbrInputs();
    this.createTerminals();
-   
-   // Reposition the terminals when the jsBox is being resized
- 
-  document.observe('node:edit:' + config.id, function() {
-    console.log('edit!!')    
-  })
+
+  
+   // Reposition the terminals when the box is being resized
+  document.observe('node:edit:' + config.id, function() { console.log('edit!!') })
 
   Event.observe(this.el, 'drag:done', function(event) {
     var x = parseInt(event.target.getStyle('left'))
@@ -39,7 +48,6 @@ var nodeBox = function(config, layer) {
       method: 'put',
       parameters: {'node[x]': x, 'node[y]': y},
       onSuccess: function(transport) {
-        console.log('updated ' + transport)        
       }
     });    
     
@@ -61,40 +69,34 @@ YAHOO.extend(nodeBox, WireIt.Container, {
     build_from: function(element) {
       this.el.appendChild(element.cloneNode(true));      
     },
-
    
-   /**
-    * Parse the textarea code to get the number of input parameters
-    */
-   getNbrInputs: function() {
-      //var sParamList = this.textarea.value.match(/^[ ]*function[ ]*\((.*)\)[ ]*{/)[1];
-      //var params = sParamList.split(',');
-      //var nParams = (sParamList == "") ? 0 : parseInt(params.length);
-      return 1/*nParams;*/
+   has_subgraph : function() {
+     return this.config.element == 'node_subgraph'
    },
    
-   /**
-    * Create (and re-create) the terminals with this.nParams input terminals
-    */
+   is_last: function() {
+     return this.config.element == 'node_last'
+   },
+
    createTerminals: function() {
-      
-   	// Remove all the existing terminals
-   	this.removeAllTerminals();
-   	
-      for(var i = 0 ; i < this.nParams ; i++) {
-      	var term = this.addTerminal({xtype: WireIt.util.TerminalInput});
-         term.jsBox = this;
-         WireIt.sn(term.el, null, {position: "absolute", top: "-15px"});
-      }
+     this.removeAllTerminals();
 
-    var term = this.addTerminal({xtype: WireIt.util.TerminalOutput});      
-          term.jsBox = this;
-          WireIt.sn(term.el, null, {position: "absolute", bottom: "-15px"});
-   	
-      this.positionTerminals();
+     for(var i = 0 ; i < this.nParams ; i++) {
+       var term = this.addTerminal({xtype: WireIt.util.TerminalInput});
+       term.nodeBox = this;
+       WireIt.sn(term.el, null, {position: "absolute", top: "-15px"});
+     }
 
-      // Declare the new terminals to the drag'n drop handler (so the wires are moved around with the container)
-      this.dd.setTerminals(this.terminals);
+     if (!this.is_last()) {
+       var term = this.addTerminal({xtype: WireIt.util.TerminalOutput});      
+       term.nodeBox = this;
+       WireIt.sn(term.el, null, {position: "absolute", bottom: "-15px"});
+     }
+   	  
+     this.positionTerminals();
+
+     // Declare the new terminals to the drag'n drop handler (so the wires are moved around with the container)
+     this.dd.setTerminals(this.terminals);
    },
    
    /**
@@ -125,75 +127,24 @@ YAHOO.extend(nodeBox, WireIt.Container, {
       }
    },
    
-   /**
-    * Execute the module
-    */
    execute: function() {
-     console.log('nodeBox::execute')
-     console.log(this.getPostion())
-
-      // Eval each of the parameter functions : 
-      var params = [];
-      for(var i = 0 ; i < this.terminals.length-1 ; i++) {
-         var term = this.terminals[i];
-         var otherTerm = term.wires[0].getOtherTerminal(term);
-         if(!otherTerm.jsBox.evalResult)
-            otherTerm.jsBox.execute();
-         params[i] = otherTerm.jsBox.evalResult;
-      }
-     
-      this.evalResult = '123'
+     this.evalResult = this.config.element
+     return this.config.element
    },
    
-   /**
-    * Returns true if all the input wires have been evaluated, false otherwise
-    */
    mayEval: function() {
-      // For each input param :
-      for(var i = 0 ; i < this.terminals.length-1 ; i++) {
-         var term = this.terminals[i];
-         if(term.wires.length != 1) return false;
-         var otherTerm = term.wires[0].getOtherTerminal(term);
-         if(!otherTerm.jsBox) return false;
-         if( !otherTerm.jsBox.mayEval() ) return false;
-      }
-      return true;
+      return this.terminals.each(function(term) {
+        return term.wires[0].getOtherTerminal(term);
+      }) || false
    }
    
 });
 
 
 /**
- * Static function to run the "program"
- */
-nodeBox.run = function() {
-   console.log(this.getPostion())
-   
-   // Clear the previous results
-   for(var i = 0; i < jsBox.jsBoxLayer.containers.length; i++) {
-      jsBox.jsBoxLayer.containers[i].evalResult = null;
-   }
-   
-   // Make a list of all the containers that may be run (no input params)
-   var modules = [];
-   for(var i = 0; i < jsBox.jsBoxLayer.containers.length; i++) {
-      if( jsBox.jsBoxLayer.containers[i].mayEval() ) {
-         modules.push( jsBox.jsBoxLayer.containers[i] );
-      }
-   }
-   
-   // Eval the "sources" modules 
-   for(var i = 0 ; i < modules.length ; i++) {
-      modules[i].execute();
-   }
-   
-};
-
-/**
- * Adds a jsBox to the layer
+ * Adds a box to the layer
  */
 nodeBox.addModule = function (element, namespace) {
-    
     var user_id = <%= params[:user_id] %>
     var pipe_id = <%= params[:pipe_id] %>
     
@@ -202,7 +153,7 @@ nodeBox.addModule = function (element, namespace) {
        parameters: {'node[x]': 50, 'node[y]': 250, 'node[kind]': 'nodeBox', 'node[element]': element, 'node[has_pipe]': false },
        onSuccess: function(transport) {
          var response = (transport.responseText.evalJSON(true));   
-         jsBox.jsBoxLayer.addContainer({xtype: nodeBox, node_id: response.node_id, pipe_id: response.pipe_id, user_id: response.user_id, position: [50,250], element:element});   
+         nodeBox.layer.addContainer({xtype: nodeBox, node_id: response.node_id, pipe_id: response.pipe_id, user_id: response.user_id, position: [50,250], element:element});   
        }
      });   
    

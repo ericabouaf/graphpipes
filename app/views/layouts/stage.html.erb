@@ -114,7 +114,9 @@
     <%= render :partial => 'nodes/partials/union' %>			
     <%= render :partial => 'nodes/partials/join' %>			    
     <%= render :partial => 'nodes/partials/filter' %>	    
-    <%= render :partial => 'nodes/partials/construct' %>					
+    <%= render :partial => 'nodes/partials/construct' %>		
+    <%= render :partial => 'nodes/partials/last' %>					
+    			
     
     
     <script src="/javascripts/prototype.js" type="text/javascript"></script>
@@ -141,13 +143,10 @@
     <script type="text/javascript" src="/javascripts/yui/dragdrop/dragdrop-min.js"></script>
 
     <!-- WireIt -->
-    <script type="text/javascript" src="/javascripts/build/wireit.js"></script>
+    <script type="text/javascript" src="/javascripts/wireit.js"></script>
     <link rel="stylesheet" type="text/css" href="/stylesheets/WireIt.css" />
 
-    <!-- jsBox -->
-    <script type="text/javascript" src="/javascripts/jsBox.js"></script>
-    <script type="text/javascript" src="/javascripts/lastBox.js"></script>
-    <script type="text/javascript" src="/javascripts/repositoryBox.js"></script>
+    <!-- boxmodel -->
     <script type="text/javascript" src="/javascripts/nodeBox/<%= current_user.id %>/<%= @pipe.id %>.js"></script>
 
 		

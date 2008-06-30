@@ -105,14 +105,98 @@ Event.observe(window, 'dom:loaded', function() {
 
 // RUN PIPE
 var parse_nodes = function() {
-  return 'select x from {x} <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> {<http://www.w3.org/2002/07/owl#Class>}'
-  // jsBox.jsBoxLayer.containers
+  
+  var run = function() {
+    var box = window.nodeBox
+    
+    var all_nodes = function() {
+      return box.layer.containers
+    }
+    
+    var find_last_node = function() {
+     return all_nodes().inject(undefined, function(mem, node) {
+        return node.config.element == 'node_last' ? node : mem
+      }) 
+    }
+
+    var has_a_construct_node = function() {
+      return all_nodes().inject(false, function(returning, container) {
+        return (container.config.element == 'node_construct') ? true : returning
+      })    
+    }  
+    
+    var is_named_graph = function() {
+      return has_a_construct_node() && construct_node_is_connected()
+    }
+    
+    var construct_node_is_connected = function() {
+      if (!has_a_construct_node()) { return false }
+      if (!tree_exists(find_last_node())) { return false }
+    
+      // check both directions
+      var node1 = find_last_node().wires.first().terminal1.nodeBox.config.element
+      var node2 = find_last_node().wires.first().terminal1.nodeBox.config.element
+            
+      return node1 == 'node_construct' || node2 == 'node_construct'
+    }
+    
+    var collect_all_node_results = function() {
+      return all_nodes().inject([], function(results, node) {
+        results.push({kind: node.config.element, result: node.result() })
+        return results
+      })
+    }
+
+    var tree_exists = function(node) {
+      return node == undefined ? false : node.wires != undefined && node.wires.length > 0 
+    }
+    
+    var has_no_children = function(node) {
+      var node_is_me = node.wires[0].terminal1.NodeBox == node || (node.wires[1] != undefined && node.wires[1].terminal1.NodeBox == node)
+      var no_otherwire_exists = (node.wires[0] == undefined || node.wires[0].terminal1.Node.wires == undefined) && 
+                                (node.wires[1] == undefined || node.wires[1].terminal1.Node.wires == undefined)
+      
+      return !node_is_me || node_is_me
+    }
+    
+    var parse = function(a_node) {
+      var results = []
+      
+      if (!tree_exists(a_node)) { return {id:0,result:0} }
+          
+      a_node.terminals.each(function(terminal) {
+        var node = terminal.wires.each(function(wire) {
+          other_node = wire.getOtherTerminal().nodeBox
+          
+          if (has_no_children(other_node)) {
+            results.push({id: node.config.node_id, result: node.result()})            
+          } else {
+            results += parse(other_node)
+          }              
+        })
+      })
+      return results
+    }
+    
+    var collect_tree_results = function() {
+      if (!tree_exists(find_last_node())) { return [] }
+      return parse(find_last_node())
+    }
+     
+    collect_tree_results()
+  }
+  
+  run()
+  
+  return "select x from {x} <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> {<http://www.w3.org/2002/07/owl#Class>}"
+  
+  // box.layer.containers
     // - config
     // - terminals
     // - className
     // - position
     
-  // jsBox.jsBoxLayer.Terminal
+  // box.layer.Terminal
     // - container
     // - wires
     // - direction
@@ -120,7 +204,7 @@ var parse_nodes = function() {
     // - className
     // - config
     
-  // jsBox.jsBoxLayer.Wire
+  // box.layer.Wire
     // - terminal1
     // - terminal2
     // - config
@@ -136,7 +220,7 @@ var parse_nodes = function() {
     //        |terminal|
     //        terminal.container
     
-    // jsBox.jsBoxLayer.containers.each(function(container) {
+    // box.layer.containers.each(function(container) {
     //           container.terminal
     // })
 }
@@ -150,17 +234,14 @@ var parse_nodes = function() {
   })
 
   $('pipe_runner').observe('click', function(){
-    
-    
-    
     runner_sheet.show()
-    
+    // parse_nodes() 
     new Ajax.Request('<%= run_user_pipe_path(current_user, @id) %>', {
         asynchronous:true, 
         evalScripts:true, 
         method: 'post',
         parameters: {query: parse_nodes()},
-  
+      
         onSuccess: function(transport) {    
           var response = (transport.responseText.evalJSON(true));   
           
@@ -183,7 +264,7 @@ var parse_nodes = function() {
             
             $('visit-button').setStyle({visibility: 'visible'})
             $('query-button').setStyle({visibility: 'visible'})
-
+    
             header_text.addClassName('error').innerHTML = 'Ok. All went well.'
           }
           return false;
@@ -211,7 +292,7 @@ var parse_nodes = function() {
             return
           } 
           sources.push({name: response.name, iri: response.iri})
-          console.log(sources)
+
           
           sources_sheet.hide(); 
           return false;
@@ -226,6 +307,6 @@ var parse_nodes = function() {
      return false
    })
   
- jsBox.jsBoxLayer = new WireIt.Layer(window.boxes);
+ nodeBox.layer = new WireIt.Layer(window.boxes);
 })
 

@@ -67,6 +67,7 @@ module Rails
 
     class << self
       def rubygems_version
+        
         Gem::RubyGemsVersion if defined? Gem::RubyGemsVersion
       end
 
@@ -82,13 +83,13 @@ module Rails
 
       def load_rubygems
         require 'rubygems'
-
         unless rubygems_version >= '0.9.4'
           $stderr.puts %(Rails requires RubyGems >= 0.9.4 (you have #{rubygems_version}). Please `gem update --system` and try again.)
           exit 1
         end
 
-      rescue LoadError
+      rescue LoadError => e
+        $stderr.puts e.to_s
         $stderr.puts %(Rails requires RubyGems >= 0.9.4. Please install RubyGems and try again: http://rubygems.rubyforge.org)
         exit 1
       end

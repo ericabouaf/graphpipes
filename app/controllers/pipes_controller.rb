@@ -23,8 +23,11 @@ class PipesController < ApplicationController
     # todo: refactor to /lib
   
     # n3 
+    # accepts jpson
+    
+    header = {:accept => 'application/sparql-results+json'}
     # query = URI.escape 'select x from {x} <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> {<http://www.w3.org/2002/07/owl#Class>}'
-    query = URI.escape params['query']
+    query = URI.escape "#{params['query']}"
     xml = RestClient.get "http://k-sems.uni-koblenz.de/openrdf-sesame/repositories/k-sems?query=#{query}&queryLn=serql"
   
     file_name = Digest::SHA1.hexdigest(xml)
@@ -81,7 +84,7 @@ class PipesController < ApplicationController
     @pipe = Pipe.new params[:pipe].merge(:user_id => current_user.id)
         
     if @pipe.save
-      @pipe.nodes.create :kind => "lastBox", :x => 300, :y => 250, :content => 'Terminal Box', :has_pipe => false
+      @pipe.nodes.create :kind => "nodeBox", :element => 'node_last', :x => 300, :y => 250, :content => 'Terminal Box', :has_pipe => false
       
       respond_to do |format|
         format.html { redirect_to user_pipe_path(current_user, @pipe) }

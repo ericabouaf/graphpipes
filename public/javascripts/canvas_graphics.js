@@ -1,7 +1,5 @@
 var graphics = {
-  hi: function(name) {
-    console.log('Hi ' + name)
-  },
+
   draw: function(x,y,width,height,radius,opacity){
     var ctx = this.getContext("2d");
   	var style; 
