@@ -1,0 +1,99 @@
+
+// RUN PIPE
+
+var Parser = Class.create({
+  initialize: function(nodebox_layer) {
+    this.box = nodebox_layer
+  }, 
+  
+  all_nodes : function() {
+    return this.box.containers
+  },
+  
+  find_last_node : function() {
+    console.log('find_last_node')
+    return this.all_nodes().inject(undefined, function(mem, node) {
+      return node.config.element == 'node_last' ? node : mem
+    }) 
+  },
+  
+  has_a_construct_node : function() {
+    return this.all_nodes().inject(false, function(returning, container) {
+      return (container.config.element == 'node_construct') ? true : returning
+    })    
+  },
+  
+  is_networked_graph : function() {
+    return this.has_a_construct_node() && this.construct_node_is_connected()
+  },
+  
+  construct_node_is_connected : function() {
+    if (!this.has_a_construct_node()) { return false }
+    if (!this.tree_exists(find_last_node())) { return false }
+  
+    // check both directions
+    var node1 = this.find_last_node().wires.first().terminal1.nodeBox.config.element
+    var node2 = this.find_last_node().wires.first().terminal1.nodeBox.config.element
+          
+    return node1 == 'node_construct' || node2 == 'node_construct'
+  },
+  
+  collect_all_node_results : function() {
+    return this.all_nodes().inject([], function(results, node) {
+      results.push({kind: node.config.element, result: node.result() })
+      return results
+    })
+  },
+  
+  
+  tree_exists : function(node) {
+     return node == undefined ? false : node.wires != undefined && node.wires.length > 0 
+   },
+   
+   
+   has_children : function(node) {
+     var node_is_me = node.wires[0].terminal1.NodeBox == node || (node.wires[1] != undefined && node.wires[1].terminal1.NodeBox == node)
+
+     if (node_is_me) {
+       return false
+     }
+     
+     var inbound_wires_exists = node.find_input_terminals().inject(false, function(found, terminal){
+       if (terminal.wires.length > 0) {
+         found = true         
+       }
+       return found
+     })
+    
+     console.log('    wires? ' + inbound_wires_exists)
+     
+     return inbound_wires_exists
+   },
+   
+   parse : function(a_node) {     
+     if (!this.tree_exists(a_node)) { return [{id:0,result:0}] }
+     
+     var node    = a_node
+     var results = []
+     var me      = this
+     
+     node.find_input_terminals().each(function(terminal) {
+       terminal.wires.each(function(wire) {
+         
+         other_node = wire.getOtherTerminal(terminal).nodeBox
+         results.push({id: other_node.config.node_id, result: other_node.result()})
+
+         if (me.has_children(other_node)) {
+           var tree_result = me.parse(other_node)
+           results = results.concat(tree_result)
+         } 
+       })
+     })
+     return results
+   },
+  
+   collect_tree_results : function(pipe) {
+     if (!this.tree_exists(this.find_last_node())) { console.log('no tree found'); return [] }
+     return this.parse(this.find_last_node())
+   }
+})
