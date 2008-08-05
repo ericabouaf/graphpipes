@@ -1,14 +1,15 @@
-<div class='node' id="node_repo">
+<div class='node repo' id="node_repo">
   <div class='content'>
     <p>FROM Resources<p>
-    <form name='repo1'>
-      <input type='checkbox'>
-      <% sources = @pipe.user.sources %>
-      <%= collection_select(:source, :id, sources, :id, :name, options ={:prompt => "Select a resource"}, :class =>"source") %>
-     
-     
-      <img src='/images/add_row.png' />
-      <img src='/images/remove_row.png' />  
+    <form name='repo'>
+      <!-- <input type='checkbox'> -->
+      <!-- <% sources = @pipe.user.sources %> -->
+      <%= collection_select(:source, :iri, sources, :iri, :name, options ={:prompt => "Select a resource"}, :class =>"source") %>
+      <br />
+      <br />      
+      <%# link_button 'Add',  {:function => "sources_sheet.show();"}%> 
+      <!-- <img src='/images/add_row.png' />
+            <img src='/images/remove_row.png' />   -->
     </form>
   </div>
 </div>

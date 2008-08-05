@@ -1,3 +1,110 @@
+
+// namespaced Proxies: Nodes
+// 
+// like Nodes::Repository
+// Nodebase represents an interface (module) implementing the needed behavior
+// the get a (dummy) result from each nodetyp.
+
+
+var NodeBase = Class.create({
+  graphics : {},
+  initialize: function(object_ref) {
+    this.graphics = object_ref
+  },
+  result : function() { 
+    return '1' 
+  },
+  defaults: function() {
+    return {
+      terminals: {
+        in  : 1,
+        out : 1       
+      }
+    }
+  }
+  
+})
+
+var Nodes = {
+  Repo : Class.create(NodeBase, {
+    result: function() {
+      var c = this.graphics.down('form')
+      var select_box = c.down('select')
+      
+      if (select_box.selectedIndex == 0) { return '' }    
+
+      var selected_iri = select_box[select_box.selectedIndex].value
+    
+      return 'FROM NAMED ' + selected_iri
+    }
+  }),
+  Last : Class.create(NodeBase, {
+    result: function() { return '' }
+  }),
+  Condition : Class.create(NodeBase, {
+    result: function() { 
+      var first_input   = this.graphics.down('input')
+      var second_input  = first_input.next('input')
+      var select_verb   = this.graphics.down('select')
+      
+      var var_1 = first_input.value
+      var var_2 = second_input.value
+      var verb = select_verb[select_verb.selectedIndex].value
+      
+      return 'WHERE ' + var_1 + ' ' + verb + ' ' + var_2
+    }
+  }),
+
+  
+  Filter: Class.create(NodeBase, {
+    result: function() {   
+      var filter_type_select   = this.graphics.down('select')
+      var filter_input         = this.graphics.down('input')
+    
+      var filter_type = filter_type_select[filter_type_select.selectedIndex].value
+      var filter      = filter_input.value
+    
+      // FILTER regex(?title, "web", "i" ) 
+      //  FILTER (?price < 30.5)
+      if (filter_type == 'A Comparision') {
+        return 'FILTER (' + filter + ')'
+      } else {
+       return 'FILTER ' + filter_type.toLowerCase() + '(' + filter + ')'  
+      }
+      
+    }
+  }),
+  
+  Subgraph: Class.create(NodeBase, {
+  }),
+  
+  
+  Construct: Class.create(NodeBase, {
+    result: function() { 
+      var first_input   = this.graphics.down('input')
+      var second_input  = first_input.next('input')
+      var select_verb   = this.graphics.down('select')
+      
+      var var_1 = first_input.value
+      var var_2 = second_input.value
+      var verb = select_verb[select_verb.selectedIndex].value
+      
+      return 'WHERE ' + var_1 + ' ' + verb + ' ' + var_2
+      }    
+  }),  
+  
+  Join: Class.create(NodeBase, {}),
+  Union: Class.create(NodeBase, {})
+}
+
+var element_to_class_name = function(element) {
+  var name = element.split('_')[1]
+  var name = name.substr(0, 1).toUpperCase() + name.substr(1)
+  return name
+}
+
+// ================================================================================
+
 var nodeBox = function(config, layer) {
     if (config.element == 'node_last') {    config.close = false }
 
@@ -5,10 +112,9 @@ var nodeBox = function(config, layer) {
    
    var user_id = <%= params[:user_id] %>
    var pipe_id = config.has_pipe
-
-   this.result = function() {
-     return '123'
-   }
+   
+   this.output_terminals = []
+   this.input_terminals  = []
 
    if (this.has_subgraph()) { 
      this.editButton = WireIt.cn('div', {className: 'WireIt-Container-editbutton '} );
@@ -21,8 +127,7 @@ var nodeBox = function(config, layer) {
    } 
    
 //   new YAHOO.util.CustomEvent("eventAddWire").fire(wire)
-  YAHOO.util.Event.addListener(document, "eventAddWire", function() { 
- })
+    YAHOO.util.Event.addListener(document, "eventAddWire", function() { })
  
    this.el.setStyle(this.is_last() ? {height:'19px', width: '150px'} : {height:'110px', width:'200px'})        
 
@@ -30,9 +135,16 @@ var nodeBox = function(config, layer) {
    this.nParams = 1
    
    this.build_from($(config.element))
+   
+   var class_name = element_to_class_name(config.element)
+   
+   
+   this.node_proxy = new Nodes[class_name](this.content)
+   
+      
    this.createTerminals();
 
-  
+   
    // Reposition the terminals when the box is being resized
   document.observe('node:edit:' + config.id, function() { console.log('edit!!') })
 
@@ -62,12 +174,18 @@ var nodeBox = function(config, layer) {
 };
 
 YAHOO.extend(nodeBox, WireIt.Container, {
+  
+    result: function() {
+      console.log('nodeBox.result')
+      console.log(this.node_proxy)
+      return this.node_proxy.result()
+    },
     getPostion:function(){
       return {x: this.el.getStyle('left'), y: this.el.getStyle('left')}
     },
     
     build_from: function(element) {
-      this.el.appendChild(element.cloneNode(true));      
+      this.content = this.el.appendChild(element.cloneNode(true));      
     },
    
    has_subgraph : function() {
@@ -78,18 +196,28 @@ YAHOO.extend(nodeBox, WireIt.Container, {
      return this.config.element == 'node_last'
    },
 
+   find_input_terminals : function () {
+     return this.input_terminals
+   },
+   
+   find_output_terminals : function () {
+     return this.output_terminals
+   },
+      
    createTerminals: function() {
      this.removeAllTerminals();
 
      for(var i = 0 ; i < this.nParams ; i++) {
-       var term = this.addTerminal({xtype: WireIt.util.TerminalInput});
+       var term = this.addTerminal({xtype: WireIt.util.TerminalInput, nMaxWires: 1});
        term.nodeBox = this;
+       this.input_terminals.push(term)
        WireIt.sn(term.el, null, {position: "absolute", top: "-15px"});
      }
 
      if (!this.is_last()) {
-       var term = this.addTerminal({xtype: WireIt.util.TerminalOutput});      
+       var term = this.addTerminal({xtype: WireIt.util.TerminalOutput, nMaxWires: 1});      
        term.nodeBox = this;
+       this.output_terminals.push(term)       
        WireIt.sn(term.el, null, {position: "absolute", bottom: "-15px"});
      }
    	  
@@ -145,17 +273,15 @@ YAHOO.extend(nodeBox, WireIt.Container, {
  * Adds a box to the layer
  */
 nodeBox.addModule = function (element, namespace) {
-    var user_id = <%= params[:user_id] %>
-    var pipe_id = <%= params[:pipe_id] %>
-    
-     new Ajax.Request("/users/" + user_id + "/pipes/" + pipe_id + "/nodes", {
-       method: 'post',
-       parameters: {'node[x]': 50, 'node[y]': 250, 'node[kind]': 'nodeBox', 'node[element]': element, 'node[has_pipe]': false },
-       onSuccess: function(transport) {
-         var response = (transport.responseText.evalJSON(true));   
-         nodeBox.layer.addContainer({xtype: nodeBox, node_id: response.node_id, pipe_id: response.pipe_id, user_id: response.user_id, position: [50,250], element:element});   
-       }
-     });   
-   
-       
+  var user_id = <%= params[:user_id] %>
+  var pipe_id = <%= params[:pipe_id] %>
+  
+  new Ajax.Request("/users/" + user_id + "/pipes/" + pipe_id + "/nodes", {
+     method: 'post',
+     parameters: {'node[x]': 50, 'node[y]': 250, 'node[kind]': 'nodeBox', 'node[element]': element, 'node[has_pipe]': false },
+     onSuccess: function(transport) {
+       var response = (transport.responseText.evalJSON(true));   
+       nodeBox.layer.addContainer({xtype: nodeBox, node_id: response.node_id, pipe_id: response.pipe_id, user_id: response.user_id, position: [50,250], element:element});   
+     }
+   });     
 };

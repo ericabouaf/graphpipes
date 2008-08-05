@@ -4,7 +4,7 @@ class EdgesController < ApplicationController
   layout 'site'
     
   def show
-    @pipe = current_user.pipe.find_by_id(params[:pipe_id])
+    @pipe = current_user.pipes.find_by_id(params[:pipe_id])
     @edge = @pipe.edges.find_by_id params[:id]
     
     raise ActiveRecord::RecordNotFound if @edge.nil?
@@ -18,7 +18,7 @@ class EdgesController < ApplicationController
     raise ActiveRecord::RecordNotFound if @pipe.nil?
 
     debugger
-    @edge = Edge.new params[:edge]# .merge(:pipe_id => @pipe.id)
+    @edge = @pipe.edges.new params[:edge]# .merge(:pipe_id => @pipe.id)
 
     if @edge.save    
       respond_to do |format|

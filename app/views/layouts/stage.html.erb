@@ -141,15 +141,18 @@
     <link rel="stylesheet" type="text/css" href="/stylesheets/yui/reset/reset-min.css" />
     <script type="text/javascript" src="/javascripts/yui/yahoo-dom-event/yahoo-dom-event.js"></script>
     <script type="text/javascript" src="/javascripts/yui/dragdrop/dragdrop-min.js"></script>
+    
+    <script type="text/javascript" src="/javascripts/nodes/results.js"></script>		
 
     <!-- WireIt -->
-    <script type="text/javascript" src="/javascripts/wireit.js"></script>
+    <script type="text/javascript" src="/javascripts/wireit/<%= current_user.id %>/<%= @pipe.id %>.js"></script>
     <link rel="stylesheet" type="text/css" href="/stylesheets/WireIt.css" />
+
+    <script type="text/javascript" src="/javascripts/parser.js"></script>
 
     <!-- boxmodel -->
     <script type="text/javascript" src="/javascripts/nodeBox/<%= current_user.id %>/<%= @pipe.id %>.js"></script>
 
-		
 		
 		<%= yield :javascript %>
     

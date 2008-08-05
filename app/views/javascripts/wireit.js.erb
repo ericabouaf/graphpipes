@@ -160,7 +160,8 @@ WireIt.Wire = function( terminal1, terminal2, parentEl, config ) {
    
    if (wire_stays_on_stage && !this.config.from_database) {
      this.el.fire('wire:added', {wire:this})
-     this.terminal1.nodeBox.layer.save_edge(this, {user_id: 1, pipe_id: 1, from_node:  this.terminal1.nodeBox.config.id, to_node: this.terminal2.nodeBox.config.id, from_terminal: get_id_from_terminal(terminal1), to_terminal: get_id_from_terminal(terminal2)})
+     console.log(this)
+    this.terminal1.nodeBox.layer.save_edge(this, {user_id: 1, pipe_id: 1, from_node:  this.terminal1.nodeBox.config.id, to_node: this.terminal2.nodeBox.config.id, from_terminal: get_id_from_terminal(terminal1), to_terminal: get_id_from_terminal(terminal2)})
    }                                                                 
                                                                     
    // Call addWire on both terminals                                
@@ -292,6 +293,7 @@ WireIt.Wire.prototype.redraw = function() {
 WireIt.Wire.prototype.getOtherTerminal = function(terminal) {
    return (terminal == this.terminal1) ? this.terminal2 : this.terminal1;
 };
+
 
 
 
@@ -569,6 +571,20 @@ WireIt.Terminal.prototype.setDropInvitation = function(display) {
 /**
  * Render the DOM of the terminal
  */
+ 
+ 
+WireIt.Terminal.prototype.is_inbound = function() {
+  if (this.direction == [0, -1]) {
+    return true
+  }
+}
+ 
+WireIt.Terminal.prototype.is_outbound = function() {
+  if (this.direction == [0, -1]) {
+    return true
+  }
+} 
+ 
 WireIt.Terminal.prototype.render = function() {
    
    // Create the DIV element
@@ -1168,9 +1184,11 @@ WireIt.Layer.prototype.onAddWire = function(event, args) {
 WireIt.Layer.prototype.save_edge = function(wire, params) {
     var the_wire = wire
 /*   e.rangeParent.fire("drag:done", { target: e.rangeParent});     // prototype.js event*/
-    var user_id = params['user_id'] //this.config.user_id
-    var pipe_id = params['pipe_id'] //this.config.pipe_id  
+    var user_id = <%= @user_id %> 
+    var pipe_id = <%= @pipe_id %>
     var me = this
+
+    console.log(params)
 
     new Ajax.Request("/users/" + user_id + "/pipes/" + pipe_id + "/edges", {
        method: 'post',
