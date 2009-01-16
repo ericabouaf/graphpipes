@@ -24,14 +24,25 @@ class NodesController < ApplicationController
   def create
     @pipe = current_user.pipes.find_by_id(params[:pipe_id])
     @node = Node.new params[:node].merge(:pipe_id => @pipe.id)
-
+    
+    sub_pipe_id = 0
+    
     if @node.save    
+      if @node.element == 'node_subgraph'
+        @sub_pipe = current_user.pipes.create :title => "Sub_#{current_user.pipes.length + 1}", :short_description => 'Untitled.', :root => true
+        sub_pipe_id = @sub_pipe.id
+        if @sub_pipe.save
+          @sub_pipe.nodes.create :kind => "nodeBox", :element => 'node_last', :x => 300, :y => 250, :content => 'Terminal Box', :has_pipe => false          
+        end
+      end
+        
       respond_to do |format|
         format.html { redirect_to user_pipe_path(current_user, @pipe) }
         format.js { render :json => { :object => "node", 
                                       :node_id => @node.id, 
                                       :pipe_id => @pipe.id,                                       
-                                      :user_id => current_user.id,                                       
+                                      :user_id => current_user.id, 
+                                      :sub_pipe_id => sub_pipe_id,                                     
                                       :success => true } }
       end
     else 

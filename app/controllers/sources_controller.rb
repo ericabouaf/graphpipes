@@ -49,6 +49,9 @@ class SourcesController < ApplicationController
     
     respond_to do |format|
       if @source.save
+        
+        @source.upload_to_sesame
+        
         flash[:notice] = 'Source was successfully created.'
         format.html { redirect_to(user_sources_path(current_user)) }
         format.xml  { render :xml => @source, :status => :created, :location => @source }

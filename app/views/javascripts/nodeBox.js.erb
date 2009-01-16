@@ -76,6 +76,9 @@ var Nodes = {
   }),
   
   Subgraph: Class.create(NodeBase, {
+     result: function() { 
+        return '--subgraph--'
+      }
   }),
   
   
@@ -106,12 +109,13 @@ var element_to_class_name = function(element) {
 // ================================================================================
 
 var nodeBox = function(config, layer) {
+    console.log(config)
     if (config.element == 'node_last') {    config.close = false }
 
    nodeBox.superclass.constructor.call(this, config, layer);
    
    var user_id = <%= params[:user_id] %>
-   var pipe_id = config.has_pipe
+   var pipe_id = config.sub_pipe_id
    
    this.output_terminals = []
    this.input_terminals  = []
@@ -119,7 +123,7 @@ var nodeBox = function(config, layer) {
    if (this.has_subgraph()) { 
      this.editButton = WireIt.cn('div', {className: 'WireIt-Container-editbutton '} );
      this.el.appendChild(this.editButton);
-     
+
      YAHOO.util.Event.addListener(this.editButton, "click", function() {
        window.open("/users/" + user_id + "/pipes/" + pipe_id)  
      }, this, true);     
@@ -176,8 +180,7 @@ var nodeBox = function(config, layer) {
 YAHOO.extend(nodeBox, WireIt.Container, {
   
     result: function() {
-      console.log('nodeBox.result')
-      console.log(this.node_proxy)
+
       return this.node_proxy.result()
     },
     getPostion:function(){
@@ -276,12 +279,14 @@ nodeBox.addModule = function (element, namespace) {
   var user_id = <%= params[:user_id] %>
   var pipe_id = <%= params[:pipe_id] %>
   
+
   new Ajax.Request("/users/" + user_id + "/pipes/" + pipe_id + "/nodes", {
      method: 'post',
      parameters: {'node[x]': 50, 'node[y]': 250, 'node[kind]': 'nodeBox', 'node[element]': element, 'node[has_pipe]': false },
      onSuccess: function(transport) {
        var response = (transport.responseText.evalJSON(true));   
-       nodeBox.layer.addContainer({xtype: nodeBox, node_id: response.node_id, pipe_id: response.pipe_id, user_id: response.user_id, position: [50,250], element:element});   
+
+       nodeBox.layer.addContainer({sub_pipe_id: response.sub_pipe_id, xtype: nodeBox, node_id: response.node_id, pipe_id: response.pipe_id, user_id: response.user_id, position: [50,250], element:element});   
      }
    });     
 };

@@ -11,4 +11,12 @@ class Pipe < ActiveRecord::Base
   belongs_to :node
   has_and_belongs_to_many :sources #, :dependent => :destroy
 
+  def self.send_to_repository(query_string='')
+    sesame = RubySesame::Server.new 'http://k-sems.uni-koblenz.de/openrdf-sesame', true, logger
+    repo = sesame.repository 'k-sems'
+    
+    repo.query query_string, :method => 'post'
+    
+   
+  end
 end

@@ -3,6 +3,7 @@
 
 var Parser = Class.create({
   initialize: function(nodebox_layer) {
+    console.log('Parser::initialize')
     this.box = nodebox_layer
   }, 
   
@@ -70,7 +71,18 @@ var Parser = Class.create({
      return inbound_wires_exists
    },
    
+   // should not be here...
+   to_query : function(resultset) {
+     console.log('to_query')
+     var r = resultset.inject('', function(all, item) {
+       return all + item.result + " "
+     })
+     console.log(r)
+     return r
+   },
+   
    parse : function(a_node) {     
+     console.log('parse')
      if (!this.tree_exists(a_node)) { return [{id:0,result:0}] }
      
      var node    = a_node
@@ -81,6 +93,7 @@ var Parser = Class.create({
        terminal.wires.each(function(wire) {
          
          other_node = wire.getOtherTerminal(terminal).nodeBox
+         console.log(other_node.config.node_id + '>> ' + other_node.result() )
          results.push({id: other_node.config.node_id, result: other_node.result()})
 
          if (me.has_children(other_node)) {
@@ -89,6 +102,7 @@ var Parser = Class.create({
          } 
        })
      })
+     console.log('--done')
      return results
    },
   

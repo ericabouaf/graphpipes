@@ -3,7 +3,7 @@
 
 <html>
 	<head>
-		<title>graphpipes css sandbox</title>	
+		<title>graphpipes: <%= h @pipe.title %></title>	
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		
 		<link rel="stylesheet" href="/stylesheets/stage.css" type="text/css" media="screen" title="application" charset="utf-8">
@@ -12,9 +12,7 @@
 	  <link href="/stylesheets/themes/window/window.css" rel="stylesheet" type="text/css"> 		
  		<link href="/stylesheets/themes/window/black_hud.css" rel="stylesheet" type="text/css">
 				
-    <link rel="stylesheet" type="text/css" href="/stylesheets/nodes.css" />
-
-    
+    <link rel="stylesheet" type="text/css" href="/stylesheets/nodes.css" />    
 	</head>
 	
 	<body id="body">
@@ -81,7 +79,6 @@
 		</div>
 	
 
-	
     <%= render :partial => 'sheets/notification' %>
     <%= render :partial => 'sheets/login' %>
     <%= render :partial => 'sheets/sources' %>	
@@ -141,8 +138,6 @@
     <link rel="stylesheet" type="text/css" href="/stylesheets/yui/reset/reset-min.css" />
     <script type="text/javascript" src="/javascripts/yui/yahoo-dom-event/yahoo-dom-event.js"></script>
     <script type="text/javascript" src="/javascripts/yui/dragdrop/dragdrop-min.js"></script>
-    
-    <script type="text/javascript" src="/javascripts/nodes/results.js"></script>		
 
     <!-- WireIt -->
     <script type="text/javascript" src="/javascripts/wireit/<%= current_user.id %>/<%= @pipe.id %>.js"></script>

@@ -5,12 +5,14 @@
 # ENV['RAILS_ENV'] ||= 'production'
 
 # Specifies gem version of Rails to use when vendor/rails is not present
-RAILS_GEM_VERSION = '2.0.2' unless defined? RAILS_GEM_VERSION
-
+#RAILS_GEM_VERSION = '2.0.2' unless defined? RAILS_GEM_VERSION
+RAILS_GEM_VERSION = '2.2.2' unless defined? RAILS_GEM_VERSION
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
-require File.join(RAILS_ROOT,"lib/rest-client-0.4/lib/rest_client")
+# require File.join(RAILS_ROOT,"lib/rest-client-0.4/lib/rest_client")
 
+require 'ruby-sesame'
+require 'open-uri'
 
 Rails::Initializer.run do |config|
   # Settings in config/environments/* take precedence over those specified here.
@@ -63,9 +65,6 @@ Rails::Initializer.run do |config|
   # config.active_record.default_timezone = :utc
 end
 
-#Workling::Remote.dispatcher = Workling::Remote::Runners::NotRemoteRunner.new
-#Workling::Return::Store.instance = Workling::Return::Store::MemoryReturnStore.new
-#Workling::Remote.dispatcher = Workling::Remote::Runners::StarlingRunner.new
 
 ActionView::Base.field_error_proc = Proc.new do |html_tag, instance|
   msg = instance.error_message
@@ -78,5 +77,15 @@ ActionView::Base.field_error_proc = Proc.new do |html_tag, instance|
     html_tag[first_whitespace] = " style='#{error_style}' "
   end
   html_tag
+end
+
+module RubySesame
+  class SesameException < Exception
+    attr :body
+    attr :error_code
+    def initialize(body)
+        @body = body
+      end
+  end
 end
 

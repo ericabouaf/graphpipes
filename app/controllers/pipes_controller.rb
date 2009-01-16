@@ -1,5 +1,5 @@
 require 'rubygems'
-require 'rest_client'
+#require 'rest_client'
 require 'hpricot'
 require 'digest/sha1'
 
@@ -17,35 +17,39 @@ class PipesController < ApplicationController
   # 2 render response to file /responses/time/
   # send link to response to client
   # 1 send testquery to server
-  def run 
-    
-    # all inline
-    # todo: refactor to /lib
-  
-    # n3 
-    # accepts jpson
+  def run     
+    # all inline, todo: refactor to /lib, n3, accepts jpson    
     
     header = {:accept => 'application/sparql-results+json'}
-    # query = URI.escape 'select x from {x} <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> {<http://www.w3.org/2002/07/owl#Class>}'
     query = URI.escape "#{params['query']}"
-    xml = RestClient.get "http://k-sems.uni-koblenz.de/openrdf-sesame/repositories/k-sems?query=#{query}&queryLn=serql"
-  
-    file_name = Digest::SHA1.hexdigest(xml)
-    
-    File.open("#{RAILS_ROOT}/public/responses/#{file_name}.txt", 'w') {|f| f.write(xml) }
+
+    file_name = Digest::SHA1.hexdigest(query)    
+    File.open("#{RAILS_ROOT}/public/responses/#{file_name}.txt", 'w') {|f| f.write(query) }
     File.open("#{RAILS_ROOT}/public/responses/#{file_name}.query.txt", 'w') {|f| f.write(URI.unescape query) }
-  
+
+    success = true
+    
+     begin
+       result = Pipe.send_to_repository query
+     rescue RubySesame::SesameException => e
+       success = false
+       result = e.body      
+     end
+      
+      
+    
     respond_to do |format|
       format.js { 
         render :json => { :object => "session", 
-                          :success => true,
+                          :success => success,
                           :query => query,
+                          :result => result,
                           :query_path => "/responses/#{file_name}.query.txt",
                           :file_name => file_name,
                           :path => "/responses/#{file_name}.txt" } 
       }
-    end
     
+    end
   end
   
   def index
@@ -97,8 +101,7 @@ class PipesController < ApplicationController
   end
   
   def update
-     @pipe = current_user.pipes.find(params[:id])
-     
+     @pipe = current_user.pipes.find(params[:id]) 
      raise ActiveRecord::RecordNotFound if @pipe.nil?
           
      respond_to do |format|
@@ -114,8 +117,7 @@ class PipesController < ApplicationController
    end
   
    def destroy
-     @pipe = current_user.pipes.find_by_id(params[:id])
-     
+     @pipe = current_user.pipes.find_by_id(params[:id])     
      raise ActiveRecord::RecordNotFound if @pipe.nil?
      
      @pipe.destroy

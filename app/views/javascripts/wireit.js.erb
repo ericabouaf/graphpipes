@@ -128,12 +128,11 @@ if(!Array.prototype.indexOf) {
 
 // ------ WIRE ---------------------------------------------------------------------------
 WireIt.Wire = function( terminal1, terminal2, parentEl, config ) {
-  
+
    this.parentEl  = parentEl; //Reference to the parent dom element
    this.terminal1 = terminal1;  //Reference to the first terminal
    this.terminal2 = terminal2;  //Reference to the second terminal
    
-  
    this.config = config || {};
    this.config.className = this.config.className || 'WireIt-Wire';
    this.config.coeffMulDirection = YAHOO.lang.isUndefined(this.config.coeffMulDirection) ? 100 : this.config.coeffMulDirection;
@@ -147,21 +146,30 @@ WireIt.Wire = function( terminal1, terminal2, parentEl, config ) {
    this.config.borderwidth = this.config.borderwidth || 1;
    this.config.color = this.config.color || 'rgb(0, 163, 255)'; //'rgb(173, 216, 230)';
    this.config.bordercolor = this.config.bordercolor || '#0278bb';
+  
    
    // Render the wire, creates el (canvas)
    this.render();
    
-   var wire_stays_on_stage = terminal1.el != undefined && terminal2.el != undefined
+   var wire_stays_on_stage = function() {
+     return terminal1.el != undefined && terminal2.el != undefined && terminal2.wires
+   }
 
    var get_id_from_terminal = function(terminal) {
      var id = terminal.nodeBox.terminals.indexOf(terminal)
      return id
    }
    
-   if (wire_stays_on_stage && !this.config.from_database) {
+   if (wire_stays_on_stage() && !this.config.from_database) {
      this.el.fire('wire:added', {wire:this})
-     console.log(this)
-    this.terminal1.nodeBox.layer.save_edge(this, {user_id: 1, pipe_id: 1, from_node:  this.terminal1.nodeBox.config.id, to_node: this.terminal2.nodeBox.config.id, from_terminal: get_id_from_terminal(terminal1), to_terminal: get_id_from_terminal(terminal2)})
+     
+     var from_node = terminal1.nodeBox.config.node_id
+     var to_node   = terminal2.nodeBox.config.node_id
+     var from_terminal = get_id_from_terminal(terminal1);
+     var to_terminal   = get_id_from_terminal(terminal2);
+     
+     console.log('Connected: ' + from_node + '/' + from_terminal + ' -> ' + to_node + '/' + to_terminal)
+     this.terminal1.nodeBox.layer.save_edge(this, {user_id: <%= @user_id %> , pipe_id: <%= @pipe_id %> , from_node:  from_node, to_node: to_node, from_terminal: from_terminal, to_terminal: to_terminal})
    }                                                                 
                                                                     
    // Call addWire on both terminals                                
@@ -187,9 +195,28 @@ WireIt.Wire.prototype.render = function() {
 
 //Remove a Wire from the Dom
 WireIt.Wire.prototype.remove = function() {
-   
+   console.log("WireIt.Wire.prototype.remove")
    // Remove the canvas from the dom
    this.parentEl.removeChild(this.el);
+   
+    var get_id_from_terminal = function(terminal) {
+      var id = terminal.nodeBox.terminals.indexOf(terminal)
+      return id
+    }
+    
+    // test if wire was only created temporarily (while dragging)
+    // dont send this to the backend
+    if (!(this.terminal1.nodeBox == undefined || this.terminal2.nodeBox == undefined)) {
+      var from_node = this.terminal1.nodeBox.config.node_id
+      var to_node   = this.terminal2.nodeBox.config.node_id
+      var from_terminal = get_id_from_terminal(this.terminal1);
+      var to_terminal   = get_id_from_terminal(this.terminal2);
+
+      console.log("removed wire: " + from_node + '/' + from_terminal + ' -> ' + to_node + '/' + to_terminal)
+      this.terminal1.nodeBox.layer.remove_edge(this, {user_id: <%= @user_id %> , pipe_id: <%= @pipe_id %> , from_node:  from_node, to_node: to_node, from_terminal: from_terminal, to_terminal: to_terminal})
+    }
+    
+   
    
    // Remove the wire reference from the connected terminals
    if (this.terminal1 && this.terminal1.removeWire) {
@@ -203,6 +230,9 @@ WireIt.Wire.prototype.remove = function() {
    // Remove references to old terminals
    this.terminal1 = null;
    this.terminal2 = null;
+   
+   
+
 };
 
 //Redraw the Wire
@@ -1014,6 +1044,7 @@ WireIt.Container.prototype.addTerminal = function(terminalConfig) {
  */
 WireIt.Container.prototype.onAddWire = function(event, args) {
    var wire = args[0];
+
    // add the wire to the list if it isn't in
    if( this.wires.indexOf(wire) == -1 ) {
       this.wires.push(wire);
@@ -1070,8 +1101,6 @@ WireIt.Layer = function(config) {
    this.initContainers();
    
    this.initWires();
-   
-
 };
 
 /**
@@ -1109,6 +1138,7 @@ WireIt.Layer.prototype.initWires = function() {
  */
 // Used when wires are created from the db
 WireIt.Layer.prototype.addWire = function(wireConfig) {
+
    var src = wireConfig.src;
    var tgt = wireConfig.tgt;
   
@@ -1117,7 +1147,7 @@ WireIt.Layer.prototype.addWire = function(wireConfig) {
    var find_container = function(id) {
      var the_container = undefined
      me.containers.each(function(cont) {
-       if (cont.config.node_id == src.moduleId) {
+       if (cont.config.node_id == id) {
          the_container = cont
        }
      })    
@@ -1126,13 +1156,15 @@ WireIt.Layer.prototype.addWire = function(wireConfig) {
   
    var terminal1 = find_container(src.moduleId).terminals[src.terminalId]
    var terminal2 = find_container(tgt.moduleId).terminals[tgt.terminalId]
+
+   console.log(wireConfig)
    
    if (terminal1 != undefined && terminal2 != undefined) {
      var wire = new WireIt.Wire( terminal1, terminal2, this.el, {id: wireConfig.id, from_database: true});
      wire.wireConfig = wireConfig
      wire.redraw();     
    } else {
-     console.log("Terminal Error")
+     console.log("Error: Could not find the terminal (wireit.js.erb line 1135)")
    }
 
 };
@@ -1142,7 +1174,7 @@ WireIt.Layer.prototype.addWire = function(wireConfig) {
  * @param {Object} containerConfig  Container configuration object (see WireIt.Container class for details)
  */
 WireIt.Layer.prototype.addContainer = function(containerConfig) {
-   
+    console.log(containerConfig)
    var type = containerConfig.xtype || WireIt.Container;
    var container = new type(containerConfig, this);
    
@@ -1188,14 +1220,32 @@ WireIt.Layer.prototype.save_edge = function(wire, params) {
     var pipe_id = <%= @pipe_id %>
     var me = this
 
-    console.log(params)
+
 
     new Ajax.Request("/users/" + user_id + "/pipes/" + pipe_id + "/edges", {
        method: 'post',
        parameters: {'edge[pipe_id]':params['pipe_id'], 'edge[to_node]':params['to_node'], 'edge[from_node]':params['from_node'], 'edge[from_terminal]':params['from_terminal'], 'edge[to_terminal]':params['to_terminal']},
-       onSuccess: function(transport) {
-         console.log('added ' + transport)        
+       onSuccess: function(transport) {       
          the_wire.config.id = transport.edge_id
+       }
+     });
+};
+
+WireIt.Layer.prototype.remove_edge = function(wire, params) {
+    var the_wire = wire
+/*   e.rangeParent.fire("drag:done", { target: e.rangeParent});     // prototype.js event*/
+    var user_id = <%= @user_id %> 
+    var pipe_id = <%= @pipe_id %>
+    var me = this
+    
+    console.log(wire)
+
+
+    new Ajax.Request("/users/" + user_id + "/pipes/" + pipe_id + "/edges/" + the_wire.wireConfig.wire_id, {
+       method: 'delete',
+       parameters: {'edge[pipe_id]':params['pipe_id'], 'edge[to_node]':params['to_node'], 'edge[from_node]':params['from_node'], 'edge[from_terminal]':params['from_terminal'], 'edge[to_terminal]':params['to_terminal']},
+       onSuccess: function(transport) {       
+         console.log('removed edge')
        }
      });
 };
@@ -1204,6 +1254,7 @@ WireIt.Layer.prototype.save_edge = function(wire, params) {
 // Update the wire list when a wire is removed
 WireIt.Layer.prototype.onRemoveWire = function(event, args) {
    var wire = args[0];
+
    var index = this.wires.indexOf(wire);
    if( index != -1 ) {
       this.eventRemoveWire.fire(wire);

@@ -14,6 +14,7 @@ class EdgesController < ApplicationController
   
   def create
     debugger
+    
     @pipe = current_user.pipes.find_by_id(params[:pipe_id])
     raise ActiveRecord::RecordNotFound if @pipe.nil?
 
@@ -59,7 +60,9 @@ class EdgesController < ApplicationController
    end
   
    def destroy
-     @pipe = current_user.pipe.find_by_id(params[:pipe_id])
+     
+     
+     @pipe = current_user.pipes.find_by_id(params[:pipe_id])
      raise ActiveRecord::RecordNotFound if @pipe.nil?
 
      @edge = @pipe.edges.find_by_id params[:id]

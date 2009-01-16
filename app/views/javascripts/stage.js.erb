@@ -105,8 +105,13 @@ Event.observe(window, 'dom:loaded', function() {
 
 
   $('show_query').observe('click', function() {
+    console.log('click')
+    
+    var p = new Parser(nodeBox.layer)
+    var last_node  = p.find_last_node()
+    
     var header_text = $$('#dummy_sheet div.sheet_header h5').first()
-    header_text.innerHTML = "<pre><code>" + Parser.parse_nodes() + "</code></pre>"
+    header_text.innerHTML = "<pre><code>" + p.to_query(p.parse(last_node)) + "</code></pre>"
     ok_sheet.show()
   })
 
@@ -116,24 +121,22 @@ Event.observe(window, 'dom:loaded', function() {
      var parser     = new Parser(nodeBox.layer)
      var last_node  = parser.find_last_node()
      
-     var results = parser.parse(last_node)
+     var results = parser.parse(last_node).reverse()
      
-     results.each(function(r){
-       console.log(r.result)
-     })
-  
+     var query = parser.to_query(results)
+    console.log(query)
     new Ajax.Request('<%= run_user_pipe_path(current_user, @id) %>', {
               asynchronous:true, 
               evalScripts:true, 
               method: 'post',
-              parameters: {query: parse_nodes()},
+              parameters: {query: query},
             
               onSuccess: function(transport) {    
                 var response = (transport.responseText.evalJSON(true));   
                 
                 if (!response.success) {
                   var header_text = $$('#runner_sheet div.status-message p').first()
-                  header_text.addClassName('error').innerHTML = response.error_message || 'What? An Error!'
+                  header_text.addClassName('error').innerHTML = response.result || 'What? An Error!'
                   return
                 } else {
                   var header_text = $$('#runner_sheet div.status-message p').first()
@@ -177,9 +180,9 @@ Event.observe(window, 'dom:loaded', function() {
             header_text.addClassName('error').innerHTML = response.error_message || 'Ups!'
             return
           } 
+          
           sources.push({name: response.name, iri: response.iri})
 
-          
           sources_sheet.hide(); 
           return false;
         },

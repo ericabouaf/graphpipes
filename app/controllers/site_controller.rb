@@ -1,6 +1,5 @@
 class SiteController < ApplicationController
 
-  
   def index  
     redirect_to user_pipes_path(current_user) if logged_in?
   end

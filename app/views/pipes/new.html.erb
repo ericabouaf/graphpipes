@@ -1,15 +1,11 @@
 <div class='form-content'>
-<h2>Create a new Pipe</h2>
+  <h2>Create a new Pipe</h2>
+    <%= error_messages_for :pipe %>
 
-<%= error_messages_for :pipe %>
-
-<% form_for(:pipe, :url => user_pipes_path(current_user)) do |f| %>
-  <%= render :partial => "form", :locals => { :f => f } %>
-
-
+    <% form_for(:pipe, :url => user_pipes_path(current_user)) do |f| %>  
+      <%= render :partial => "form", :locals => { :f => f } %>
+      <%= link_button 'Cancel and go back to list', :url => user_pipes_url(current_user) %>
+      <%= submit_tag "Create new Pipe" %>
+      <% button_to 'Create Pipe', :id => 'create_pipe',  :url => user_pipes_url(current_user)%>  
+  <% end %>
 </div>
-
-<%= link_button 'Cancel and go back to list', :url => user_pipes_url(current_user) %>
-<%= submit_tag "Create new Pipe" %>
-<% button_to 'Create Pipe', :id => 'create_pipe',  :url => user_pipes_url(current_user)%>
-<% end %>
