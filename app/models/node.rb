@@ -42,8 +42,44 @@ class Node < ActiveRecord::Base
     inputs != []
   end
   
-  def result
-    element
+  def to_sparql
+    # Examples:
+    
+    # FILTER regex(?title, "web", "i" ) 
+    # FILTER (?price < 30.5)
+    
+    node_result = case element
+    when /construct/:
+      puts content.inspect
+      "CONSTRUCT { #{content['var_1']} #{content['verb']} #{content['var_2']} }"
+    when /last/: 
+      ''
+    when /condition/:          
+      'WHERE {' + content['var_1'] + ' ' + content['verb'] + ' ' + content['var_2'] + ' }'       
+    when /filter/: 
+     
+      if content['kind'] == 'A Comparision'
+        'FILTER (' + content['values'] + ')'
+      else
+        'FILTER ' + content['kind'] + '(' + content['values'] + ')'  
+      end
+    when /join/: 'join'
+      ''
+    when /repo/: 'resource'
+      if !content.nil? && !content.blank?
+        'FROM NAMED ' + content['iri']
+      else 
+        'FROM NAMED nothing'
+      end  
+    when /subgraph/: 
+      Pipe.find(content['pipe_id']).to_sparql
+    when /union/: 
+      "{ #{content['var_1']} } UNION  { #{content['var_2']} }"
+    else
+      "ERROR: #{element}"
+    end 
+    puts "-- #{node_result}"
+    node_result
   end
   
   def remember(data)

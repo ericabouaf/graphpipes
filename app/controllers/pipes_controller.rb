@@ -20,7 +20,7 @@ class PipesController < ApplicationController
     
     respond_to do |format|
       format.js {
-        render :json => params.to_json
+        render :json => {:params => params.to_json, :success => true}      
       }
     end
   end
@@ -37,7 +37,7 @@ class PipesController < ApplicationController
      
      respond_to do |format|
        format.js {
-         render :json => query.to_json
+         render :json => {:query => query.to_json, :success => true}
        }
      end
   end
@@ -51,13 +51,7 @@ class PipesController < ApplicationController
         
     @pipe = Pipe.find(params[:id])    
     query = @pipe.to_sparql
-    
-    result = Pipe.send_to_repository(query)
-    
-    file_name = Digest::SHA1.hexdigest(query)    
-    File.open("#{RAILS_ROOT}/public/responses/#{file_name}.result.txt", 'w') {|f| f.write(result) }
-    File.open("#{RAILS_ROOT}/public/responses/#{file_name}.query.txt", 'w') {|f| f.write(URI.unescape query) }
-
+  
     success = true
     
     begin
@@ -66,6 +60,10 @@ class PipesController < ApplicationController
       success = false
       result = e.body      
     end
+
+    file_name = Digest::SHA1.hexdigest(query)    
+    File.open("#{RAILS_ROOT}/public/responses/#{file_name}.result.txt", 'w') {|f| f.write(result) }
+    File.open("#{RAILS_ROOT}/public/responses/#{file_name}.query.txt", 'w') {|f| f.write(URI.unescape query) }
 
     respond_to do |format|
       format.js { 

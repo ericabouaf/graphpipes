@@ -12,8 +12,9 @@ var NodeBase = Class.create({
   initialize: function(object_ref, config) {
     this.graphics = object_ref
     this.config = config
-    if (config.content != undefined) {
-      this.restore(config.content.evalJSON())      
+    var json = config.content.evalJSON()
+    if (json != undefined) {
+      this.restore(json)      
     }
   },
   result : function() { 
@@ -139,9 +140,20 @@ var Nodes = {
   }),
   
   Subgraph: Class.create(NodeBase, {
-     result: function() { 
-        return '--subgraph--'
-      }
+    restore : function(data) {
+      var pipe_select = this.graphics.down('select')
+      var optional    = this.graphics.down('input')
+      
+      pipe_select.selectedIndex = data.select_id
+ 
+    },
+    to_fields : function() {
+      var pipe_select = this.graphics.down('select')
+      return {pipe_id: pipe_select.value, select_id: pipe_select.selectedIndex}
+    },
+    result: function() { 
+      return '--subgraph--'
+    }
   }),
   
   
@@ -218,10 +230,12 @@ var nodeBox = function(config, layer) {
     if (config.element == 'node_last') { config.close = false }
 
    nodeBox.superclass.constructor.call(this, config, layer);
-   console.log(config)
-   var user_id = <%= params[:user_id] %>
-   var pipe_id = config.sub_pipe_id
    
+   var user_id = <%= params[:user_id] %>
+   
+   console.log(config.content)
+    var pipe_id = <%= params[:pipe_id] %>  
+    
    this.output_terminals = []
    this.input_terminals  = []
 
@@ -230,7 +244,7 @@ var nodeBox = function(config, layer) {
      this.el.appendChild(this.editButton);
 
      YAHOO.util.Event.addListener(this.editButton, "click", function() {
-       window.open("/users/" + user_id + "/pipes/" + pipe_id)  
+       window.open("/users/" + user_id + "/pipes/" + config.content.evalJSON().pipe_id + "?parent=" + pipe_id)
      }, this, true);     
      this.el.addClassName('has_pipe') 
    } 
