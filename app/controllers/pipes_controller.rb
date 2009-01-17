@@ -12,32 +12,61 @@ class PipesController < ApplicationController
     redirect_to user_pipes_path(current_user)
   end
   
-  # 3 running the pipe in worker (todo)
-  # 2 currently: just build the query and send to server
-  # 2 render response to file /responses/time/
-  # send link to response to client
-  # 1 send testquery to server
-  def run     
-    # all inline, todo: refactor to /lib, n3, accepts jpson    
     
-    header = {:accept => 'application/sparql-results+json'}
-    query = URI.escape "#{params['query']}"
-
+  def save
+    JSON.load(params["query"]).each do |h|
+      Node.find(h['id']).remember(h['fields'])
+    end
+    
+    respond_to do |format|
+      format.js {
+        render :json => params.to_json
+      }
+    end
+  end
+  
+  
+  def query 
+    # save data
+    # todo: clean up => save is doing the same    
+    JSON.load(params["save"]).each do |h|
+      Node.find(h['id']).remember(h['fields'])
+    end
+     @pipe = Pipe.find(params[:id])    
+     query = @pipe.to_sparql
+     
+     respond_to do |format|
+       format.js {
+         render :json => query.to_json
+       }
+     end
+  end
+  
+  def run     
+    # save data
+    # todo: clean up => save is doing the same
+    JSON.load(params["save"]).each do |h|
+      Node.find(h['id']).remember(h['fields'])
+    end    
+        
+    @pipe = Pipe.find(params[:id])    
+    query = @pipe.to_sparql
+    
+    result = Pipe.send_to_repository(query)
+    
     file_name = Digest::SHA1.hexdigest(query)    
-    File.open("#{RAILS_ROOT}/public/responses/#{file_name}.txt", 'w') {|f| f.write(query) }
+    File.open("#{RAILS_ROOT}/public/responses/#{file_name}.result.txt", 'w') {|f| f.write(result) }
     File.open("#{RAILS_ROOT}/public/responses/#{file_name}.query.txt", 'w') {|f| f.write(URI.unescape query) }
 
     success = true
     
-     begin
-       result = Pipe.send_to_repository query
-     rescue RubySesame::SesameException => e
-       success = false
-       result = e.body      
-     end
-      
-      
-    
+    begin
+      result = Pipe.send_to_repository query
+    rescue RubySesame::SesameException => e
+      success = false
+      result = e.body      
+    end
+
     respond_to do |format|
       format.js { 
         render :json => { :object => "session", 
@@ -46,7 +75,7 @@ class PipesController < ApplicationController
                           :result => result,
                           :query_path => "/responses/#{file_name}.query.txt",
                           :file_name => file_name,
-                          :path => "/responses/#{file_name}.txt" } 
+                          :path => "/responses/#{file_name}.result.txt" } 
       }
     
     end

@@ -4,7 +4,7 @@ ActionController::Routing::Routes.draw do |map|
 
   # map.resources :users, :has_many => :pipes
   map.resources :users do |user|
-    user.resources :pipes, :member => {:run => :post} do |node|
+    user.resources :pipes, :member => {:run => :post, :query => :get, :save => :post} do |node|
       node.resources :nodes
       node.resources :edges      
     end

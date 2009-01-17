@@ -8,11 +8,22 @@
 
 var NodeBase = Class.create({
   graphics : {},
-  initialize: function(object_ref) {
+
+  initialize: function(object_ref, config) {
     this.graphics = object_ref
+    this.config = config
+    if (config.content != undefined) {
+      this.restore(config.content.evalJSON())      
+    }
   },
   result : function() { 
     return '1' 
+  },
+  to_fields : function() {
+    return {}
+  },
+  restore : function(content) {
+    
   },
   defaults: function() {
     return {
@@ -27,6 +38,20 @@ var NodeBase = Class.create({
 
 var Nodes = {
   Repo : Class.create(NodeBase, {
+    restore : function(data) {
+      var c = this.graphics.down('form')
+      var select_box = c.down('select')
+      select_box.selectedIndex = data.num
+    },
+    to_fields : function() {
+      var c = this.graphics.down('form')
+      var select_box = c.down('select')
+      
+      if (select_box.selectedIndex == 0) { return '' }    
+
+      var selected_iri = select_box[select_box.selectedIndex].value
+      return {num: select_box.selectedIndex, iri: selected_iri}
+    },
     result: function() {
       var c = this.graphics.down('form')
       var select_box = c.down('select')
@@ -39,9 +64,32 @@ var Nodes = {
     }
   }),
   Last : Class.create(NodeBase, {
+    to_fields : function() {
+      return {}
+    },
     result: function() { return '' }
   }),
   Condition : Class.create(NodeBase, {
+     restore : function(data) {
+       var first_input   = this.graphics.down('input')
+       var second_input  = first_input.next('input')
+       var select_verb   = this.graphics.down('select')
+       
+       first_input.value = data.var_1
+       second_input.value = data.var_2
+       select_verb.value = data.verb
+       
+      },
+    to_fields : function() {
+      var first_input   = this.graphics.down('input')
+      var second_input  = first_input.next('input')
+      var select_verb   = this.graphics.down('select')
+      
+      var var_1 = first_input.value
+      var var_2 = second_input.value
+      var verb = select_verb[select_verb.selectedIndex].value
+      return {var_1: var_1, verb: verb, var_2: var_2}
+    },
     result: function() { 
       var first_input   = this.graphics.down('input')
       var second_input  = first_input.next('input')
@@ -57,6 +105,21 @@ var Nodes = {
 
   
   Filter: Class.create(NodeBase, {
+    restore : function(data) {
+      var filter_type_select   = this.graphics.down('select')
+      var filter_input         = this.graphics.down('input')
+      console.log(data)
+      filter_type_select.selectedIndex = data.num
+      filter_input.value = data.values
+    },
+    to_fields: function() {
+      var filter_type_select   = this.graphics.down('select')
+      var filter_input         = this.graphics.down('input')
+
+      var filter_type = filter_type_select[filter_type_select.selectedIndex].value
+      var filter      = filter_input.value
+      return {num: filter_type_select.selectedIndex, kind: filter_type, values: filter}
+    },
     result: function() {   
       var filter_type_select   = this.graphics.down('select')
       var filter_input         = this.graphics.down('input')
@@ -83,6 +146,27 @@ var Nodes = {
   
   
   Construct: Class.create(NodeBase, {
+    restore : function(data) {
+        console.log('restoring construct node')
+       var first_input   = this.graphics.down('input')
+       var verb_input = first_input.next('input')
+       var second_input  = verb_input.next('input')
+       
+       first_input.value = data.var_1
+       verb_input.value = data.verb
+       second_input.value = data.var_2     
+    },
+    to_fields: function() {
+       var first_input   = this.graphics.down('input')
+       var verb_input = first_input.next('input')
+       var second_input  = verb_input.next('input')
+
+
+       var var_1 = first_input.value
+        var var_2 = second_input.value
+        var verb = verb_input.value
+        return {var_1: var_1, verb:verb, var_2:var_2}
+    },
     result: function() { 
       var first_input   = this.graphics.down('input')
       var second_input  = first_input.next('input')
@@ -96,8 +180,30 @@ var Nodes = {
       }    
   }),  
   
-  Join: Class.create(NodeBase, {}),
-  Union: Class.create(NodeBase, {})
+  Join: Class.create(NodeBase, {
+    to_fields: function() { 
+      return '--join--'
+    }
+  }),
+  
+  Union: Class.create(NodeBase, {
+    restore: function(data) {
+      var optional   = this.graphics.down('input')
+      var first_input  = optional.next('input')
+      var second_input  = first_input.next('input')
+
+      optional.checked = data.optional
+      optional.value = data.optional
+      first_input.value = data.var_1
+      second_input.value = data.var_2
+    },
+    to_fields: function() { 
+      var optional   = this.graphics.down('input')
+      var first_input  = optional.next('input')
+      var second_input  = first_input.next('input')
+      return {var_1: first_input.value, var_2: second_input.value, optional: optional.checked}
+    }
+  })
 }
 
 var element_to_class_name = function(element) {
@@ -109,11 +215,10 @@ var element_to_class_name = function(element) {
 // ================================================================================
 
 var nodeBox = function(config, layer) {
-    console.log(config)
-    if (config.element == 'node_last') {    config.close = false }
+    if (config.element == 'node_last') { config.close = false }
 
    nodeBox.superclass.constructor.call(this, config, layer);
-   
+   console.log(config)
    var user_id = <%= params[:user_id] %>
    var pipe_id = config.sub_pipe_id
    
@@ -143,7 +248,7 @@ var nodeBox = function(config, layer) {
    var class_name = element_to_class_name(config.element)
    
    
-   this.node_proxy = new Nodes[class_name](this.content)
+   this.node_proxy = new Nodes[class_name](this.content, this.config)
    
       
    this.createTerminals();

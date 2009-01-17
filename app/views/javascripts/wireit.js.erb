@@ -1157,7 +1157,6 @@ WireIt.Layer.prototype.addWire = function(wireConfig) {
    var terminal1 = find_container(src.moduleId).terminals[src.terminalId]
    var terminal2 = find_container(tgt.moduleId).terminals[tgt.terminalId]
 
-   console.log(wireConfig)
    
    if (terminal1 != undefined && terminal2 != undefined) {
      var wire = new WireIt.Wire( terminal1, terminal2, this.el, {id: wireConfig.id, from_database: true});
@@ -1174,7 +1173,7 @@ WireIt.Layer.prototype.addWire = function(wireConfig) {
  * @param {Object} containerConfig  Container configuration object (see WireIt.Container class for details)
  */
 WireIt.Layer.prototype.addContainer = function(containerConfig) {
-    console.log(containerConfig)
+
    var type = containerConfig.xtype || WireIt.Container;
    var container = new type(containerConfig, this);
    
@@ -1238,7 +1237,6 @@ WireIt.Layer.prototype.remove_edge = function(wire, params) {
     var pipe_id = <%= @pipe_id %>
     var me = this
     
-    console.log(wire)
 
 
     new Ajax.Request("/users/" + user_id + "/pipes/" + pipe_id + "/edges/" + the_wire.wireConfig.wire_id, {

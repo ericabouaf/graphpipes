@@ -32,7 +32,7 @@ class NodesController < ApplicationController
         @sub_pipe = current_user.pipes.create :title => "Sub_#{current_user.pipes.length + 1}", :short_description => 'Untitled.', :root => true
         sub_pipe_id = @sub_pipe.id
         if @sub_pipe.save
-          @sub_pipe.nodes.create :kind => "nodeBox", :element => 'node_last', :x => 300, :y => 250, :content => 'Terminal Box', :has_pipe => false          
+          @sub_pipe.nodes.create :kind => "nodeBox", :element => 'node_last', :x => 300, :y => 250, :has_pipe => false          
         end
       end
         

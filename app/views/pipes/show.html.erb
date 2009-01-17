@@ -7,7 +7,7 @@
             <% has_pipe = node.has_pipe.blank? ? false : "'#{node.has_pipe.id}'" %>
         
             <%= "{xtype: #{node.kind}, id: #{node.id}, position: [#{node.x.to_i}, #{node.y.to_i}], 
-            codeText: '#{node.content}' + ' ' + #{node.id}, element: '#{node.element}', node_id: #{node.id}, pipe_id: #{node.pipe.id}, user_id: #{node.pipe.user.id}, has_pipe: #{has_pipe} }"%><% if index < @pipe.nodes.size - 1 %>,<% end %>    
+            content: '#{node.content.to_json}', element: '#{node.element}', node_id: #{node.id}, pipe_id: #{node.pipe.id}, user_id: #{node.pipe.user.id}, has_pipe: #{has_pipe} }"%><% if index < @pipe.nodes.size - 1 %>,<% end %>    
           <% end %>      
         ], // containers
     

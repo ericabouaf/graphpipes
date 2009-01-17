@@ -12,13 +12,10 @@ class EdgesController < ApplicationController
     render :action => 'show', :layout => 'stage'
   end
   
-  def create
-    debugger
-    
+  def create    
     @pipe = current_user.pipes.find_by_id(params[:pipe_id])
     raise ActiveRecord::RecordNotFound if @pipe.nil?
 
-    debugger
     @edge = @pipe.edges.new params[:edge]# .merge(:pipe_id => @pipe.id)
 
     if @edge.save    

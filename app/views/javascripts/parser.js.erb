@@ -3,7 +3,6 @@
 
 var Parser = Class.create({
   initialize: function(nodebox_layer) {
-    console.log('Parser::initialize')
     this.box = nodebox_layer
   }, 
   
@@ -12,7 +11,6 @@ var Parser = Class.create({
   },
   
   find_last_node : function() {
-    console.log('find_last_node')
     return this.all_nodes().inject(undefined, function(mem, node) {
       return node.config.element == 'node_last' ? node : mem
     }) 
@@ -46,6 +44,14 @@ var Parser = Class.create({
     })
   },
   
+  collect_all_node_data : function() {
+    var r = this.all_nodes().inject([], function(results, node) {
+      results.push({id: node.config.node_id, fields: node.terminals[0].nodeBox.node_proxy.to_fields()})
+      return results
+    })
+    return r
+  },
+  
   
   tree_exists : function(node) {
      return node == undefined ? false : node.wires != undefined && node.wires.length > 0 
@@ -77,9 +83,11 @@ var Parser = Class.create({
      var r = resultset.inject('', function(all, item) {
        return all + item.result + " "
      })
-     console.log(r)
+
      return r
    },
+   
+   
    
    parse : function(a_node) {     
      console.log('parse')
