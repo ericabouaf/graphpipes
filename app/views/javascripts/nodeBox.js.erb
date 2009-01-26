@@ -233,18 +233,25 @@ var nodeBox = function(config, layer) {
    
    var user_id = <%= params[:user_id] %>
    
-   console.log(config.content)
+   
+    var _config = config
     var pipe_id = <%= params[:pipe_id] %>  
-    
+
    this.output_terminals = []
    this.input_terminals  = []
 
    if (this.has_subgraph()) { 
+     console.log(this.el)
+     
      this.editButton = WireIt.cn('div', {className: 'WireIt-Container-editbutton '} );
      this.el.appendChild(this.editButton);
 
      YAHOO.util.Event.addListener(this.editButton, "click", function() {
-       window.open("/users/" + user_id + "/pipes/" + config.content.evalJSON().pipe_id + "?parent=" + pipe_id)
+       var select = this.el.down('select')
+       var sub_id = select[select.selectedIndex].value
+
+       window.open("/users/" + user_id + "/pipes/" + sub_id + "?parent=" + pipe_id)
+       // window.open("/users/" + user_id + "/pipes/" + config.content.evalJSON().pipe_id + "?parent=" + pipe_id)
      }, this, true);     
      this.el.addClassName('has_pipe') 
    } 
