@@ -335,7 +335,8 @@ YAHOO.extend(nodeBox, WireIt.Container, {
       
    createTerminals: function() {
      this.removeAllTerminals();
-
+     console.log('createTerminals')
+     console.log(this.nParams)
      for(var i = 0 ; i < this.nParams ; i++) {
        var term = this.addTerminal({xtype: WireIt.util.TerminalInput, nMaxWires: 1});
        term.nodeBox = this;
