@@ -11,7 +11,7 @@ class Pipe < ActiveRecord::Base
   validates_presence_of :title
 
   def self.send_to_repository(query_string='')
-    sesame = RubySesame::Server.new 'http://k-sems.uni-koblenz.de/openrdf-sesame', true, logger
+    sesame = RubySesame::Server.new 'http://k-sems.uni-koblenz.de/openrdf-sesame', true
     repo = sesame.repository 'k-sems'
     
     repo.query query_string, :method => 'post'
