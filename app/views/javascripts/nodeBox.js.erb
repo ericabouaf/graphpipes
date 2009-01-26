@@ -230,7 +230,7 @@ var nodeBox = function(config, layer) {
     if (config.element == 'node_last') { config.close = false }
 
    nodeBox.superclass.constructor.call(this, config, layer);
-   
+
    var user_id = <%= params[:user_id] %>
    
    
@@ -268,11 +268,9 @@ var nodeBox = function(config, layer) {
    
    var class_name = element_to_class_name(config.element)
    
+   this.createTerminals();
    
    this.node_proxy = new Nodes[class_name](this.content, this.config)
-   
-      
-   this.createTerminals();
 
    
    // Reposition the terminals when the box is being resized
@@ -336,6 +334,7 @@ YAHOO.extend(nodeBox, WireIt.Container, {
    createTerminals: function() {
      this.removeAllTerminals();
      console.log('createTerminals')
+     
      console.log(this.nParams)
      for(var i = 0 ; i < this.nParams ; i++) {
        var term = this.addTerminal({xtype: WireIt.util.TerminalInput, nMaxWires: 1});

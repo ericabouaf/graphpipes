@@ -1176,7 +1176,7 @@ WireIt.Layer.prototype.addContainer = function(containerConfig) {
 
    var type = containerConfig.xtype || WireIt.Container;
    var container = new type(containerConfig, this);
-   
+     console.log('addContainer')
    this.containers.push( container );
    
    // Event listeners
