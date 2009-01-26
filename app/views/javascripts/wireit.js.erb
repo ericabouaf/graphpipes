@@ -1000,6 +1000,7 @@ WireIt.Container.prototype.onCloseButton = function() {
  * Remove this container from the dom
  */
 WireIt.Container.prototype.remove = function() {
+    console.log('Container.prototype.remove')
    this.removeAllTerminals(); // Remove the terminals (and thus remove the wires)
    this.layer.el.removeChild(this.el);    // Remove from the dom
 };
@@ -1189,9 +1190,13 @@ WireIt.Layer.prototype.addContainer = function(containerConfig) {
  * @param {WireIt.Container} container Container instance to remove
  */
 WireIt.Layer.prototype.removeContainer = function(container) {
+
+   console.log(container)
    var index = this.containers.indexOf(container);
+   container.remove();
+   
    if( index != -1 ) {
-      container.remove();
+      // container.remove();
       this.containers[index] = null;
       this.containers = this.containers.compact();
    }

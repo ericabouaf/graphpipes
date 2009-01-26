@@ -73,8 +73,8 @@ var Nodes = {
   Condition : Class.create(NodeBase, {
      restore : function(data) {
        var first_input   = this.graphics.down('input')
-       var second_input  = first_input.next('input')
-       var select_verb   = this.graphics.down('select')
+       var select_verb   = first_input.next('input')
+       var second_input  = select_verb.next('input')
        
        first_input.value = data.var_1
        second_input.value = data.var_2
@@ -83,22 +83,23 @@ var Nodes = {
       },
     to_fields : function() {
       var first_input   = this.graphics.down('input')
-      var second_input  = first_input.next('input')
-      var select_verb   = this.graphics.down('select')
+      var select_verb   = first_input.next('input')
+      
+      var second_input  = select_verb.next('input')
       
       var var_1 = first_input.value
       var var_2 = second_input.value
-      var verb = select_verb[select_verb.selectedIndex].value
+      var verb = select_verb.value
       return {var_1: var_1, verb: verb, var_2: var_2}
     },
     result: function() { 
-      var first_input   = this.graphics.down('input')
-      var second_input  = first_input.next('input')
-      var select_verb   = this.graphics.down('select')
+       var first_input   = this.graphics.down('input')
+       var select_verb   = first_input.next('input')
+       var second_input  = select_verb.next('input')
       
       var var_1 = first_input.value
       var var_2 = second_input.value
-      var verb = select_verb[select_verb.selectedIndex].value
+      var verb = select_verb.value
       
       return 'WHERE ' + var_1 + ' ' + verb + ' ' + var_2
     }
@@ -233,9 +234,8 @@ var nodeBox = function(config, layer) {
 
    var user_id = <%= params[:user_id] %>
    
-   
-    var _config = config
-    var pipe_id = <%= params[:pipe_id] %>  
+   var _config = config
+   var pipe_id = <%= params[:pipe_id] %>  
 
    this.output_terminals = []
    this.input_terminals  = []
@@ -249,9 +249,13 @@ var nodeBox = function(config, layer) {
      YAHOO.util.Event.addListener(this.editButton, "click", function() {
        var select = this.el.down('select')
        var sub_id = select[select.selectedIndex].value
-
-       window.open("/users/" + user_id + "/pipes/" + sub_id + "?parent=" + pipe_id)
-       // window.open("/users/" + user_id + "/pipes/" + config.content.evalJSON().pipe_id + "?parent=" + pipe_id)
+       
+       if (sub_id == pipe_id) {
+         alert('The Subpipe you selected is the same as the current pipe you are in. This will result in an error!')
+       } else {
+         window.open("/users/" + user_id + "/pipes/" + sub_id + "?parent=" + pipe_id)  
+       }
+       
      }, this, true);     
      this.el.addClassName('has_pipe') 
    } 
