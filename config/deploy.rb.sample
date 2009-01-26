@@ -1,0 +1,8 @@
+set :application, "graphpipes"
+set :repository,  "git"
+
+
+role :app, "formrausch.com"
+role :web, "formrausch.com"
+role :db,  "formrausch.com", :primary => true
+
